@@ -5,14 +5,19 @@ import { motion, AnimatePresence } from "motion/react";
  import { Linkedin, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-type Social = {
-  icon: React.ElementType;
-  url: string;
-};
+
+
 const iconMap = {
   linkedin: Linkedin,
   twitter: X,
- };
+};
+type IconName = keyof typeof iconMap;
+
+type Social = {
+  icon: IconName;
+  url: string;
+};
+ 
 
 type Testimonial = {
   quote: string;
