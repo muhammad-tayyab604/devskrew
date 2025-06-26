@@ -159,7 +159,7 @@ export const AnimatedTeamMembers = ({
               ))}
               {testimonials[active].socials && (
   <div className="mt-2 flex gap-3">
-    {testimonials[active].socials.map((social, index) => {
+    {testimonials[active].socials?.map((social, index) => {
       const Icon = iconMap[social.icon]; // Lookup icon
       return (
         <a
