@@ -18,7 +18,7 @@ export const services = [
     technologies: ['React', 'Next.js', 'Node.js', 'Python', 'PostgreSQL', 'AWS'],
     startingPrice: '$2,500',
     gradient: 'from-blue-500 to-cyan-500',
-    bgGradient: 'from-blue-50 to-cyan-50 dark:from-blue-950/50 dark:to-cyan-950/50',
+    bgGradient: '',
   },
   {
     icon: Palette,

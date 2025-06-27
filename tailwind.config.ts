@@ -79,10 +79,9 @@ const config: Config = {
           },
         },
          scroll: {
-          to: {
-            transform: 'translate(calc(-50% - 0.5rem))',
-          },
-        },
+      '0%':   { transform: 'translateX(0)' },
+      '100%': { transform: 'translate(calc(-50% - 0.5rem))' },
+    },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
