@@ -12,9 +12,11 @@ import {
   FileText, 
   LogOut,
   BarChart3,
-  Settings
+  Settings,
+  AlertTriangle
 } from 'lucide-react';
 import { useAdminAuth } from '@/lib/admin-auth';
+import { isSupabaseConfigured } from '@/lib/supabase';
 import TeamManagement from './TeamManagement';
 import ServicesManagement from './ServicesManagement';
 import PortfolioManagement from './PortfolioManagement';
@@ -29,6 +31,39 @@ export default function AdminDashboard() {
   const handleLogout = () => {
     logout();
   };
+
+  // Check if Supabase is configured
+  if (!isSupabaseConfigured()) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+        <Card className="max-w-md mx-4">
+          <CardHeader>
+            <div className="flex items-center gap-3 mb-4">
+              <AlertTriangle className="h-8 w-8 text-yellow-500" />
+              <CardTitle className="text-xl">Configuration Required</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-gray-600 dark:text-gray-300">
+              Supabase is not configured. Please set up your environment variables:
+            </p>
+            <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
+              <code className="text-sm">
+                NEXT_PUBLIC_SUPABASE_URL=your-supabase-url<br />
+                NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+              </code>
+            </div>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Add these to your .env.local file and restart the development server.
+            </p>
+            <Button onClick={() => window.location.reload()} className="w-full">
+              Retry
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, Briefcase, FolderOpen, MessageSquare, FileText, TrendingUp } from 'lucide-react';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 
 interface Stats {
   teamMembers: number;
@@ -26,10 +26,16 @@ export default function AdminStats() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchStats();
+    if (isSupabaseConfigured()) {
+      fetchStats();
+    } else {
+      setIsLoading(false);
+    }
   }, []);
 
   const fetchStats = async () => {
+    if (!supabase) return;
+
     try {
       const [
         teamResult,
@@ -109,6 +115,20 @@ export default function AdminStats() {
       gradient: 'from-teal-500 to-blue-500',
     },
   ];
+
+  if (!isSupabaseConfigured()) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <Card className="col-span-full">
+          <CardContent className="p-6 text-center">
+            <p className="text-gray-500 dark:text-gray-400">
+              Configure Supabase to view statistics
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   if (isLoading) {
     return (
