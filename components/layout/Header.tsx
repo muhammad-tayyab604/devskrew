@@ -7,6 +7,7 @@ import { Menu, X, Moon, Sun, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ModeToggle } from '../ThemeToggle';
+import { useAdminAuth } from '@/lib/admin-auth';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -22,6 +23,7 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+   const { isAuthenticated, isLoading } = useAdminAuth();
 
   useEffect(() => {
     setMounted(true);
@@ -33,7 +35,8 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  if (!mounted) {
+  if(!isAuthenticated){
+     if (!mounted) {
     return (
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/20 shadow-lg shadow-black/5">
         <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -177,5 +180,9 @@ export default function Header() {
         )}
       </nav>
     </header>
+  }
+ else{
+   
+ }
   );
 }
