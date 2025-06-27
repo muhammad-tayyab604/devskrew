@@ -7,7 +7,6 @@ import { Menu, X, Moon, Sun, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ModeToggle } from '../ThemeToggle';
-import { useAdminAuth } from '@/lib/admin-auth';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -23,7 +22,6 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
-   const { isAuthenticated, isLoading } = useAdminAuth();
 
   useEffect(() => {
     setMounted(true);
