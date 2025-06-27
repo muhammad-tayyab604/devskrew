@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Mail, Phone, MapPin, Clock, Send, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import CTA from '@/components/sections/CTA';
+import FAQSection from '@/components/sections/FAQSection';
 
 const contactInfo = [
   {
@@ -327,35 +328,7 @@ export default function Contact() {
             </p>
           </div>
 
-          <div className="space-y-6">
-            {[
-              {
-                question: 'How long does a typical project take?',
-                answer: 'Project timelines vary based on scope and complexity. Simple websites typically take 2-4 weeks, while complex applications can take 2-6 months. We provide detailed timelines during our initial consultation.',
-              },
-              {
-                question: 'Do you work with small businesses?',
-                answer: 'Absolutely! We work with businesses of all sizes, from startups to enterprises. We offer scalable solutions that grow with your business and budget-friendly packages for smaller companies.',
-              },
-              {
-                question: 'What is your design process?',
-                answer: 'Our design process includes research, wireframing, visual design, prototyping, and testing. We involve you throughout the process to ensure the final product meets your vision and goals.',
-              },
-              {
-                question: 'Do you provide ongoing support?',
-                answer: 'Yes, we offer various support and maintenance packages to keep your digital assets secure, updated, and performing optimally. Our support includes regular updates, security monitoring, and technical assistance.',
-              },
-            ].map((faq, index) => (
-              <Card key={index} className="border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-xl text-gray-900 dark:text-white">{faq.question}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{faq.answer}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          <FAQSection/>
         </div>
       </section>
 
