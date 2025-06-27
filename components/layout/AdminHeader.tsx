@@ -15,14 +15,6 @@ import {
   Settings,
   AlertTriangle
 } from 'lucide-react';
-import { useAdminAuth } from '@/lib/admin-auth';
-import { isSupabaseConfigured } from '@/lib/supabase';
-import TeamManagement from './TeamManagement';
-import ServicesManagement from './ServicesManagement';
-import PortfolioManagement from './PortfolioManagement';
-import ContactManagement from './ContactManagement';
-import BlogManagement from './BlogManagement';
-import AdminStats from './AdminStats';
 
 export function AdminHeader(){
   return(
