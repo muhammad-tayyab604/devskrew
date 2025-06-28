@@ -79,10 +79,16 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-    toast.success('Message sent successfully! We\'ll get back to you within 24 hours.');
+    if (res.ok) {
+      toast.success('Message sent successfully! We\'ll get back to you within 24 hours.');
     setFormData({
       name: '',
       email: '',
@@ -92,6 +98,12 @@ export default function Contact() {
       message: '',
     });
     setIsSubmitting(false);
+    } else {
+      toast.error("Unable to send an email: ");
+      setIsSubmitting(false);
+    }
+
+    
   };
 
   return (
