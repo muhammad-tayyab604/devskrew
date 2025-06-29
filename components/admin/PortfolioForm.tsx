@@ -105,24 +105,25 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
     });
   };
 
-  const handleArrayChange = (field: string, index: number, value: string) => {
+  // Fixed array change handlers with proper typing
+  const handleArrayChange = (field: 'galleryUrls' | 'tags' | 'features' | 'seoKeywords', index: number, value: string) => {
     setFormData(prev => ({
       ...prev,
-      [field]: prev[field as keyof typeof prev].map((item: any, i: number) => i === index ? value : item)
+      [field]: prev[field].map((item, i) => i === index ? value : item)
     }));
   };
 
-  const handleTechChange = (category: string, index: number, value: string) => {
+  const handleTechChange = (category: 'frontend' | 'backend' | 'tools', index: number, value: string) => {
     setFormData(prev => ({
       ...prev,
       technologies: {
         ...prev.technologies,
-        [category]: prev.technologies[category as keyof typeof prev.technologies].map((tech, i) => i === index ? value : tech)
+        [category]: prev.technologies[category].map((tech, i) => i === index ? value : tech)
       }
     }));
   };
 
-  const handleResultChange = (index: number, field: string, value: string) => {
+  const handleResultChange = (index: number, field: 'metric' | 'value' | 'description', value: string) => {
     setFormData(prev => ({
       ...prev,
       results: prev.results.map((result, i) => 
@@ -131,26 +132,26 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
     }));
   };
 
-  const handleTestimonialChange = (field: string, value: string) => {
+  const handleTestimonialChange = (field: 'content' | 'author' | 'role' | 'avatar', value: string) => {
     setFormData(prev => ({
       ...prev,
       testimonial: { ...prev.testimonial, [field]: value }
     }));
   };
 
-  const addArrayItem = (field: string) => {
+  const addArrayItem = (field: 'galleryUrls' | 'tags' | 'features' | 'seoKeywords') => {
     setFormData(prev => ({
       ...prev,
-      [field]: [...prev[field as keyof typeof prev], '']
+      [field]: [...prev[field], '']
     }));
   };
 
-  const addTechItem = (category: string) => {
+  const addTechItem = (category: 'frontend' | 'backend' | 'tools') => {
     setFormData(prev => ({
       ...prev,
       technologies: {
         ...prev.technologies,
-        [category]: [...prev.technologies[category as keyof typeof prev.technologies], '']
+        [category]: [...prev.technologies[category], '']
       }
     }));
   };
@@ -162,19 +163,19 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
     }));
   };
 
-  const removeArrayItem = (field: string, index: number) => {
+  const removeArrayItem = (field: 'galleryUrls' | 'tags' | 'features' | 'seoKeywords', index: number) => {
     setFormData(prev => ({
       ...prev,
-      [field]: prev[field as keyof typeof prev].filter((_: any, i: number) => i !== index)
+      [field]: prev[field].filter((_, i) => i !== index)
     }));
   };
 
-  const removeTechItem = (category: string, index: number) => {
+  const removeTechItem = (category: 'frontend' | 'backend' | 'tools', index: number) => {
     setFormData(prev => ({
       ...prev,
       technologies: {
         ...prev.technologies,
-        [category]: prev.technologies[category as keyof typeof prev.technologies].filter((_, i) => i !== index)
+        [category]: prev.technologies[category].filter((_, i) => i !== index)
       }
     }));
   };
@@ -558,14 +559,14 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                       <div key={index} className="flex gap-2 mt-2">
                         <Input
                           value={tech}
-                          onChange={(e) => handleTechChange(category, index, e.target.value)}
+                          onChange={(e) => handleTechChange(category as 'frontend' | 'backend' | 'tools', index, e.target.value)}
                           placeholder={`Enter ${category} technology`}
                         />
                         <Button
                           type="button"
                           variant="outline"
                           size="sm"
-                          onClick={() => removeTechItem(category, index)}
+                          onClick={() => removeTechItem(category as 'frontend' | 'backend' | 'tools', index)}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -575,7 +576,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                       type="button"
                       variant="outline"
                       size="sm"
-                      onClick={() => addTechItem(category)}
+                      onClick={() => addTechItem(category as 'frontend' | 'backend' | 'tools')}
                       className="mt-2"
                     >
                       <Plus className="h-4 w-4 mr-2" />
