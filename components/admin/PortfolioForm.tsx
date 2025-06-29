@@ -45,6 +45,10 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
     seoTitle: item?.seoTitle || '',
     seoDescription: item?.seoDescription || '',
     seoKeywords: item?.seoKeywords || [''],
+    // OpenGraph fields
+    ogTitle: item?.ogTitle || '',
+    ogDescription: item?.ogDescription || '',
+    ogImage: item?.ogImage || '',
   });
   const [loading, setLoading] = useState(false);
 
@@ -665,56 +669,99 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
               </TabsContent>
 
               <TabsContent value="seo" className="space-y-6">
-                <div>
-                  <Label htmlFor="seoTitle">SEO Title</Label>
-                  <Input
-                    id="seoTitle"
-                    value={formData.seoTitle}
-                    onChange={(e) => handleChange('seoTitle', e.target.value)}
-                    placeholder="Custom SEO title"
-                  />
+                <div className="space-y-6">
+                  <h3 className="text-lg font-semibold">Basic SEO</h3>
+                  
+                  <div>
+                    <Label htmlFor="seoTitle">SEO Title</Label>
+                    <Input
+                      id="seoTitle"
+                      value={formData.seoTitle}
+                      onChange={(e) => handleChange('seoTitle', e.target.value)}
+                      placeholder="Custom SEO title"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="seoDescription">SEO Description</Label>
+                    <Textarea
+                      id="seoDescription"
+                      value={formData.seoDescription}
+                      onChange={(e) => handleChange('seoDescription', e.target.value)}
+                      rows={3}
+                      placeholder="Custom SEO description"
+                    />
+                  </div>
+
+                  <div>
+                    <Label>SEO Keywords</Label>
+                    {formData.seoKeywords.map((keyword, index) => (
+                      <div key={index} className="flex gap-2 mt-2">
+                        <Input
+                          value={keyword}
+                          onChange={(e) => handleArrayChange('seoKeywords', index, e.target.value)}
+                          placeholder="Enter keyword"
+                        />
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => removeArrayItem('seoKeywords', index)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ))}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => addArrayItem('seoKeywords')}
+                      className="mt-2"
+                    >
+                      <Plus className="h-4 w-4 mr-2" />
+                      Add Keyword
+                    </Button>
+                  </div>
                 </div>
 
-                <div>
-                  <Label htmlFor="seoDescription">SEO Description</Label>
-                  <Textarea
-                    id="seoDescription"
-                    value={formData.seoDescription}
-                    onChange={(e) => handleChange('seoDescription', e.target.value)}
-                    rows={3}
-                    placeholder="Custom SEO description"
-                  />
-                </div>
+                <div className="border-t pt-6 space-y-6">
+                  <h3 className="text-lg font-semibold">OpenGraph (Social Media)</h3>
+                  
+                  <div>
+                    <Label htmlFor="ogTitle">OG Title</Label>
+                    <Input
+                      id="ogTitle"
+                      value={formData.ogTitle}
+                      onChange={(e) => handleChange('ogTitle', e.target.value)}
+                      placeholder="Title for social media sharing"
+                    />
+                  </div>
 
-                <div>
-                  <Label>SEO Keywords</Label>
-                  {formData.seoKeywords.map((keyword, index) => (
-                    <div key={index} className="flex gap-2 mt-2">
-                      <Input
-                        value={keyword}
-                        onChange={(e) => handleArrayChange('seoKeywords', index, e.target.value)}
-                        placeholder="Enter keyword"
-                      />
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={() => removeArrayItem('seoKeywords', index)}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  ))}
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => addArrayItem('seoKeywords')}
-                    className="mt-2"
-                  >
-                    <Plus className="h-4 w-4 mr-2" />
-                    Add Keyword
-                  </Button>
+                  <div>
+                    <Label htmlFor="ogDescription">OG Description</Label>
+                    <Textarea
+                      id="ogDescription"
+                      value={formData.ogDescription}
+                      onChange={(e) => handleChange('ogDescription', e.target.value)}
+                      rows={3}
+                      placeholder="Description for social media sharing"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="ogImage">OG Image URL</Label>
+                    <Input
+                      id="ogImage"
+                      type="url"
+                      value={formData.ogImage}
+                      onChange={(e) => handleChange('ogImage', e.target.value)}
+                      placeholder="https://example.com/og-image.jpg"
+                    />
+                    <p className="text-sm text-gray-500 mt-1">
+                      Recommended size: 1200x630px for optimal social media display
+                    </p>
+                  </div>
                 </div>
               </TabsContent>
             </Tabs>

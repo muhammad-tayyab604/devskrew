@@ -81,6 +81,10 @@ export interface Service {
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string[];
+  // OpenGraph fields
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
 }
@@ -161,6 +165,10 @@ export interface Portfolio {
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string[];
+  // OpenGraph fields
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
 }
@@ -223,6 +231,10 @@ export interface BlogPost {
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string[];
+  // OpenGraph fields
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
   publishedAt?: Timestamp;
