@@ -82,6 +82,7 @@
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
+    "@next/swc-wasm-nodejs": "^15.3.4",
     "babel-loader": "^10.0.0"
   }
 }
