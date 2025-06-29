@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Search, Edit, Trash2, ArrowLeft, ExternalLink, Eye, Star } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, ArrowLeft, ExternalLink, Eye, Star, Image } from 'lucide-react';
 import Link from 'next/link';
 import { portfolioService, Portfolio } from '@/lib/firestore';
 import { toast } from 'sonner';
@@ -141,11 +141,16 @@ export default function PortfolioPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredItems.map((item) => (
             <Card key={item.id} className="overflow-hidden">
+              {/* Featured or Main Image */}
               <div className="aspect-video relative">
                 <img
-                  src={item.imageUrl}
+                  src={item.featuredImage || item.imageUrl}
                   alt={item.title}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    // Fallback to placeholder if image fails to load
+                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjOTk5Ij5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+';
+                  }}
                 />
                 <div className="absolute top-4 left-4 flex gap-2">
                   <Badge variant="outline" className="bg-white/90 text-gray-900">
@@ -158,6 +163,14 @@ export default function PortfolioPage() {
                     </Badge>
                   )}
                 </div>
+                {item.featuredImage && item.featuredImage !== item.imageUrl && (
+                  <div className="absolute top-4 right-4">
+                    <Badge variant="secondary" className="bg-blue-500 text-white">
+                      <Image className="h-3 w-3 mr-1" />
+                      Featured
+                    </Badge>
+                  </div>
+                )}
               </div>
               <CardHeader>
                 <CardTitle className="text-lg line-clamp-2">{item.title}</CardTitle>

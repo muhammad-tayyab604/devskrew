@@ -75,6 +75,7 @@ export interface Service {
   startingPrice: string;
   deliveryTime: string;
   icon: string;
+  featuredImage?: string; // New field for featured image
   gradient: string;
   bgGradient: string;
   seoTitle?: string;
@@ -134,6 +135,7 @@ export interface Portfolio {
   description: string;
   longDescription: string;
   imageUrl: string;
+  featuredImage?: string; // New field for featured image (different from main imageUrl)
   galleryUrls: string[];
   tags: string[];
   category: string;

@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { X, Plus, Trash2 } from 'lucide-react';
+import { X, Plus, Trash2, Upload, Image } from 'lucide-react';
 import { servicesService, Service } from '@/lib/firestore';
 import { toast } from 'sonner';
 
@@ -27,6 +27,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
     startingPrice: service?.startingPrice || '',
     deliveryTime: service?.deliveryTime || '',
     icon: service?.icon || 'Code',
+    featuredImage: service?.featuredImage || '',
     gradient: service?.gradient || 'from-blue-500 to-cyan-500',
     bgGradient: service?.bgGradient || 'from-blue-50 to-cyan-50 dark:from-blue-950/50 dark:to-cyan-950/50',
     seoTitle: service?.seoTitle || '',
@@ -123,8 +124,9 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
         <CardContent>
           <form onSubmit={handleSubmit}>
             <Tabs defaultValue="basic" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="basic">Basic Info</TabsTrigger>
+                <TabsTrigger value="media">Media</TabsTrigger>
                 <TabsTrigger value="details">Details</TabsTrigger>
                 <TabsTrigger value="seo">SEO</TabsTrigger>
               </TabsList>
@@ -203,6 +205,56 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                       placeholder="Code"
                     />
                   </div>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="media" className="space-y-6">
+                <div>
+                  <Label htmlFor="featuredImage">Featured Image URL</Label>
+                  <div className="space-y-4">
+                    <Input
+                      id="featuredImage"
+                      type="url"
+                      value={formData.featuredImage}
+                      onChange={(e) => handleChange('featuredImage', e.target.value)}
+                      placeholder="https://example.com/service-image.jpg"
+                    />
+                    
+                    {formData.featuredImage && (
+                      <div className="relative">
+                        <img
+                          src={formData.featuredImage}
+                          alt="Featured image preview"
+                          className="w-full h-48 object-cover rounded-lg border"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                        <div className="absolute top-2 right-2">
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleChange('featuredImage', '')}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {!formData.featuredImage && (
+                      <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center">
+                        <Image className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+                        <p className="text-gray-500 dark:text-gray-400">
+                          Add a featured image URL above to see preview
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-500 mt-2">
+                    This image will be displayed on service cards and detail pages. Recommended size: 800x600px
+                  </p>
                 </div>
               </TabsContent>
 

@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
-import { X, Plus, Trash2 } from 'lucide-react';
+import { X, Plus, Trash2, Image } from 'lucide-react';
 import { portfolioService, Portfolio } from '@/lib/firestore';
 import { toast } from 'sonner';
 
@@ -24,6 +24,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
     description: item?.description || '',
     longDescription: item?.longDescription || '',
     imageUrl: item?.imageUrl || '',
+    featuredImage: item?.featuredImage || '',
     galleryUrls: item?.galleryUrls || [''],
     tags: item?.tags || [''],
     category: item?.category || '',
@@ -202,8 +203,9 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
         <CardContent>
           <form onSubmit={handleSubmit}>
             <Tabs defaultValue="basic" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-5">
+              <TabsList className="grid w-full grid-cols-6">
                 <TabsTrigger value="basic">Basic</TabsTrigger>
+                <TabsTrigger value="media">Media</TabsTrigger>
                 <TabsTrigger value="details">Details</TabsTrigger>
                 <TabsTrigger value="tech">Tech</TabsTrigger>
                 <TabsTrigger value="results">Results</TabsTrigger>
@@ -336,16 +338,93 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                 </div>
               </TabsContent>
 
-              <TabsContent value="details" className="space-y-6">
+              <TabsContent value="media" className="space-y-6">
                 <div>
                   <Label htmlFor="imageUrl">Main Image URL *</Label>
-                  <Input
-                    id="imageUrl"
-                    type="url"
-                    value={formData.imageUrl}
-                    onChange={(e) => handleChange('imageUrl', e.target.value)}
-                    required
-                  />
+                  <div className="space-y-4">
+                    <Input
+                      id="imageUrl"
+                      type="url"
+                      value={formData.imageUrl}
+                      onChange={(e) => handleChange('imageUrl', e.target.value)}
+                      required
+                      placeholder="https://example.com/main-image.jpg"
+                    />
+                    
+                    {formData.imageUrl && (
+                      <div className="relative">
+                        <img
+                          src={formData.imageUrl}
+                          alt="Main image preview"
+                          className="w-full h-48 object-cover rounded-lg border"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                        <div className="absolute top-2 right-2">
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleChange('imageUrl', '')}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-500 mt-2">
+                    This is the primary image used in portfolio listings and case study headers.
+                  </p>
+                </div>
+
+                <div>
+                  <Label htmlFor="featuredImage">Featured Image URL</Label>
+                  <div className="space-y-4">
+                    <Input
+                      id="featuredImage"
+                      type="url"
+                      value={formData.featuredImage}
+                      onChange={(e) => handleChange('featuredImage', e.target.value)}
+                      placeholder="https://example.com/featured-image.jpg"
+                    />
+                    
+                    {formData.featuredImage && (
+                      <div className="relative">
+                        <img
+                          src={formData.featuredImage}
+                          alt="Featured image preview"
+                          className="w-full h-48 object-cover rounded-lg border"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          }}
+                        />
+                        <div className="absolute top-2 right-2">
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleChange('featuredImage', '')}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {!formData.featuredImage && (
+                      <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center">
+                        <Image className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+                        <p className="text-gray-500 dark:text-gray-400">
+                          Add a featured image URL above to see preview
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Optional: A different image for featured sections and special displays. If not provided, main image will be used.
+                  </p>
                 </div>
 
                 <div>
@@ -379,7 +458,9 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                     Add Gallery Image
                   </Button>
                 </div>
+              </TabsContent>
 
+              <TabsContent value="details" className="space-y-6">
                 <div>
                   <Label>Tags</Label>
                   {formData.tags.map((tag, index) => (
