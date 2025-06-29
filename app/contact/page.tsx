@@ -11,6 +11,7 @@ import { Mail, Phone, MapPin, Clock, Send, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import CTA from '@/components/sections/CTA';
 import FAQSection from '@/components/sections/FAQSection';
+import { contactService } from '@/lib/firestore';
 
 const contactInfo = [
   {
@@ -79,31 +80,26 @@ export default function Contact() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    const res = await fetch('/api/contact', {
-      method: 'POST',
-      body: JSON.stringify(formData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    try {
+      await contactService.create({
+        ...formData,
+        status: 'new',
+      });
 
-    if (res.ok) {
       toast.success('Message sent successfully! We\'ll get back to you within 24 hours.');
-    setFormData({
-      name: '',
-      email: '',
-      company: '',
-      service: '',
-      budget: '',
-      message: '',
-    });
-    setIsSubmitting(false);
-    } else {
-      toast.error("Unable to send an email: ");
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        service: '',
+        budget: '',
+        message: '',
+      });
+    } catch (error) {
+      toast.error('Failed to send message. Please try again.');
+    } finally {
       setIsSubmitting(false);
     }
-
-    
   };
 
   return (
