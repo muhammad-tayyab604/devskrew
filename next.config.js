@@ -5,26 +5,16 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   images: { unoptimized: true },
-  // Disable SWC and use Babel instead for WebContainer compatibility
-  swcMinify: false,
+  // Configure for WebContainer environment
   experimental: {
-    forceSwcTransforms: false,
+    // Use the JavaScript fallback for SWC
+    useWasmBinary: true,
   },
-  // Use webpack for transformations instead of SWC
-  webpack: (config, { dev, isServer }) => {
-    // Fallback to Babel for transformations
-    config.module.rules.push({
-      test: /\.(js|jsx|ts|tsx)$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: ['next/babel'],
-        },
-      },
-    });
-    
-    return config;
+  // Override SWC target to use WASM
+  swcMinify: true,
+  compiler: {
+    // Force SWC to use WASM instead of native binaries
+    styledComponents: true,
   },
 };
 
