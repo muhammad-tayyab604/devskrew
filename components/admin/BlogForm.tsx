@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,9 +8,14 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
-import { X, Plus, Trash2, Bold, Italic, Underline, List, Link2, Image, Code } from 'lucide-react';
+import { X, Plus, Trash2 } from 'lucide-react';
 import { blogService, BlogPost } from '@/lib/firestore';
 import { toast } from 'sonner';
+import dynamic from 'next/dynamic';
+
+// Dynamically import ReactQuill to avoid SSR issues
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import 'react-quill/dist/quill.snow.css';
 
 interface BlogFormProps {
   post?: BlogPost | null;
@@ -38,6 +43,11 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
     ogImage: post?.ogImage || '',
   });
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const generateSlug = (title: string) => {
     return title
@@ -104,68 +114,26 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
     }));
   };
 
-  // Rich text editor functions
-  const insertFormatting = (tag: string, placeholder: string = '') => {
-    const textarea = document.getElementById('content') as HTMLTextAreaElement;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = textarea.value.substring(start, end);
-    const textToInsert = selectedText || placeholder;
-
-    let formattedText = '';
-    switch (tag) {
-      case 'bold':
-        formattedText = `<strong>${textToInsert}</strong>`;
-        break;
-      case 'italic':
-        formattedText = `<em>${textToInsert}</em>`;
-        break;
-      case 'underline':
-        formattedText = `<u>${textToInsert}</u>`;
-        break;
-      case 'h2':
-        formattedText = `<h2>${textToInsert || 'Heading 2'}</h2>`;
-        break;
-      case 'h3':
-        formattedText = `<h3>${textToInsert || 'Heading 3'}</h3>`;
-        break;
-      case 'ul':
-        formattedText = `<ul>\n  <li>${textToInsert || 'List item'}</li>\n</ul>`;
-        break;
-      case 'ol':
-        formattedText = `<ol>\n  <li>${textToInsert || 'List item'}</li>\n</ol>`;
-        break;
-      case 'link':
-        formattedText = `<a href="https://example.com">${textToInsert || 'Link text'}</a>`;
-        break;
-      case 'image':
-        formattedText = `<img src="https://example.com/image.jpg" alt="${textToInsert || 'Image description'}" />`;
-        break;
-      case 'code':
-        formattedText = `<code>${textToInsert || 'code'}</code>`;
-        break;
-      case 'blockquote':
-        formattedText = `<blockquote>${textToInsert || 'Quote text'}</blockquote>`;
-        break;
-      default:
-        formattedText = textToInsert;
-    }
-
-    const newContent = 
-      textarea.value.substring(0, start) + 
-      formattedText + 
-      textarea.value.substring(end);
-
-    setFormData(prev => ({ ...prev, content: newContent }));
-
-    // Set cursor position after the inserted text
-    setTimeout(() => {
-      textarea.focus();
-      textarea.setSelectionRange(start + formattedText.length, start + formattedText.length);
-    }, 0);
+  // Quill editor configuration
+  const quillModules = {
+    toolbar: [
+      [{ 'header': [1, 2, 3, false] }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+      [{ 'indent': '-1'}, { 'indent': '+1' }],
+      ['link', 'image', 'video'],
+      [{ 'align': [] }],
+      ['blockquote', 'code-block'],
+      [{ 'color': [] }, { 'background': [] }],
+      ['clean']
+    ],
   };
+
+  const quillFormats = [
+    'header', 'bold', 'italic', 'underline', 'strike',
+    'list', 'bullet', 'indent', 'link', 'image', 'video',
+    'align', 'blockquote', 'code-block', 'color', 'background'
+  ];
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -293,132 +261,23 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
               <TabsContent value="content" className="space-y-6">
                 <div>
                   <Label htmlFor="content">Content *</Label>
-                  
-                  {/* Rich Text Editor Toolbar */}
-                  <div className="border rounded-t-lg p-2 bg-gray-50 dark:bg-gray-800 flex flex-wrap gap-1">
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => insertFormatting('bold')}
-                      title="Bold"
-                    >
-                      <Bold className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => insertFormatting('italic')}
-                      title="Italic"
-                    >
-                      <Italic className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => insertFormatting('underline')}
-                      title="Underline"
-                    >
-                      <Underline className="h-4 w-4" />
-                    </Button>
-                    
-                    <div className="w-px h-6 bg-gray-300 mx-1" />
-                    
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => insertFormatting('h2')}
-                      title="Heading 2"
-                    >
-                      H2
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => insertFormatting('h3')}
-                      title="Heading 3"
-                    >
-                      H3
-                    </Button>
-                    
-                    <div className="w-px h-6 bg-gray-300 mx-1" />
-                    
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => insertFormatting('ul')}
-                      title="Bullet List"
-                    >
-                      <List className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => insertFormatting('ol')}
-                      title="Numbered List"
-                    >
-                      1.
-                    </Button>
-                    
-                    <div className="w-px h-6 bg-gray-300 mx-1" />
-                    
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => insertFormatting('link')}
-                      title="Link"
-                    >
-                      <Link2 className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => insertFormatting('image')}
-                      title="Image"
-                    >
-                      <Image className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => insertFormatting('code')}
-                      title="Code"
-                    >
-                      <Code className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => insertFormatting('blockquote')}
-                      title="Quote"
-                    >
-                      "
-                    </Button>
+                  <div className="mt-2">
+                    {mounted && (
+                      <ReactQuill
+                        theme="snow"
+                        value={formData.content}
+                        onChange={(content) => handleChange('content', content)}
+                        modules={quillModules}
+                        formats={quillFormats}
+                        placeholder="Write your blog content here..."
+                        style={{ height: '400px', marginBottom: '50px' }}
+                      />
+                    )}
                   </div>
-                  
-                  <Textarea
-                    id="content"
-                    value={formData.content}
-                    onChange={(e) => handleChange('content', e.target.value)}
-                    rows={20}
-                    className="font-mono rounded-t-none border-t-0"
-                    placeholder="Write your blog content here. Use the toolbar above to format your text."
-                    required
-                  />
-                  <div className="text-sm text-gray-500 mt-2 space-y-1">
+                  <div className="text-sm text-gray-500 mt-16 space-y-1">
                     <p><strong>Rich Text Editor:</strong> Use the toolbar above to format your content.</p>
-                    <p><strong>Supported tags:</strong> &lt;h2&gt;, &lt;h3&gt;, &lt;p&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;u&gt;, &lt;ul&gt;, &lt;ol&gt;, &lt;li&gt;, &lt;a&gt;, &lt;img&gt;, &lt;code&gt;, &lt;blockquote&gt;</p>
-                    <p><strong>Line breaks:</strong> Will be converted to &lt;br&gt; tags automatically.</p>
+                    <p><strong>Features:</strong> Headers, Bold, Italic, Lists, Links, Images, Code blocks, and more.</p>
+                    <p><strong>Media:</strong> You can insert images and videos directly into your content.</p>
                   </div>
                 </div>
               </TabsContent>
