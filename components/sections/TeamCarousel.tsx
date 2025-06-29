@@ -1,3 +1,10 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Linkedin, X, Users } from "lucide-react";
+import { AnimatedTeamMembers } from "../ui/animated-testimonials";
+import { teamMembersService, TeamMember } from '@/lib/firestore';
+
 const iconMap = {
   linkedin: Linkedin,
   twitter: X,
@@ -9,47 +16,61 @@ type Social = {
   url: string;
 };
 
-import { Linkedin, X } from "lucide-react";
-import { AnimatedTeamMembers } from "../ui/animated-testimonials";
-
 export function TeamCarousel() {
-  const testimonials = [
-    {
-      quote:
-        "The attention to detail and innovative features have completely transformed our workflow. This is exactly what we've been looking for.",
-      name: "Muhammad tayyab",
-      designation: "Co-Founder at Devskrew",
-      src: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      socials: [
-  { icon: "linkedin"  as IconName, url: "https://linkedin.com/in/sarahchen" },
-  { icon: "twitter" as IconName, url: "https://twitter.com/sarahchen" },
-],
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    },
-    {
-      quote:
-        "Implementation was seamless and the results exceeded our expectations. The platform's flexibility is remarkable.",
-      name: "Usman Bin Muaz",
-      designation: "CEO at Devskrew",
-      src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      socials: [
-  { icon: "linkedin" as IconName, url: "https://linkedin.com/in/sarahchen" },
-  { icon: "twitter" as IconName, url: "https://twitter.com/sarahchen" },
-],
+  useEffect(() => {
+    const fetchTeamMembers = async () => {
+      try {
+        const membersList = await teamMembersService.getAll();
+        setTeamMembers(membersList);
+      } catch (error) {
+        console.error('Error fetching team members:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    },
-    {
-      quote:
-        "This solution has significantly improved our team's productivity. The intuitive interface makes complex tasks simple.",
-      name: "Muhammad Sheraz Akram",
-      designation: "Operations Director at Devskrew",
-      src: "https://images.unsplash.com/photo-1623582854588-d60de57fa33f?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      socials: [
-  { icon: "linkedin" as IconName, url: "https://linkedin.com/in/sarahchen" },
-  { icon: "twitter" as IconName, url: "https://twitter.com/sarahchen" },
-],
+    fetchTeamMembers();
+  }, []);
 
-    },
-  ];
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (teamMembers.length === 0) {
+    return (
+      <div className="text-center py-20">
+        <div className="max-w-md mx-auto">
+          <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Users className="h-12 w-12 text-blue-600 dark:text-blue-400" />
+          </div>
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Team Profiles Coming Soon
+          </h3>
+          <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+            We're currently updating our team profiles. Check back soon to meet the amazing people behind our success.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  const testimonials = teamMembers.map(member => ({
+    quote: member.bio,
+    name: member.name,
+    designation: member.designation,
+    src: member.imageUrl,
+    socials: [
+      ...(member.linkedinUrl ? [{ icon: "linkedin" as IconName, url: member.linkedinUrl }] : []),
+      ...(member.twitterUrl ? [{ icon: "twitter" as IconName, url: member.twitterUrl }] : []),
+    ],
+  }));
+
   return <AnimatedTeamMembers testimonials={testimonials} />;
 }

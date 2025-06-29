@@ -1,37 +1,41 @@
-import { Metadata } from 'next';
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { CalendarDays, User, ArrowRight, Sparkles } from 'lucide-react';
+import { CalendarDays, User, ArrowRight, Sparkles, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CTA from '@/components/sections/CTA';
-import { blogPosts } from '@/data/BlogPostData';
-
-export const metadata: Metadata = {
-  title: 'Blog - Digital Marketing Tips, Web Development Insights & Industry News',
-  description: 'Stay updated with the latest trends in web development, digital marketing strategies, design inspiration, and industry insights from our expert team.',
-  keywords: ['digital marketing blog', 'web development tips', 'SEO strategies', 'design trends', 'tech insights'],
-  openGraph: {
-    title: 'Devskrew Blog - Expert Insights & Tips',
-    description: 'Expert insights on web development, digital marketing, and design trends.',
-    images: ['/og-blog.jpg'],
-  },
-  robots: {
-    index: false,
-    follow: false,
-    googleBot: {
-      index: false,
-      follow: false,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-};
-
-
+import { blogService, BlogPost } from '@/lib/firestore';
 
 export default function Blog() {
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchBlogPosts = async () => {
+      try {
+        const posts = await blogService.getPublished();
+        setBlogPosts(posts);
+      } catch (error) {
+        console.error('Error fetching blog posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogPosts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
   return (
     <div>
       {/* Hero Section */}
@@ -67,59 +71,79 @@ export default function Blog() {
         </div>
       </section>
 
-      {/* Featured Posts */}
+      {/* Blog Posts */}
       <section className="py-32 bg-white dark:bg-gray-900">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
-            {blogPosts.map((post, index) => (
-              <Card key={index} className="group overflow-hidden border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                <div className={`absolute -inset-1 bg-gradient-to-r ${post.gradient} rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
-                
-                <div className="relative overflow-hidden rounded-t-2xl">
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <Badge className="bg-white/90 text-gray-900 hover:bg-white">
-                      {post.category}
-                    </Badge>
+          {blogPosts.length > 0 ? (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-20">
+              {blogPosts.map((post, index) => (
+                <Card key={post.id || index} className="group overflow-hidden border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                  <div className={`absolute -inset-1 bg-gradient-to-r ${post.gradient} rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
+                  
+                  <div className="relative overflow-hidden rounded-t-2xl">
+                    <img
+                      src={post.imageUrl}
+                      alt={post.title}
+                      className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700"
+                      onError={(e) => {
+                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjOTk5Ij5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+';
+                      }}
+                    />
+                    <div className="absolute top-4 left-4">
+                      <Badge className="bg-white/90 text-gray-900 hover:bg-white">
+                        {post.category}
+                      </Badge>
+                    </div>
                   </div>
+                  
+                  <CardHeader className="relative">
+                    <CardTitle className="text-xl font-bold line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      {post.title}
+                    </CardTitle>
+                    <CardDescription className="line-clamp-3 leading-relaxed">
+                      {post.excerpt}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="relative">
+                    <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+                      <div className="flex items-center">
+                        <User className="h-4 w-4 mr-1" />
+                        {post.author}
+                      </div>
+                      <div className="flex items-center">
+                        <CalendarDays className="h-4 w-4 mr-1" />
+                        {post.publishedAt?.toDate().toLocaleDateString() || 
+                         post.createdAt?.toDate().toLocaleDateString()}
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-500 dark:text-gray-400">{post.readTime}</span>
+                      <Button variant="ghost" size="sm" className="group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20">
+                        <Link href={`/blog/${post.slug}`}>
+                          Read More
+                        </Link>
+                        <ArrowRight className="h-4 w-4 ml-1" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <div className="max-w-md mx-auto">
+                <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <FileText className="h-12 w-12 text-blue-600 dark:text-blue-400" />
                 </div>
-                
-                <CardHeader className="relative">
-                  <CardTitle className="text-xl font-bold line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {post.title}
-                  </CardTitle>
-                  <CardDescription className="line-clamp-3 leading-relaxed">
-                    {post.excerpt}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="relative">
-                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-                    <div className="flex items-center">
-                      <User className="h-4 w-4 mr-1" />
-                      {post.author}
-                    </div>
-                    <div className="flex items-center">
-                      <CalendarDays className="h-4 w-4 mr-1" />
-                      {new Date(post.date).toLocaleDateString()}
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500 dark:text-gray-400">{post.readTime}</span>
-                    <Button variant="ghost" size="sm" className="group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20">
-                      <Link href={`/blog/${post.slug}`}>
-                      Read More
-                      </Link>
-                      <ArrowRight className="h-4 w-4 ml-1" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                  Blog Posts Coming Soon
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                  We're working on creating valuable content for you. Check back soon for insights, tips, and industry knowledge from our expert team.
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

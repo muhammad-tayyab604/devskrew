@@ -1,74 +1,44 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ExternalLink, ArrowRight, Calendar, User } from 'lucide-react';
-import { PortfolioCards } from '../Cards/PortfilioCards';
+import { ExternalLink, ArrowRight, Calendar, User, FolderOpen } from 'lucide-react';
+import { portfolioService, Portfolio } from '@/lib/firestore';
 
-const projects = [
-  {
-    id: 'ecommerce-platform',
-    title: 'E-commerce Platform',
-    description: 'Modern e-commerce solution with advanced features and seamless user experience.',
-    image: 'https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg',
-    tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-    category: 'Web Development',
-    year: '2024',
-    client: 'TechStart Inc.',
-  },
-  {
-    id: 'brand-identity-design',
-    title: 'Brand Identity Design',
-    description: 'Complete brand identity and visual design system for a growing tech startup.',
-    image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg',
-    tags: ['Branding', 'Logo Design', 'Typography', 'Color Theory'],
-    category: 'Design',
-    year: '2024',
-    client: 'Creative Studio',
-  },
-  {
-    id: 'mobile-banking-app',
-    title: 'Mobile Banking App',
-    description: 'Secure and intuitive mobile banking application with modern UI/UX design.',
-    image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg',
-    tags: ['React Native', 'UI/UX', 'Security', 'Fintech'],
-    category: 'Mobile Development',
-    year: '2024',
-    client: 'FinanceFlow',
-  },
-  {
-    id: 'digital-marketing-campaign',
-    title: 'Digital Marketing Campaign',
-    description: 'Comprehensive digital marketing strategy that increased conversions by 300%.',
-    image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg',
-    tags: ['SEO', 'Social Media', 'PPC', 'Analytics'],
-    category: 'Marketing',
-    year: '2024',
-    client: 'GrowthCorp',
-  },
-  {
-    id: 'saas-dashboard',
-    title: 'SaaS Dashboard',
-    description: 'Complex data visualization dashboard for enterprise SaaS platform.',
-    image: 'https://images.pexels.com/photos/3184336/pexels-photo-3184336.jpeg',
-    tags: ['Vue.js', 'D3.js', 'Python', 'PostgreSQL'],
-    category: 'Web Development',
-    year: '2024',
-    client: 'DataFlow',
-  },
-  {
-    id: 'restaurant-website',
-    title: 'Restaurant Website',
-    description: 'Elegant restaurant website with online ordering and reservation system.',
-    image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg',
-    tags: ['WordPress', 'PHP', 'MySQL', 'Responsive'],
-    category: 'Web Development',
-    year: '2024',
-    client: 'Bistro Elite',
-  },
-];
+export default function PortfolioSection() {
+  const [projects, setProjects] = useState<Portfolio[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default function Portfolio() {
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const projectsList = await portfolioService.getAll();
+        setProjects(projectsList.slice(0, 6)); // Show only first 6 projects
+      } catch (error) {
+        console.error('Error fetching portfolio:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <section id="portfolio" className="py-32 bg-gray-50 dark:bg-gray-900/50 relative overflow-hidden">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="portfolio" className="py-32 bg-gray-50 dark:bg-gray-900/50 relative overflow-hidden">
       {/* Background Elements */}
@@ -99,16 +69,108 @@ export default function Portfolio() {
           </p>
         </div>
 
-        <PortfolioCards limit={6} />
+        {projects.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+              {projects.map((project, index) => (
+                <Card key={project.id || index} className="group overflow-hidden border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                  <div className={`absolute -inset-1 bg-gradient-to-r ${project.gradient} rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
+                  
+                  <div className="relative overflow-hidden rounded-t-2xl">
+                    <img
+                      src={project.featuredImage || project.imageUrl}
+                      alt={project.title}
+                      className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700"
+                      onError={(e) => {
+                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjOTk5Ij5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    <div className="absolute top-4 left-4">
+                      <Badge className="bg-white/90 text-gray-900 hover:bg-white">
+                        {project.category}
+                      </Badge>
+                    </div>
+                    
+                    <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2">
+                      <Button size="sm" className="bg-white/90 text-gray-900 hover:bg-white" asChild>
+                        <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <CardContent className="relative p-6 space-y-4">
+                    <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center">
+                        <User className="h-3 w-3 mr-1" />
+                        {project.client}
+                      </div>
+                      <div className="flex items-center">
+                        <Calendar className="h-3 w-3 mr-1" />
+                        {project.year}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                        {project.description}
+                      </p>
+                    </div>
+                    
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.slice(0, 3).map((tag, tagIndex) => (
+                        <Badge key={tagIndex} variant="outline" className="text-xs border-gray-200 dark:border-gray-700">
+                          {tag}
+                        </Badge>
+                      ))}
+                      {project.tags.length > 3 && (
+                        <Badge variant="outline" className="text-xs border-gray-200 dark:border-gray-700">
+                          +{project.tags.length - 3}
+                        </Badge>
+                      )}
+                    </div>
+                    
+                    <Button asChild variant="ghost" className="w-full justify-between group/btn hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl">
+                      <Link href={`/portfolio/${project.slug}`}>
+                        View Case Study
+                        <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                      </Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
 
-        <div className="text-center">
-          <Button size="lg" asChild className="rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
-            <Link href="/portfolio">
-              View All Projects
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-        </div>
+            <div className="text-center">
+              <Button size="lg" asChild className="rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+                <Link href="/portfolio">
+                  View All Projects
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </div>
+          </>
+        ) : (
+          <div className="text-center py-20">
+            <div className="max-w-md mx-auto">
+              <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                <FolderOpen className="h-12 w-12 text-blue-600 dark:text-blue-400" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Portfolio Coming Soon
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                We're currently curating our best work to showcase here. Check back soon to see our amazing projects and case studies.
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

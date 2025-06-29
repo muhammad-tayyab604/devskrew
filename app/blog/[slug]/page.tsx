@@ -28,9 +28,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.seoDescription || post.excerpt,
       keywords: post.seoKeywords || [post.category.toLowerCase(), 'blog', 'insights'],
       openGraph: {
-        title: post.title,
-        description: post.excerpt,
-        images: [post.imageUrl],
+        title: post.ogTitle || post.title,
+        description: post.ogDescription || post.excerpt,
+        images: post.ogImage ? [post.ogImage] : [post.imageUrl],
         type: 'article',
         publishedTime: post.publishedAt?.toDate().toISOString(),
         authors: [post.author],
@@ -122,6 +122,9 @@ export default async function BlogPost({ params }: Props) {
                 src={post.imageUrl}
                 alt={post.title}
                 className="relative rounded-3xl shadow-2xl w-full h-64 sm:h-96 object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjOTk5Ij5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+';
+                }}
               />
             </div>
           </div>
@@ -138,7 +141,7 @@ export default async function BlogPost({ params }: Props) {
             
             <div 
               className="prose-content"
-              dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }}
+              dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>
         </div>

@@ -6,11 +6,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, ExternalLink, Github, Calendar, User, Target, Award, ArrowRight } from 'lucide-react';
 import CTA from '@/components/sections/CTA';
-import { SingleProjects } from '@/data/PortfolioData';
 import { Testimonials } from '@/components/sections/Testimonials';
-
-
-type ProjectSlug = keyof typeof SingleProjects;
+import { portfolioService } from '@/lib/firestore';
 
 interface Props {
   params: {
@@ -19,35 +16,41 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const project = SingleProjects[params.slug as ProjectSlug];
-  
-  if (!project) {
+  try {
+    const project = await portfolioService.getBySlug(params.slug);
+    
+    if (!project) {
+      return {
+        title: 'Project Not Found',
+      };
+    }
+
+    return {
+      title: project.seoTitle || `${project.title} - Case Study | Devskrew Portfolio`,
+      description: project.seoDescription || project.description,
+      keywords: project.seoKeywords || [project.category.toLowerCase(), 'case study', 'portfolio', ...project.tags.map(tag => tag.toLowerCase())],
+      openGraph: {
+        title: project.ogTitle || `${project.title} - Case Study`,
+        description: project.ogDescription || project.description,
+        images: project.ogImage ? [project.ogImage] : [project.featuredImage || project.imageUrl],
+        type: 'website',
+      },
+    };
+  } catch (error) {
     return {
       title: 'Project Not Found',
     };
   }
-
-  return {
-    title: `${project.title} - Case Study | Devskrew Portfolio`,
-    description: project.description,
-    keywords: [project.category.toLowerCase(), 'case study', 'portfolio', ...project.tags.map(tag => tag.toLowerCase())],
-    openGraph: {
-      title: `${project.title} - Case Study`,
-      description: project.description,
-      images: [project.image],
-      type: 'website',
-    },
-  };
 }
 
-export async function generateStaticParams() {
-  return Object.keys(SingleProjects).map((slug) => ({
-    slug,
-  }));
-}
-
-export default function ProjectDetail({ params }: Props) {
-  const project = SingleProjects[params.slug as ProjectSlug];
+export default async function ProjectDetail({ params }: Props) {
+  let project;
+  
+  try {
+    project = await portfolioService.getBySlug(params.slug);
+  } catch (error) {
+    notFound();
+  }
 
   if (!project) {
     notFound();
@@ -103,12 +106,14 @@ export default function ProjectDetail({ params }: Props) {
               </div>
               
               <div className="flex gap-4">
-                <Button asChild className="rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
-                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    View Live
-                  </a>
-                </Button>
+                {project.liveUrl && (
+                  <Button asChild className="rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      View Live
+                    </a>
+                  </Button>
+                )}
                 {project.githubUrl && (
                   <Button variant="outline" asChild className="rounded-xl">
                     <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
@@ -124,9 +129,12 @@ export default function ProjectDetail({ params }: Props) {
               <div className="relative group">
                 <div className={`absolute -inset-4 bg-gradient-to-r ${project.gradient} rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
                 <img
-                  src={project.image}
+                  src={project.featuredImage || project.imageUrl}
                   alt={project.title}
                   className="relative rounded-3xl shadow-2xl group-hover:scale-105 transition-transform duration-500"
+                  onError={(e) => {
+                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjOTk5Ij5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+';
+                  }}
                 />
               </div>
             </div>

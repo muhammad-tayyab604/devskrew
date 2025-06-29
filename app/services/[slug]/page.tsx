@@ -6,11 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Check, Star, Users, Clock, Award, ArrowRight } from 'lucide-react';
 import CTA from '@/components/sections/CTA';
-import { SingleServices } from '@/data/ServiceData';
-
-
-
-type ServiceSlug = keyof typeof SingleServices;
+import { servicesService } from '@/lib/firestore';
 
 interface Props {
   params: {
@@ -19,34 +15,41 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const service = SingleServices[params.slug as ServiceSlug];
-  
-  if (!service) {
+  try {
+    const service = await servicesService.getBySlug(params.slug);
+    
+    if (!service) {
+      return {
+        title: 'Service Not Found',
+      };
+    }
+
+    return {
+      title: service.seoTitle || `${service.title} Services - Professional ${service.title} Solutions`,
+      description: service.seoDescription || service.description,
+      keywords: service.seoKeywords || [service.title.toLowerCase(), 'professional services', 'digital agency', ...service.technologies.map(tech => tech.toLowerCase())],
+      openGraph: {
+        title: service.ogTitle || `${service.title} Services - Devskrew`,
+        description: service.ogDescription || service.description,
+        images: service.ogImage ? [service.ogImage] : undefined,
+        type: 'website',
+      },
+    };
+  } catch (error) {
     return {
       title: 'Service Not Found',
     };
   }
-
-  return {
-    title: `${service.title} Services - Professional ${service.title} Solutions`,
-    description: service.description,
-    keywords: [service.title.toLowerCase(), 'professional services', 'digital agency', ...service.technologies.map(tech => tech.toLowerCase())],
-    openGraph: {
-      title: `${service.title} Services - Devskrew`,
-      description: service.description,
-      type: 'website',
-    },
-  };
 }
 
-export async function generateStaticParams() {
-  return Object.keys(SingleServices).map((slug) => ({
-    slug,
-  }));
-}
-
-export default function ServiceDetail({ params }: Props) {
-  const service = SingleServices[params.slug as ServiceSlug];
+export default async function ServiceDetail({ params }: Props) {
+  let service;
+  
+  try {
+    service = await servicesService.getBySlug(params.slug);
+  } catch (error) {
+    notFound();
+  }
 
   if (!service) {
     notFound();
@@ -106,6 +109,18 @@ export default function ServiceDetail({ params }: Props) {
               <div className="relative group">
                 <div className={`absolute -inset-4 bg-gradient-to-r ${service.gradient} rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
                 <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+                  {service.featuredImage && (
+                    <div className="mb-6">
+                      <img
+                        src={service.featuredImage}
+                        alt={service.title}
+                        className="w-full h-48 object-cover rounded-2xl"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  )}
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Key Features</h3>
                   <ul className="space-y-3">
                     {service.features.slice(0, 6).map((feature, index) => (
@@ -118,42 +133,6 @@ export default function ServiceDetail({ params }: Props) {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Process Section */}
-      <section className="py-32 bg-white dark:bg-gray-900">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl sm:text-6xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-                Our {" "}
-              </span>
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                Process
-              </span>
-            </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              We follow a proven methodology to ensure your project is delivered successfully.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {service.process.map((step, index) => (
-              <Card key={index} className="group text-center border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                <div className={`absolute -inset-1 bg-gradient-to-r ${service.gradient} rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
-                <CardHeader className="relative">
-                  <div className={`w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                    <span className="text-white font-bold text-lg">{index + 1}</span>
-                  </div>
-                  <CardTitle className="text-xl font-bold text-gray-900 dark:text-white">{step.step}</CardTitle>
-                </CardHeader>
-                <CardContent className="relative">
-                  <CardDescription className="text-gray-600 dark:text-gray-300 leading-relaxed">{step.description}</CardDescription>
-                </CardContent>
-              </Card>
-            ))}
           </div>
         </div>
       </section>
@@ -181,56 +160,6 @@ export default function ServiceDetail({ params }: Props) {
                 {tech}
               </Badge>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="py-32 bg-white dark:bg-gray-900">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-4xl sm:text-6xl font-bold mb-8">
-                <span className="bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
-                  Why Choose Our
-                </span>
-                <br />
-                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
-                  {service.title} Services?
-                </span>
-              </h2>
-              <ul className="space-y-4">
-                {service.benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start">
-                    <Check className="h-6 w-6 text-green-500 mr-3 flex-shrink-0 mt-0.5" />
-                    <span className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <Card className={`border-0 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/30 dark:to-purple-950/30`}>
-              <CardContent className="p-8">
-                <div className="flex items-center mb-4">
-                  {[...Array(service.testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="h-5 w-5 text-yellow-400 fill-current" />
-                  ))}
-                </div>
-                <blockquote className="text-lg text-gray-700 dark:text-gray-300 mb-6 italic leading-relaxed">
-                  "{service.testimonial.content}"
-                </blockquote>
-                <div className="flex items-center">
-                  <div>
-                    <div className="font-bold text-gray-900 dark:text-white">
-                      {service.testimonial.author}
-                    </div>
-                    <div className="text-gray-600 dark:text-gray-400">
-                      {service.testimonial.role}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </section>

@@ -1,74 +1,44 @@
-"use client";
+'use client';
 
-import React, { ComponentProps } from "react";
-import { InfiniteMovingCards } from "../ui/infinite-moving-cards";
+import React, { useState, useEffect } from "react";
 import Marquee from "../ui/marquee";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
+import { Sparkles, MessageSquare } from "lucide-react";
+import { testimonialsService, Testimonial } from '@/lib/firestore';
 
-const testimonials = [
-  {
-    id: 1,
-    name: "John Doe",
-    designation: "Software Engineer",
-    company: "TechCorp",
-    testimonial:
-      "This product has completely transformed the way we work. The efficiency and ease of use are unmatched!",
-    avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-  },
-  {
-    id: 2,
-    name: "Sophia Lee",
-    designation: "Data Analyst",
-    company: "InsightTech",
-    testimonial:
-      "This tool has saved me hours of work! The analytics and reporting features are incredibly powerful.",
-    avatar: "https://randomuser.me/api/portraits/women/6.jpg",
-  },
-  {
-    id: 3,
-    name: "Michael Johnson",
-    designation: "UX Designer",
-    company: "DesignPro",
-    testimonial:
-      "An amazing tool that simplifies complex tasks. Highly recommended for professionals in the industry.",
-    avatar: "https://randomuser.me/api/portraits/men/3.jpg",
-  },
-  {
-    id: 4,
-    name: "Emily Davis",
-    designation: "Marketing Specialist",
-    company: "BrandBoost",
-    testimonial:
-      "I've seen a significant improvement in our team's productivity since we started using this service.",
-    avatar: "https://randomuser.me/api/portraits/women/4.jpg",
-  },
-  {
-    id: 5,
-    name: "Daniel Martinez",
-    designation: "Full-Stack Developer",
-    company: "CodeCrafters",
-    testimonial:
-      "The best investment we've made! The support team is also super responsive and helpful.",
-    avatar: "https://randomuser.me/api/portraits/men/5.jpg",
-  },
-  {
-    id: 6,
-    name: "Jane Smith",
-    designation: "Product Manager",
-    company: "InnovateX",
-    testimonial:
-      "The user experience is top-notch! The interface is clean, intuitive, and easy to navigate.",
-    avatar: "https://randomuser.me/api/portraits/women/2.jpg",
-  },
-];
+export const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export const Testimonials = () => (
-  <div className="min-h-screen flex justify-center items-center py-12">
-    <div className="h-full w-full">
-      <div className="text-center mb-20">
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const testimonialsList = await testimonialsService.getFeatured();
+        setTestimonials(testimonialsList);
+      } catch (error) {
+        console.error('Error fetching testimonials:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center py-12">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen flex justify-center items-center py-12">
+      <div className="h-full w-full">
+        <div className="text-center mb-20">
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 border border-blue-200/50 dark:border-blue-700/50 mb-6">
             <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400 mr-2" />
             <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
@@ -86,22 +56,39 @@ export const Testimonials = () => (
             </span>
           </h2>
         </div>
-      <div className="relative">
-        <div className="z-10 absolute left-0 inset-y-0 w-[15%] bg-gradient-to-r from-background to-transparent" />
-        <div className="z-10 absolute right-0 inset-y-0 w-[15%] bg-gradient-to-l from-background to-transparent" />
-        <Marquee pauseOnHover className="[--duration:20s]">
-          <TestimonialList />
-        </Marquee>
-        <Marquee pauseOnHover reverse className="mt-0 [--duration:20s]">
-          <TestimonialList />
-        </Marquee>
+
+        {testimonials.length > 0 ? (
+          <div className="relative">
+            <div className="z-10 absolute left-0 inset-y-0 w-[15%] bg-gradient-to-r from-background to-transparent" />
+            <div className="z-10 absolute right-0 inset-y-0 w-[15%] bg-gradient-to-l from-background to-transparent" />
+            <Marquee pauseOnHover className="[--duration:20s]">
+              <TestimonialList testimonials={testimonials} />
+            </Marquee>
+            <Marquee pauseOnHover reverse className="mt-0 [--duration:20s]">
+              <TestimonialList testimonials={testimonials} />
+            </Marquee>
+          </div>
+        ) : (
+          <div className="text-center py-20">
+            <div className="max-w-md mx-auto">
+              <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
+                <MessageSquare className="h-12 w-12 text-blue-600 dark:text-blue-400" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Testimonials Coming Soon
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                We're gathering feedback from our amazing clients. Check back soon to see what they have to say about working with us.
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
-  </div>
-);
+  );
+};
 
-
-const TestimonialList = () =>
+const TestimonialList = ({ testimonials }: { testimonials: Testimonial[] }) =>
   testimonials.map((testimonial) => (
     <div
       key={testimonial.id}
@@ -110,36 +97,26 @@ const TestimonialList = () =>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Avatar>
-            <AvatarFallback className="text-xl font-medium bg-primary text-primary-foreground">
-              {testimonial.name.charAt(0)}
-            </AvatarFallback>
+            {testimonial.avatar ? (
+              <img src={testimonial.avatar} alt={testimonial.name} className="w-full h-full object-cover" />
+            ) : (
+              <AvatarFallback className="text-xl font-medium bg-primary text-primary-foreground">
+                {testimonial.name.charAt(0)}
+              </AvatarFallback>
+            )}
           </Avatar>
           <div>
             <p className="text-lg font-semibold">{testimonial.name}</p>
             <p className="text-sm text-gray-500">{testimonial.designation}</p>
+            <p className="text-xs text-gray-400">{testimonial.company}</p>
           </div>
         </div>
-        <Button variant="ghost" size="icon" asChild>
-          <Link href="#" target="_blank">
-            <TwitterLogo className="w-4 h-4" />
-          </Link>
-        </Button>
+        <div className="flex">
+          {[...Array(testimonial.rating)].map((_, i) => (
+            <span key={i} className="text-yellow-400">★</span>
+          ))}
+        </div>
       </div>
-      <p className="mt-5 text-[17px]">{testimonial.testimonial}</p>
+      <p className="mt-5 text-[17px]">{testimonial.content}</p>
     </div>
   ));
-
-const TwitterLogo = (props: ComponentProps<"svg">) => (
-  <svg
-    role="img"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
-    <title>X</title>
-    <path
-      fill="currentColor"
-      d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"
-    />
-  </svg>
-);
