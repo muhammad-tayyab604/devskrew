@@ -162,7 +162,7 @@ export default function AdminDashboard() {
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Admin Dashboard
+                Devskrew Dashboard
               </h1>
             </div>
             <div className="flex gap-4">
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Main Menu */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex flex-col gap-4">
           {menuItems.map((item, index) => {
             const Icon = item.icon;
             return (

@@ -26,7 +26,6 @@ export default function TestimonialForm({ testimonial, onClose }: TestimonialFor
     avatar: testimonial?.avatar || '',
     rating: testimonial?.rating || 5,
     featured: testimonial?.featured || false,
-    orderIndex: testimonial?.orderIndex || 0,
   });
   const [loading, setLoading] = useState(false);
 
@@ -151,16 +150,6 @@ export default function TestimonialForm({ testimonial, onClose }: TestimonialFor
                     ))}
                   </SelectContent>
                 </Select>
-              </div>
-              <div>
-                <Label htmlFor="orderIndex">Order Index</Label>
-                <Input
-                  id="orderIndex"
-                  type="number"
-                  value={formData.orderIndex}
-                  onChange={(e) => handleChange('orderIndex', parseInt(e.target.value) || 0)}
-                  placeholder="0"
-                />
               </div>
             </div>
 

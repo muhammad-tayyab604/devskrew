@@ -171,12 +171,6 @@ export default function TestimonialsPage() {
                   "{testimonial.content}"
                 </CardDescription>
                 
-                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
-                  <span>Order: {testimonial.orderIndex}</span>
-                  <span>
-                    {testimonial.createdAt?.toDate().toLocaleDateString()}
-                  </span>
-                </div>
                 
                 <div className="flex justify-end space-x-2">
                   <Button

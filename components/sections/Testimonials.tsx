@@ -17,6 +17,9 @@ export const Testimonials = () => {
       try {
         const testimonialsList = await testimonialsService.getFeatured();
         setTestimonials(testimonialsList);
+        console.log('====================================');
+        console.log(testimonialsList);
+        console.log('====================================');
       } catch (error) {
         console.error('Error fetching testimonials:', error);
       } finally {

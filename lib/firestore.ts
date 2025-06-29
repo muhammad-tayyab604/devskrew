@@ -22,14 +22,13 @@ export interface TeamMember {
   imageUrl: string;
   linkedinUrl?: string;
   twitterUrl?: string;
-  orderIndex: number;
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
 }
 
 export const teamMembersService = {
   async getAll(): Promise<TeamMember[]> {
-    const q = query(collection(db, 'teamMembers'), orderBy('orderIndex'));
+    const q = query(collection(db, 'teamMembers'));
     const snapshot = await getDocs(q);
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as TeamMember));
   },
@@ -309,14 +308,13 @@ export interface Testimonial {
   avatar?: string;
   rating: number;
   featured: boolean;
-  orderIndex: number;
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
 }
 
 export const testimonialsService = {
   async getAll(): Promise<Testimonial[]> {
-    const q = query(collection(db, 'testimonials'), orderBy('orderIndex'));
+    const q = query(collection(db, 'testimonials'));
     const snapshot = await getDocs(q);
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Testimonial));
   },
@@ -324,8 +322,7 @@ export const testimonialsService = {
   async getFeatured(): Promise<Testimonial[]> {
     const q = query(
       collection(db, 'testimonials'),
-      where('featured', '==', true),
-      orderBy('orderIndex')
+      where('featured', '==', true)
     );
     const snapshot = await getDocs(q);
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Testimonial));

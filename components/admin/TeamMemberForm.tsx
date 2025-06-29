@@ -23,7 +23,6 @@ export default function TeamMemberForm({ member, onClose }: TeamMemberFormProps)
     imageUrl: member?.imageUrl || '',
     linkedinUrl: member?.linkedinUrl || '',
     twitterUrl: member?.twitterUrl || '',
-    orderIndex: member?.orderIndex || 0,
   });
   const [loading, setLoading] = useState(false);
 
@@ -133,16 +132,6 @@ export default function TeamMemberForm({ member, onClose }: TeamMemberFormProps)
                   onChange={(e) => handleChange('twitterUrl', e.target.value)}
                 />
               </div>
-            </div>
-
-            <div>
-              <Label htmlFor="orderIndex">Order Index</Label>
-              <Input
-                id="orderIndex"
-                type="number"
-                value={formData.orderIndex}
-                onChange={(e) => handleChange('orderIndex', parseInt(e.target.value) || 0)}
-              />
             </div>
 
             <div className="flex justify-end space-x-4">
