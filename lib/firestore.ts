@@ -285,6 +285,67 @@ export const blogService = {
   },
 };
 
+// Testimonials
+export interface Testimonial {
+  id?: string;
+  name: string;
+  designation: string;
+  company: string;
+  content: string;
+  avatar?: string;
+  rating: number;
+  featured: boolean;
+  orderIndex: number;
+  createdAt?: Timestamp;
+  updatedAt?: Timestamp;
+}
+
+export const testimonialsService = {
+  async getAll(): Promise<Testimonial[]> {
+    const q = query(collection(db, 'testimonials'), orderBy('orderIndex'));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Testimonial));
+  },
+
+  async getFeatured(): Promise<Testimonial[]> {
+    const q = query(
+      collection(db, 'testimonials'),
+      where('featured', '==', true),
+      orderBy('orderIndex')
+    );
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Testimonial));
+  },
+
+  async getById(id: string): Promise<Testimonial | null> {
+    const docRef = doc(db, 'testimonials', id);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } as Testimonial : null;
+  },
+
+  async create(data: Omit<Testimonial, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
+    const docRef = await addDoc(collection(db, 'testimonials'), {
+      ...data,
+      createdAt: Timestamp.now(),
+      updatedAt: Timestamp.now(),
+    });
+    return docRef.id;
+  },
+
+  async update(id: string, data: Partial<Testimonial>): Promise<void> {
+    const docRef = doc(db, 'testimonials', id);
+    await updateDoc(docRef, {
+      ...data,
+      updatedAt: Timestamp.now(),
+    });
+  },
+
+  async delete(id: string): Promise<void> {
+    const docRef = doc(db, 'testimonials', id);
+    await deleteDoc(docRef);
+  },
+};
+
 // Contact Submissions
 export interface ContactSubmission {
   id?: string;

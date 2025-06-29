@@ -15,10 +15,11 @@ import {
   BarChart3,
   TrendingUp,
   Eye,
-  MessageSquare
+  MessageSquare,
+  Star
 } from 'lucide-react';
 import Link from 'next/link';
-import { teamMembersService, servicesService, portfolioService, blogService, contactService } from '@/lib/firestore';
+import { teamMembersService, servicesService, portfolioService, blogService, contactService, testimonialsService } from '@/lib/firestore';
 import { ModeToggle } from '@/components/ThemeToggle';
 
 export default function AdminDashboard() {
@@ -29,18 +30,20 @@ export default function AdminDashboard() {
     portfolio: 0,
     blogPosts: 0,
     contactSubmissions: 0,
+    testimonials: 0,
     newContacts: 0,
   });
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [teamMembers, services, portfolio, blogPosts, contacts] = await Promise.all([
+        const [teamMembers, services, portfolio, blogPosts, contacts, testimonials] = await Promise.all([
           teamMembersService.getAll(),
           servicesService.getAll(),
           portfolioService.getAll(),
           blogService.getAll(),
           contactService.getAll(),
+          testimonialsService.getAll(),
         ]);
 
         setStats({
@@ -49,6 +52,7 @@ export default function AdminDashboard() {
           portfolio: portfolio.length,
           blogPosts: blogPosts.length,
           contactSubmissions: contacts.length,
+          testimonials: testimonials.length,
           newContacts: contacts.filter(c => c.status === 'new').length,
         });
       } catch (error) {
@@ -101,6 +105,14 @@ export default function AdminDashboard() {
       color: 'bg-orange-500',
     },
     {
+      title: 'Testimonials',
+      description: 'Manage client testimonials and reviews',
+      icon: Star,
+      href: '/admin/testimonials',
+      count: stats.testimonials,
+      color: 'bg-yellow-500',
+    },
+    {
       title: 'Contact Submissions',
       description: 'View and manage contact form submissions',
       icon: Mail,
@@ -135,7 +147,7 @@ export default function AdminDashboard() {
     },
     {
       title: 'Content Items',
-      value: (stats.services + stats.portfolio + stats.blogPosts).toString(),
+      value: (stats.services + stats.portfolio + stats.blogPosts + stats.testimonials).toString(),
       change: 'Total',
       icon: BarChart3,
       color: 'text-orange-600',
@@ -254,6 +266,13 @@ export default function AdminDashboard() {
                   Portfolio project updated
                 </span>
                 <span className="text-gray-400 text-xs">2 days ago</span>
+              </div>
+              <div className="flex items-center space-x-3 text-sm">
+                <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+                <span className="text-gray-600 dark:text-gray-400">
+                  New testimonial added
+                </span>
+                <span className="text-gray-400 text-xs">3 days ago</span>
               </div>
             </div>
           </CardContent>
