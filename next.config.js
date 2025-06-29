@@ -8,7 +8,7 @@ const nextConfig = {
   // Configure for WebContainer environment
   experimental: {
     // Use the JavaScript fallback for SWC
-    useWasmBinary: true,
+    // useWasmBinary: true,
   },
   // Override SWC target to use WASM
   swcMinify: true,

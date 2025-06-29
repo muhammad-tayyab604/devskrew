@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { teamMembersService, servicesService, portfolioService, blogService, contactService } from '@/lib/firestore';
+import { ModeToggle } from '@/components/ThemeToggle';
 
 export default function AdminDashboard() {
   const { logout } = useAuth();
@@ -152,10 +153,13 @@ export default function AdminDashboard() {
                 Admin Dashboard
               </h1>
             </div>
-            <Button onClick={handleLogout} variant="outline" size="sm">
+            <div className="flex gap-4">
+              <ModeToggle />
+              <Button onClick={handleLogout} variant="outline" size="sm">
               <LogOut className="h-4 w-4 mr-2" />
               Logout
             </Button>
+            </div>
           </div>
         </div>
       </header>

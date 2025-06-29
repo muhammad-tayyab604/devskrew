@@ -1,11 +1,10 @@
-
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster } from '@/components/ui/sonner';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
 import { ThemeProvider } from '@/components/theme-provider';
+import HeaderGuard from '@/components/layout/HeaderGuard';
+import FooterGuard from '@/components/layout/FooterGuard';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -79,11 +78,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange={false}
         >
-          <Header />
+          <HeaderGuard/>
           <main className="min-h-screen">
             {children}
           </main>
-          <Footer />
+          <FooterGuard />
           <Toaster />
         </ThemeProvider>
       </body>

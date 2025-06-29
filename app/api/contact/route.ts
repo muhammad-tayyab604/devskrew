@@ -6,7 +6,9 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-
+console.log('====================================');
+console.log(resend);
+console.log('====================================');
 export async function POST(req: Request) {
   const body = await req.json();
 
@@ -16,7 +18,7 @@ export async function POST(req: Request) {
 
   try {
     const result = await resend.emails.send({
-      from: 'Contact Form <onboarding@resend.dev>',
+      from: 'Contact Form <contact@devskrew.com>',
       to: 'tali6443@gmail.com',
       subject: 'New Contact Form Submission',
       html: `
