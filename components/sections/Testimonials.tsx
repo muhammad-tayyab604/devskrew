@@ -15,11 +15,8 @@ export const Testimonials = () => {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const testimonialsList = await testimonialsService.getFeatured();
+        const testimonialsList = await testimonialsService.getAll();
         setTestimonials(testimonialsList);
-        console.log('====================================');
-        console.log(testimonialsList);
-        console.log('====================================');
       } catch (error) {
         console.error('Error fetching testimonials:', error);
       } finally {

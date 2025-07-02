@@ -18,6 +18,9 @@ export default function Blog() {
       try {
         const posts = await blogService.getPublished();
         setBlogPosts(posts);
+        console.log('====================================');
+        console.log(setBlogPosts(posts));
+        console.log('====================================');
       } catch (error) {
         console.error('Error fetching blog posts:', error);
       } finally {

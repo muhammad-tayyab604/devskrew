@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { ThemeProvider } from '@/components/theme-provider';
 import HeaderGuard from '@/components/layout/HeaderGuard';
 import FooterGuard from '@/components/layout/FooterGuard';
+import { SmoothCursor } from '@/components/ui/smooth-cursor';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -79,6 +80,8 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <HeaderGuard/>
+          <SmoothCursor />
+
           <main className="min-h-screen">
             {children}
           </main>
