@@ -44,17 +44,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProjectDetail({ params }: Props) {
-  let project;
-  
-  try {
-    project = await portfolioService.getBySlug(params.slug);
-  } catch (error) {
-    notFound();
-  }
+  const project = await portfolioService.getBySlug(params.slug).catch(() => null);
 
-  if (!project) {
-    notFound();
-  }
+if (!project) {
+  notFound();
+}
+
 
   return (
     <div>
