@@ -164,8 +164,8 @@ export default function BlogPage() {
                 <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
                   <span>By {post.author}</span>
                   <span>
-                    {post.publishedAt?.toDate().toLocaleDateString() || 
-                     post.createdAt?.toDate().toLocaleDateString()}
+                    {post.published_at ? new Date(post.published_at).toLocaleDateString() : 
+                     new Date(post.created_at!).toLocaleDateString()}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">

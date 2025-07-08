@@ -26,13 +26,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title: post.seoTitle || `${post.title} - Devskrew Blog`,
       description: post.seoDescription || post.excerpt,
-      keywords: post.seoKeywords || [post.category.toLowerCase(), 'blog', 'insights'],
+      keywords: post.seoKeywords?.length ? post.seoKeywords : [post.category.toLowerCase(), 'blog', 'insights'],
       openGraph: {
         title: post.ogTitle || post.title,
         description: post.ogDescription || post.excerpt,
         images: post.ogImage ? [post.ogImage] : [post.imageUrl],
         type: 'article',
-        publishedTime: post.publishedAt?.toDate().toISOString(),
+        publishedTime: post.published_at,
         authors: [post.author],
       },
       twitter: {
@@ -62,7 +62,7 @@ export default async function BlogPost({ params }: Props) {
     notFound();
   }
 
-  const publishedDate = post.publishedAt?.toDate();
+  const publishedDate = post.published_at ? new Date(post.published_at) : null;
 
   return (
     <div>
@@ -99,7 +99,7 @@ export default async function BlogPost({ params }: Props) {
               </div>
               <div className="flex items-center">
                 <Calendar className="h-4 w-4 mr-2" />
-                {publishedDate?.toLocaleDateString()}
+                {publishedDate?.toLocaleDateString() || new Date(post.created_at!).toLocaleDateString()}
               </div>
               <div className="flex items-center">
                 <Clock className="h-4 w-4 mr-2" />

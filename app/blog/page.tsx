@@ -115,8 +115,8 @@ export default function Blog() {
                       </div>
                       <div className="flex items-center">
                         <CalendarDays className="h-4 w-4 mr-1" />
-                        {post.publishedAt?.toDate().toLocaleDateString() || 
-                         post.createdAt?.toDate().toLocaleDateString()}
+                        {post.published_at ? new Date(post.published_at).toLocaleDateString() : 
+                         new Date(post.created_at!).toLocaleDateString()}
                       </div>
                     </div>
                     <div className="flex items-center justify-between">

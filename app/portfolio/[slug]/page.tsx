@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title: project.seoTitle || `${project.title} - Case Study | Devskrew Portfolio`,
       description: project.seoDescription || project.description,
-      keywords: project.seoKeywords || [project.category.toLowerCase(), 'case study', 'portfolio', ...project.tags.map(tag => tag.toLowerCase())],
+      keywords: project.seoKeywords?.length ? project.seoKeywords : [project.category.toLowerCase(), 'case study', 'portfolio', ...project.tags.map(tag => tag.toLowerCase())],
       openGraph: {
         title: project.ogTitle || `${project.title} - Case Study`,
         description: project.ogDescription || project.description,

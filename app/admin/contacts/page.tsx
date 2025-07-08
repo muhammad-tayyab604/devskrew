@@ -176,7 +176,7 @@ export default function ContactsPage() {
                       )}
                       <div className="flex items-center">
                         <Calendar className="h-4 w-4 mr-1" />
-                        {contact.createdAt?.toDate().toLocaleDateString()}
+                        {new Date(contact.created_at!).toLocaleDateString()}
                       </div>
                     </div>
                   </div>
@@ -293,7 +293,7 @@ export default function ContactsPage() {
               <div>
                 <Label className="text-sm font-medium">Submitted</Label>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  {selectedContact.createdAt?.toDate().toLocaleString()}
+                  {new Date(selectedContact.created_at!).toLocaleString()}
                 </p>
               </div>
             </CardContent>

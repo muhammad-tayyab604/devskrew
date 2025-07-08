@@ -38,20 +38,24 @@ npm install
 ### 2. Supabase Setup
 1. Create a new project at [supabase.com](https://supabase.com)
 2. Go to Settings > API to get your project URL and anon key
-3. Go to SQL Editor and run the migration file: `supabase/migrations/001_initial_schema.sql`
+3. Go to SQL Editor and run the migration files:
+   - `supabase/migrations/001_initial_schema.sql`
+   - `supabase/storage/buckets.sql`
+4. Create an admin user in the Authentication section
 
 ### 3. Environment Variables
 Create a `.env.local` file in the root directory:
 
 ```env
-# Supabase Configuration
+# Supabase Configuration (Required)
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
 
-# Admin Configuration
-ADMIN_SECRET_KEY=your_admin_secret_key
-NEXT_PUBLIC_ADMIN_PASSWORD=admin123
+# Email Configuration (Optional)
+RESEND_API_KEY=your_resend_api_key
+
+# Site Configuration
+SITE_URL=https://yourdomain.com
 ```
 
 ### 4. Run the Development Server
@@ -62,7 +66,7 @@ npm run dev
 Visit `http://localhost:3000` to see the website.
 
 ### 5. Access Admin Panel
-Visit `http://localhost:3000/admin` and use the password `admin123` to access the admin panel.
+Visit `http://localhost:3000/admin` and sign in with your Supabase admin credentials.
 
 ## Admin Panel Usage
 
@@ -97,12 +101,20 @@ Visit `http://localhost:3000/admin` and use the password `admin123` to access th
 
 ## Database Schema
 
-The application uses the following main tables:
+The application uses Supabase with the following main tables:
 - `team_members`: Team member information and social links
 - `services`: Service offerings with detailed descriptions
 - `portfolio`: Project case studies and portfolios
 - `blog_posts`: Blog articles and content
+- `testimonials`: Client testimonials and reviews
 - `contact_submissions`: Contact form submissions and inquiries
+
+### Storage Buckets
+- `team-members`: Profile images for team members
+- `services`: Featured images for services
+- `portfolio`: Project images and galleries
+- `blog`: Featured images and OpenGraph images for blog posts
+- `testimonials`: Avatar images for testimonials
 
 ## Deployment
 
