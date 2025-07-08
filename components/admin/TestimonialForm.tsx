@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { X, Star } from 'lucide-react';
 import { testimonialsService, Testimonial } from '@/lib/firestore';
 import { toast } from 'sonner';
+import ImageUpload from '@/components/ui/image-upload';
 
 interface TestimonialFormProps {
   testimonial?: Testimonial | null;
@@ -116,16 +117,13 @@ export default function TestimonialForm({ testimonial, onClose }: TestimonialFor
               />
             </div>
 
-            <div>
-              <Label htmlFor="avatar">Avatar URL</Label>
-              <Input
-                id="avatar"
-                type="url"
-                value={formData.avatar}
-                onChange={(e) => handleChange('avatar', e.target.value)}
-                placeholder="https://example.com/avatar.jpg"
-              />
-            </div>
+            <ImageUpload
+              value={formData.avatar}
+              onChange={(url) => handleChange('avatar', url)}
+              bucket="testimonials"
+              folder="avatars"
+              label="Avatar Image"
+            />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>

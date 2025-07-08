@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { X } from 'lucide-react';
 import { teamMembersService, TeamMember } from '@/lib/firestore';
 import { toast } from 'sonner';
+import ImageUpload from '@/components/ui/image-upload';
 
 interface TeamMemberFormProps {
   member?: TeamMember | null;
@@ -102,16 +103,14 @@ export default function TeamMemberForm({ member, onClose }: TeamMemberFormProps)
               />
             </div>
 
-            <div>
-              <Label htmlFor="imageUrl">Image URL *</Label>
-              <Input
-                id="imageUrl"
-                type="url"
-                value={formData.imageUrl}
-                onChange={(e) => handleChange('imageUrl', e.target.value)}
-                required
-              />
-            </div>
+            <ImageUpload
+              value={formData.imageUrl}
+              onChange={(url) => handleChange('imageUrl', url)}
+              bucket="team-members"
+              folder="avatars"
+              label="Profile Image"
+              required
+            />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>

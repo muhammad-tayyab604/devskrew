@@ -1,17 +1,4 @@
-import {
-  collection,
-  doc,
-  getDocs,
-  getDoc,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  query,
-  orderBy,
-  where,
-  Timestamp,
-} from 'firebase/firestore';
-import { db } from './firebase';
+import { supabase } from './supabase';
 
 // Team Members
 export interface TeamMember {
@@ -22,43 +9,59 @@ export interface TeamMember {
   imageUrl: string;
   linkedinUrl?: string;
   twitterUrl?: string;
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export const teamMembersService = {
   async getAll(): Promise<TeamMember[]> {
-    const q = query(collection(db, 'teamMembers'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as TeamMember));
+    const { data, error } = await supabase
+      .from('team_members')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw new Error(error.message);
+    return data || [];
   },
 
   async getById(id: string): Promise<TeamMember | null> {
-    const docRef = doc(db, 'teamMembers', id);
-    const docSnap = await getDoc(docRef);
-    return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } as TeamMember : null;
+    const { data, error } = await supabase
+      .from('team_members')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) return null;
+    return data;
   },
 
-  async create(data: Omit<TeamMember, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
-    const docRef = await addDoc(collection(db, 'teamMembers'), {
-      ...data,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
-    });
-    return docRef.id;
+  async create(data: Omit<TeamMember, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+    const { data: result, error } = await supabase
+      .from('team_members')
+      .insert([data])
+      .select()
+      .single();
+    
+    if (error) throw new Error(error.message);
+    return result.id;
   },
 
   async update(id: string, data: Partial<TeamMember>): Promise<void> {
-    const docRef = doc(db, 'teamMembers', id);
-    await updateDoc(docRef, {
-      ...data,
-      updatedAt: Timestamp.now(),
-    });
+    const { error } = await supabase
+      .from('team_members')
+      .update(data)
+      .eq('id', id);
+    
+    if (error) throw new Error(error.message);
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(db, 'teamMembers', id);
-    await deleteDoc(docRef);
+    const { error } = await supabase
+      .from('team_members')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw new Error(error.message);
   },
 };
 
@@ -74,59 +77,79 @@ export interface Service {
   startingPrice: string;
   deliveryTime: string;
   icon: string;
-  featuredImage?: string; // New field for featured image
+  featuredImage?: string;
   gradient: string;
   bgGradient: string;
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string[];
-  // OpenGraph fields
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export const servicesService = {
   async getAll(): Promise<Service[]> {
-    const q = query(collection(db, 'services'), orderBy('createdAt', 'desc'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Service));
+    const { data, error } = await supabase
+      .from('services')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw new Error(error.message);
+    return data || [];
   },
 
   async getById(id: string): Promise<Service | null> {
-    const docRef = doc(db, 'services', id);
-    const docSnap = await getDoc(docRef);
-    return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } as Service : null;
+    const { data, error } = await supabase
+      .from('services')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) return null;
+    return data;
   },
 
   async getBySlug(slug: string): Promise<Service | null> {
-    const q = query(collection(db, 'services'), where('slug', '==', slug));
-    const snapshot = await getDocs(q);
-    return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as Service;
+    const { data, error } = await supabase
+      .from('services')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+    
+    if (error) return null;
+    return data;
   },
 
-  async create(data: Omit<Service, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
-    const docRef = await addDoc(collection(db, 'services'), {
-      ...data,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
-    });
-    return docRef.id;
+  async create(data: Omit<Service, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+    const { data: result, error } = await supabase
+      .from('services')
+      .insert([data])
+      .select()
+      .single();
+    
+    if (error) throw new Error(error.message);
+    return result.id;
   },
 
   async update(id: string, data: Partial<Service>): Promise<void> {
-    const docRef = doc(db, 'services', id);
-    await updateDoc(docRef, {
-      ...data,
-      updatedAt: Timestamp.now(),
-    });
+    const { error } = await supabase
+      .from('services')
+      .update(data)
+      .eq('id', id);
+    
+    if (error) throw new Error(error.message);
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(db, 'services', id);
-    await deleteDoc(docRef);
+    const { error } = await supabase
+      .from('services')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw new Error(error.message);
   },
 };
 
@@ -138,7 +161,7 @@ export interface Portfolio {
   description: string;
   longDescription: string;
   imageUrl: string;
-  featuredImage?: string; // New field for featured image (different from main imageUrl)
+  featuredImage?: string;
   galleryUrls: string[];
   tags: string[];
   category: string;
@@ -164,53 +187,73 @@ export interface Portfolio {
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string[];
-  // OpenGraph fields
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export const portfolioService = {
   async getAll(): Promise<Portfolio[]> {
-    const q = query(collection(db, 'portfolio'), orderBy('createdAt', 'desc'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Portfolio));
+    const { data, error } = await supabase
+      .from('portfolio')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw new Error(error.message);
+    return data || [];
   },
 
   async getById(id: string): Promise<Portfolio | null> {
-    const docRef = doc(db, 'portfolio', id);
-    const docSnap = await getDoc(docRef);
-    return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } as Portfolio : null;
+    const { data, error } = await supabase
+      .from('portfolio')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) return null;
+    return data;
   },
 
   async getBySlug(slug: string): Promise<Portfolio | null> {
-    const q = query(collection(db, 'portfolio'), where('slug', '==', slug));
-    const snapshot = await getDocs(q);
-    return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as Portfolio;
+    const { data, error } = await supabase
+      .from('portfolio')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+    
+    if (error) return null;
+    return data;
   },
 
-  async create(data: Omit<Portfolio, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
-    const docRef = await addDoc(collection(db, 'portfolio'), {
-      ...data,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
-    });
-    return docRef.id;
+  async create(data: Omit<Portfolio, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+    const { data: result, error } = await supabase
+      .from('portfolio')
+      .insert([data])
+      .select()
+      .single();
+    
+    if (error) throw new Error(error.message);
+    return result.id;
   },
 
   async update(id: string, data: Partial<Portfolio>): Promise<void> {
-    const docRef = doc(db, 'portfolio', id);
-    await updateDoc(docRef, {
-      ...data,
-      updatedAt: Timestamp.now(),
-    });
+    const { error } = await supabase
+      .from('portfolio')
+      .update(data)
+      .eq('id', id);
+    
+    if (error) throw new Error(error.message);
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(db, 'portfolio', id);
-    await deleteDoc(docRef);
+    const { error } = await supabase
+      .from('portfolio')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw new Error(error.message);
   },
 };
 
@@ -230,71 +273,96 @@ export interface BlogPost {
   seoTitle?: string;
   seoDescription?: string;
   seoKeywords?: string[];
-  // OpenGraph fields
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
-  publishedAt?: Timestamp;
+  created_at?: string;
+  updated_at?: string;
+  published_at?: string;
 }
 
 export const blogService = {
   async getAll(): Promise<BlogPost[]> {
-    const q = query(collection(db, 'blogPosts'), orderBy('createdAt', 'desc'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as BlogPost));
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw new Error(error.message);
+    return data || [];
   },
 
   async getPublished(): Promise<BlogPost[]> {
-    const q = query(
-      collection(db, 'blogPosts'),
-      where('published', '==', true),
-      orderBy('publishedAt', 'desc')
-    );
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as BlogPost));
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select('*')
+      .eq('published', true)
+      .order('published_at', { ascending: false });
+    
+    if (error) throw new Error(error.message);
+    return data || [];
   },
 
   async getById(id: string): Promise<BlogPost | null> {
-    const docRef = doc(db, 'blogPosts', id);
-    const docSnap = await getDoc(docRef);
-    return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } as BlogPost : null;
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) return null;
+    return data;
   },
 
   async getBySlug(slug: string): Promise<BlogPost | null> {
-    const q = query(collection(db, 'blogPosts'), where('slug', '==', slug));
-    const snapshot = await getDocs(q);
-    return snapshot.empty ? null : { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as BlogPost;
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+    
+    if (error) return null;
+    return data;
   },
 
-  async create(data: Omit<BlogPost, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
-    const docRef = await addDoc(collection(db, 'blogPosts'), {
+  async create(data: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+    const insertData = {
       ...data,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
-      publishedAt: data.published ? Timestamp.now() : null,
-    });
-    return docRef.id;
+      published_at: data.published ? new Date().toISOString() : null,
+    };
+
+    const { data: result, error } = await supabase
+      .from('blog_posts')
+      .insert([insertData])
+      .select()
+      .single();
+    
+    if (error) throw new Error(error.message);
+    return result.id;
   },
 
   async update(id: string, data: Partial<BlogPost>): Promise<void> {
-    const docRef = doc(db, 'blogPosts', id);
-    const updateData: any = {
-      ...data,
-      updatedAt: Timestamp.now(),
-    };
+    const updateData: any = { ...data };
     
-    if (data.published && !data.publishedAt) {
-      updateData.publishedAt = Timestamp.now();
+    if (data.published && !data.published_at) {
+      updateData.published_at = new Date().toISOString();
     }
+
+    const { error } = await supabase
+      .from('blog_posts')
+      .update(updateData)
+      .eq('id', id);
     
-    await updateDoc(docRef, updateData);
+    if (error) throw new Error(error.message);
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(db, 'blogPosts', id);
-    await deleteDoc(docRef);
+    const { error } = await supabase
+      .from('blog_posts')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw new Error(error.message);
   },
 };
 
@@ -308,52 +376,70 @@ export interface Testimonial {
   avatar?: string;
   rating: number;
   featured: boolean;
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export const testimonialsService = {
   async getAll(): Promise<Testimonial[]> {
-    const q = query(collection(db, 'testimonials'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Testimonial));
+    const { data, error } = await supabase
+      .from('testimonials')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw new Error(error.message);
+    return data || [];
   },
 
   async getFeatured(): Promise<Testimonial[]> {
-    const q = query(
-      collection(db, 'testimonials'),
-      where('featured', '==', true)
-    );
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Testimonial));
+    const { data, error } = await supabase
+      .from('testimonials')
+      .select('*')
+      .eq('featured', true)
+      .order('created_at', { ascending: false });
+    
+    if (error) throw new Error(error.message);
+    return data || [];
   },
 
   async getById(id: string): Promise<Testimonial | null> {
-    const docRef = doc(db, 'testimonials', id);
-    const docSnap = await getDoc(docRef);
-    return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } as Testimonial : null;
+    const { data, error } = await supabase
+      .from('testimonials')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) return null;
+    return data;
   },
 
-  async create(data: Omit<Testimonial, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
-    const docRef = await addDoc(collection(db, 'testimonials'), {
-      ...data,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
-    });
-    return docRef.id;
+  async create(data: Omit<Testimonial, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+    const { data: result, error } = await supabase
+      .from('testimonials')
+      .insert([data])
+      .select()
+      .single();
+    
+    if (error) throw new Error(error.message);
+    return result.id;
   },
 
   async update(id: string, data: Partial<Testimonial>): Promise<void> {
-    const docRef = doc(db, 'testimonials', id);
-    await updateDoc(docRef, {
-      ...data,
-      updatedAt: Timestamp.now(),
-    });
+    const { error } = await supabase
+      .from('testimonials')
+      .update(data)
+      .eq('id', id);
+    
+    if (error) throw new Error(error.message);
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(db, 'testimonials', id);
-    await deleteDoc(docRef);
+    const { error } = await supabase
+      .from('testimonials')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw new Error(error.message);
   },
 };
 
@@ -367,42 +453,58 @@ export interface ContactSubmission {
   budget?: string;
   message: string;
   status: 'new' | 'read' | 'replied' | 'archived';
-  createdAt?: Timestamp;
-  updatedAt?: Timestamp;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export const contactService = {
   async getAll(): Promise<ContactSubmission[]> {
-    const q = query(collection(db, 'contactSubmissions'), orderBy('createdAt', 'desc'));
-    const snapshot = await getDocs(q);
-    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as ContactSubmission));
+    const { data, error } = await supabase
+      .from('contact_submissions')
+      .select('*')
+      .order('created_at', { ascending: false });
+    
+    if (error) throw new Error(error.message);
+    return data || [];
   },
 
   async getById(id: string): Promise<ContactSubmission | null> {
-    const docRef = doc(db, 'contactSubmissions', id);
-    const docSnap = await getDoc(docRef);
-    return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } as ContactSubmission : null;
+    const { data, error } = await supabase
+      .from('contact_submissions')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) return null;
+    return data;
   },
 
-  async create(data: Omit<ContactSubmission, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
-    const docRef = await addDoc(collection(db, 'contactSubmissions'), {
-      ...data,
-      createdAt: Timestamp.now(),
-      updatedAt: Timestamp.now(),
-    });
-    return docRef.id;
+  async create(data: Omit<ContactSubmission, 'id' | 'created_at' | 'updated_at'>): Promise<string> {
+    const { data: result, error } = await supabase
+      .from('contact_submissions')
+      .insert([data])
+      .select()
+      .single();
+    
+    if (error) throw new Error(error.message);
+    return result.id;
   },
 
   async update(id: string, data: Partial<ContactSubmission>): Promise<void> {
-    const docRef = doc(db, 'contactSubmissions', id);
-    await updateDoc(docRef, {
-      ...data,
-      updatedAt: Timestamp.now(),
-    });
+    const { error } = await supabase
+      .from('contact_submissions')
+      .update(data)
+      .eq('id', id);
+    
+    if (error) throw new Error(error.message);
   },
 
   async delete(id: string): Promise<void> {
-    const docRef = doc(db, 'contactSubmissions', id);
-    await deleteDoc(docRef);
+    const { error } = await supabase
+      .from('contact_submissions')
+      .delete()
+      .eq('id', id);
+    
+    if (error) throw new Error(error.message);
   },
 };

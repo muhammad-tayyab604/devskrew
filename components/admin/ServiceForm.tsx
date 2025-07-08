@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { X, Plus, Trash2, Upload, Image } from 'lucide-react';
 import { servicesService, Service } from '@/lib/firestore';
 import { toast } from 'sonner';
+import ImageUpload from '@/components/ui/image-upload';
 
 interface ServiceFormProps {
   service?: Service | null;
@@ -213,53 +214,13 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
               </TabsContent>
 
               <TabsContent value="media" className="space-y-6">
-                <div>
-                  <Label htmlFor="featuredImage">Featured Image URL</Label>
-                  <div className="space-y-4">
-                    <Input
-                      id="featuredImage"
-                      type="url"
-                      value={formData.featuredImage}
-                      onChange={(e) => handleChange('featuredImage', e.target.value)}
-                      placeholder="https://example.com/service-image.jpg"
-                    />
-                    
-                    {formData.featuredImage && (
-                      <div className="relative">
-                        <img
-                          src={formData.featuredImage}
-                          alt="Featured image preview"
-                          className="w-full h-48 object-cover rounded-lg border"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none';
-                          }}
-                        />
-                        <div className="absolute top-2 right-2">
-                          <Button
-                            type="button"
-                            size="sm"
-                            variant="destructive"
-                            onClick={() => handleChange('featuredImage', '')}
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </div>
-                    )}
-                    
-                    {!formData.featuredImage && (
-                      <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center">
-                        <Image className="h-12 w-12 mx-auto text-gray-400 mb-4" />
-                        <p className="text-gray-500 dark:text-gray-400">
-                          Add a featured image URL above to see preview
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                  <p className="text-sm text-gray-500 mt-2">
-                    This image will be displayed on service cards and detail pages. Recommended size: 800x600px
-                  </p>
-                </div>
+                <ImageUpload
+                  value={formData.featuredImage}
+                  onChange={(url) => handleChange('featuredImage', url)}
+                  bucket="services"
+                  folder="featured-images"
+                  label="Featured Image"
+                />
               </TabsContent>
 
               <TabsContent value="details" className="space-y-6">

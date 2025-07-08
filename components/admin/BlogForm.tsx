@@ -12,6 +12,7 @@ import { X, Plus, Trash2 } from 'lucide-react';
 import { blogService, BlogPost } from '@/lib/firestore';
 import { toast } from 'sonner';
 import dynamic from 'next/dynamic';
+import ImageUpload from '@/components/ui/image-upload';
 
 // Dynamically import ReactQuill to avoid SSR issues
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
@@ -195,16 +196,14 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
                   />
                 </div>
 
-                <div>
-                  <Label htmlFor="imageUrl">Featured Image URL *</Label>
-                  <Input
-                    id="imageUrl"
-                    type="url"
-                    value={formData.imageUrl}
-                    onChange={(e) => handleChange('imageUrl', e.target.value)}
-                    required
-                  />
-                </div>
+                <ImageUpload
+                  value={formData.imageUrl}
+                  onChange={(url) => handleChange('imageUrl', url)}
+                  bucket="blog"
+                  folder="featured-images"
+                  label="Featured Image"
+                  required
+                />
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
@@ -365,12 +364,12 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
 
                   <div>
                     <Label htmlFor="ogImage">OG Image URL</Label>
-                    <Input
-                      id="ogImage"
-                      type="url"
+                    <ImageUpload
                       value={formData.ogImage}
-                      onChange={(e) => handleChange('ogImage', e.target.value)}
-                      placeholder="https://example.com/og-image.jpg"
+                      onChange={(url) => handleChange('ogImage', url)}
+                      bucket="blog"
+                      folder="og-images"
+                      label="OpenGraph Image"
                     />
                     <p className="text-sm text-gray-500 mt-1">
                       Recommended size: 1200x630px for optimal social media display
