@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, ArrowLeft, Mail, Phone, Building, DollarSign, Calendar, Eye, Archive, Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { contactService, ContactSubmission } from '@/lib/firestore';
+import { contactService, ContactSubmission } from '@/lib/database';
 import { toast } from 'sonner';
 
 export default function ContactsPage() {

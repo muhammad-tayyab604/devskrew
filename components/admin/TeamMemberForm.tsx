@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { X } from 'lucide-react';
-import { teamMembersService, TeamMember } from '@/lib/firestore';
+import { teamMembersService, TeamMember } from '@/lib/database';
 import { toast } from 'sonner';
 import ImageUpload from '@/components/ui/image-upload';
 
@@ -35,6 +35,8 @@ export default function TeamMemberForm({ member, onClose }: TeamMemberFormProps)
       if (member?.id) {
         await teamMembersService.update(member.id, formData);
         toast.success('Team member updated successfully');
+        console.log(formData);
+        
       } else {
         await teamMembersService.create(formData);
         toast.success('Team member created successfully');
@@ -106,11 +108,11 @@ export default function TeamMemberForm({ member, onClose }: TeamMemberFormProps)
             <ImageUpload
               value={formData.imageUrl}
               onChange={(url) => handleChange('imageUrl', url)}
-              bucket="team-members"
+              bucket="images"
               folder="avatars"
               label="Profile Image"
               required
-            />
+            />            
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>

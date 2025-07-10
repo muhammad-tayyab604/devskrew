@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Calendar, User, Clock, Share2 } from 'lucide-react';
 import CTA from '@/components/sections/CTA';
-import { blogService } from '@/lib/firestore';
+import { blogService } from '@/lib/database';
 
 interface Props {
   params: {

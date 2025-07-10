@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, ExternalLink, Github, Calendar, User, Target, Award, ArrowRight } from 'lucide-react';
 import CTA from '@/components/sections/CTA';
 import { Testimonials } from '@/components/sections/Testimonials';
-import { portfolioService } from '@/lib/firestore';
+import { portfolioService } from '@/lib/database';
 
 interface Props {
   params: {

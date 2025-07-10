@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { X, Plus, Trash2, Upload, Image } from 'lucide-react';
-import { servicesService, Service } from '@/lib/firestore';
+import { servicesService, Service } from '@/lib/database';
 import { toast } from 'sonner';
 import ImageUpload from '@/components/ui/image-upload';
 

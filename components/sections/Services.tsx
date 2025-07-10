@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '../ui/button';
 import Link from 'next/link';
-import { servicesService, Service } from '@/lib/firestore';
+import { servicesService, Service } from '@/lib/database';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 

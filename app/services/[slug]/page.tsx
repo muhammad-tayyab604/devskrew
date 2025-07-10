@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Check, Star, Users, Clock, Award, ArrowRight } from 'lucide-react';
 import CTA from '@/components/sections/CTA';
-import { servicesService } from '@/lib/firestore';
+import { servicesService } from '@/lib/database';
 
 interface Props {
   params: {

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Metadata } from 'next';
 import CTA from '@/components/sections/CTA';
 import { Sparkles, Code } from 'lucide-react';
-import { servicesService, Service } from '@/lib/firestore';
+import { servicesService, Service } from '@/lib/database';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';

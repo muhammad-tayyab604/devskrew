@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Search, Edit, Trash2, ArrowLeft, ExternalLink, Eye } from 'lucide-react';
 import Link from 'next/link';
-import { blogService, BlogPost } from '@/lib/firestore';
+import { blogService, BlogPost } from '@/lib/database';
 import { toast } from 'sonner';
 import BlogForm from '@/components/admin/BlogForm';
 

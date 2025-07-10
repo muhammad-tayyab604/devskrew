@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Plus, Search, Edit, Trash2, ArrowLeft, ExternalLink, Eye, Star, Image } from 'lucide-react';
 import Link from 'next/link';
-import { portfolioService, Portfolio } from '@/lib/firestore';
+import { portfolioService, Portfolio } from '@/lib/database';
 import { toast } from 'sonner';
 import PortfolioForm from '@/components/admin/PortfolioForm';
 

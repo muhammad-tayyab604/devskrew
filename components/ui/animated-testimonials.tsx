@@ -59,9 +59,9 @@ export const AnimatedTeamMembers = ({
   };
   return (
     <div className="mx-auto max-w-sm px-4 py-20 font-sans antialiased md:max-w-4xl md:px-8 lg:px-12">
-      <div className="relative grid grid-cols-1 gap-20 md:grid-cols-2">
+      <div className="relative grid grid-cols-1 gap-20 md:grid-cols-2 justify-center items-center">
         <div>
-          <div className="relative h-80 w-full">
+          <div className="relative h-[26rem] w-full">
             <AnimatePresence>
               {testimonials.map((testimonial, index) => (
                 <motion.div
@@ -133,7 +133,7 @@ export const AnimatedTeamMembers = ({
             <p className="text-sm text-gray-500 dark:text-neutral-500">
               {testimonials[active].designation}
             </p>
-            <motion.p className="mt-8 text-lg text-gray-500 dark:text-neutral-300">
+            <motion.p className="mt-4 text-lg text-gray-500 dark:text-neutral-300">
               {testimonials[active].quote.split(" ").map((word, index) => (
                 <motion.span
                   key={index}
@@ -158,7 +158,7 @@ export const AnimatedTeamMembers = ({
                 </motion.span>
               ))}
               {testimonials[active].socials && (
-  <div className="mt-2 flex gap-3">
+  <div className="mt-2 mb-4 flex gap-3">
     {testimonials[active].socials?.map((social, index) => {
       const Icon = iconMap[social.icon]; // Lookup icon
       return (

@@ -7,9 +7,10 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Plus, Search, Edit, Trash2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { teamMembersService, TeamMember } from '@/lib/firestore';
+import { teamMembersService, TeamMember } from '@/lib/database';
 import { toast } from 'sonner';
 import TeamMemberForm from '@/components/admin/TeamMemberForm';
+import Image from 'next/image';
 
 export default function TeamMembersPage() {
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
@@ -26,6 +27,8 @@ export default function TeamMembersPage() {
     try {
       const members = await teamMembersService.getAll();
       setTeamMembers(members);
+      console.log(members);
+      
     } catch (error) {
       toast.error('Failed to fetch team members');
     } finally {
@@ -89,7 +92,7 @@ export default function TeamMembersPage() {
             </div>
             <Button onClick={() => setShowForm(true)}>
               <Plus className="h-4 w-4 mr-2" />
-              Add Team Member
+              Add Team Members
             </Button>
           </div>
         </div>
@@ -108,6 +111,7 @@ export default function TeamMembersPage() {
             />
           </div>
         </div>
+
 
         {/* Team Members Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

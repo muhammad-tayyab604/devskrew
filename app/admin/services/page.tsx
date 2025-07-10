@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Plus, Search, Edit, Trash2, ArrowLeft, ExternalLink, Image } from 'lucide-react';
 import Link from 'next/link';
-import { servicesService, Service } from '@/lib/firestore';
+import { servicesService, Service } from '@/lib/database';
 import { toast } from 'sonner';
 import ServiceForm from '@/components/admin/ServiceForm';
 

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink, ArrowRight, Calendar, User, FolderOpen } from 'lucide-react';
-import { portfolioService, Portfolio } from '@/lib/firestore';
+import { portfolioService, Portfolio } from '@/lib/database';
 
 export default function PortfolioSection() {
   const [projects, setProjects] = useState<Portfolio[]>([]);

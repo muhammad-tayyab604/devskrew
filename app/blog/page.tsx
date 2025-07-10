@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { CalendarDays, User, ArrowRight, Sparkles, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CTA from '@/components/sections/CTA';
-import { blogService, BlogPost } from '@/lib/firestore';
+import { blogService, BlogPost } from '@/lib/database';
 
 export default function Blog() {
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);

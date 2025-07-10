@@ -19,7 +19,7 @@ import {
   Star
 } from 'lucide-react';
 import Link from 'next/link';
-import { teamMembersService, servicesService, portfolioService, blogService, contactService, testimonialsService } from '@/lib/firestore';
+import { teamMembersService, servicesService, portfolioService, blogService, contactService, testimonialsService } from '@/lib/database';
 import { ModeToggle } from '@/components/ThemeToggle';
 
 export default function AdminDashboard() {

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Linkedin, X, Users } from "lucide-react";
 import { AnimatedTeamMembers } from "../ui/animated-testimonials";
-import { teamMembersService, TeamMember } from '@/lib/firestore';
+import { teamMembersService, TeamMember } from '@/lib/database';
 
 const iconMap = {
   linkedin: Linkedin,

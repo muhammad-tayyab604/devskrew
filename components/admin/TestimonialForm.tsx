@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { X, Star } from 'lucide-react';
-import { testimonialsService, Testimonial } from '@/lib/firestore';
+import { testimonialsService, Testimonial } from '@/lib/database';
 import { toast } from 'sonner';
 import ImageUpload from '@/components/ui/image-upload';
 

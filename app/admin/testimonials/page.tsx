@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Plus, Search, Edit, Trash2, ArrowLeft, Star } from 'lucide-react';
 import Link from 'next/link';
-import { testimonialsService, Testimonial } from '@/lib/firestore';
+import { testimonialsService, Testimonial } from '@/lib/database';
 import { toast } from 'sonner';
 import TestimonialForm from '@/components/admin/TestimonialForm';
 

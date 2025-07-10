@@ -86,7 +86,6 @@ export interface Service {
   ogTitle?: string;
   ogDescription?: string;
   ogImage?: string;
-  created_at?: string;
   updated_at?: string;
 }
 

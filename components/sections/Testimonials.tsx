@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback } from "../ui/avatar";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { Sparkles, MessageSquare } from "lucide-react";
-import { testimonialsService, Testimonial } from '@/lib/firestore';
+import { testimonialsService, Testimonial } from '@/lib/database';
 
 export const Testimonials = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);

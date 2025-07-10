@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Switch } from '@/components/ui/switch';
 import { X, Plus, Trash2, Image } from 'lucide-react';
-import { portfolioService, Portfolio } from '@/lib/firestore';
+import { portfolioService, Portfolio } from '@/lib/database';
 import { toast } from 'sonner';
 import ImageUpload from '@/components/ui/image-upload';
 

@@ -11,7 +11,7 @@ import { Mail, Phone, MapPin, Clock, Send, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
 import CTA from '@/components/sections/CTA';
 import FAQSection from '@/components/sections/FAQSection';
-import { contactService } from '@/lib/firestore';
+import { contactService } from '@/lib/database';
 
 const contactInfo = [
   {
