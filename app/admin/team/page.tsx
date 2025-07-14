@@ -26,9 +26,7 @@ export default function TeamMembersPage() {
   const fetchTeamMembers = async () => {
     try {
       const members = await teamMembersService.getAll();
-      setTeamMembers(members);
-      console.log(members);
-      
+      setTeamMembers(members);      
     } catch (error) {
       toast.error('Failed to fetch team members');
     } finally {

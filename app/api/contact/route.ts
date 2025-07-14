@@ -5,10 +5,6 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-
-console.log('====================================');
-console.log(resend);
-console.log('====================================');
 export async function POST(req: Request) {
   const body = await req.json();
 

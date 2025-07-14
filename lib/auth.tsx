@@ -53,8 +53,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       email,
       password,
     });
-     console.log('SIGN IN RESPONSE:', data, error);
-    
     if (error) {
       throw new Error(error.message);
     }

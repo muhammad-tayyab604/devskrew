@@ -35,8 +35,6 @@ export default function TeamMemberForm({ member, onClose }: TeamMemberFormProps)
       if (member?.id) {
         await teamMembersService.update(member.id, formData);
         toast.success('Team member updated successfully');
-        console.log(formData);
-        
       } else {
         await teamMembersService.create(formData);
         toast.success('Team member created successfully');
