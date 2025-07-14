@@ -17,6 +17,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const post = await blogService.getBySlug(params.slug);
     
+    console.log(post);
+    
+
     if (!post || !post.published) {
       return {
         title: 'Post Not Found',
