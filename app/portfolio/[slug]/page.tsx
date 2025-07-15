@@ -26,13 +26,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     return {
-      title: project.seoTitle || `${project.title} - Case Study | Devskrew Portfolio`,
-      description: project.seoDescription || project.description,
-      keywords: project.seoKeywords?.length ? project.seoKeywords : [project.category.toLowerCase(), 'case study', 'portfolio', ...project.tags.map(tag => tag.toLowerCase())],
+      title: project.seo_title || `${project.title} - Case Study | Devskrew Portfolio`,
+      description: project.seo_description || project.description,
+      keywords: project.seo_keywords?.length ? project.seo_keywords : [project.category.toLowerCase(), 'case study', 'portfolio', ...project.tags.map(tag => tag.toLowerCase())],
       openGraph: {
-        title: project.ogTitle || `${project.title} - Case Study`,
-        description: project.ogDescription || project.description,
-        images: project.ogImage ? [project.ogImage] : [project.featuredImage || project.imageUrl],
+        title: project.og_title || `${project.title} - Case Study`,
+        description: project.og_description || project.description,
+        images: project.og_image ? [project.og_image] : [project.featured_image || project.image_url],
         type: 'website',
       },
     };
@@ -80,7 +80,7 @@ if (!project) {
                 </span>
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                {project.longDescription}
+                {project.long_description}
               </p>
               
               <div className="grid grid-cols-2 gap-6 mb-8">
@@ -101,17 +101,17 @@ if (!project) {
               </div>
               
               <div className="flex gap-4">
-                {project.liveUrl && (
+                {project.live_url && (
                   <Button asChild className="rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={project.live_url} target="_blank" rel="noopener noreferrer">
                       <ExternalLink className="h-4 w-4 mr-2" />
                       View Live
                     </a>
                   </Button>
                 )}
-                {project.githubUrl && (
+                {project.github_url && (
                   <Button variant="outline" asChild className="rounded-xl">
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={project.github_url} target="_blank" rel="noopener noreferrer">
                       <Github className="h-4 w-4 mr-2" />
                       View Code
                     </a>
@@ -124,7 +124,7 @@ if (!project) {
               <div className="relative group">
                 <div className={`absolute -inset-4 bg-gradient-to-r ${project.gradient} rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
                 <img
-                  src={project.featuredImage || project.imageUrl}
+                  src={project.featured_image || project.image_url}
                   alt={project.title}
                   className="relative rounded-3xl shadow-2xl group-hover:scale-105 transition-transform duration-500"
                   onError={(e) => {
