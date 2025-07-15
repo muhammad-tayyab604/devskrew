@@ -151,7 +151,7 @@ export default function PortfolioPage() {
                     <div className="relative group">
                       <div className={`absolute -inset-4 bg-gradient-to-r ${project.gradient} rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
                       <img
-                        src={project.featuredImage || project.imageUrl}
+                        src={project.featured_image || project.image_url}
                         alt={project.title}
                         className="relative rounded-3xl shadow-2xl group-hover:scale-105 transition-transform duration-500"
                         onError={(e) => {
@@ -192,7 +192,7 @@ export default function PortfolioPage() {
                   
                   <div className="relative overflow-hidden rounded-t-2xl">
                     <img
-                      src={project.featuredImage || project.imageUrl}
+                      src={project.featured_image || project.image_url}
                       alt={project.title}
                       className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700"
                       onError={(e) => {
@@ -208,16 +208,16 @@ export default function PortfolioPage() {
                     </div>
                     
                     <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2">
-                      {project.liveUrl && (
+                      {project.live_url && (
                         <Button size="sm" className="bg-white/90 text-gray-900 hover:bg-white" asChild>
-                          <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                          <a href={project.live_url} target="_blank" rel="noopener noreferrer">
                             <ExternalLink className="h-4 w-4" />
                           </a>
                         </Button>
                       )}
-                      {project.githubUrl && (
+                      {project.github_url && (
                         <Button size="sm" className="bg-white/90 text-gray-900 hover:bg-white" asChild>
-                          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                          <a href={project.github_url} target="_blank" rel="noopener noreferrer">
                             <Github className="h-4 w-4" />
                           </a>
                         </Button>
