@@ -162,8 +162,8 @@ export default function PortfolioPage() {
                       Featured
                     </Badge>
                   )}
-                  {item.featured_image && item.featured_image !== item.image_url && (
-                {item.featuredImage && item.featuredImage !== item.imageUrl && (
+                </div>
+                {item.featured_image && item.featured_image !== item.image_url && (
                   <div className="absolute top-4 right-4">
                     <Badge variant="secondary" className="bg-blue-500 text-white">
                       <Image className="h-3 w-3 mr-1" />
