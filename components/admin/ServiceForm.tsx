@@ -216,7 +216,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
               <TabsContent value="media" className="space-y-6">
                 <ImageUpload
                   value={formData.featured_image}
-                  onChange={(url) => handleChange('featuredImage', url)}
+                  onChange={(url) => handleChange('featured_image', url)}
                   bucket="images"
                   folder="featured-images"
                   label="Featured Image"
@@ -297,11 +297,11 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="bgGradient">Background Gradient</Label>
+                    <Label htmlFor="bg_gradient">Background Gradient</Label>
                     <Input
-                      id="bgGradient"
+                      id="bg_gradient"
                       value={formData.bg_gradient}
-                      onChange={(e) => handleChange('bgGradient', e.target.value)}
+                      onChange={(e) => handleChange('bg_gradient', e.target.value)}
                       placeholder="from-blue-50 to-cyan-50"
                     />
                   </div>
@@ -313,21 +313,21 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                   <h3 className="text-lg font-semibold">Basic SEO</h3>
                   
                   <div>
-                    <Label htmlFor="seoTitle">SEO Title</Label>
+                    <Label htmlFor="seo_title">SEO Title</Label>
                     <Input
-                      id="seoTitle"
+                      id="seo_title"
                       value={formData.seo_title}
-                      onChange={(e) => handleChange('seoTitle', e.target.value)}
+                      onChange={(e) => handleChange('seo_title', e.target.value)}
                       placeholder="Custom SEO title"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="seoDescription">SEO Description</Label>
+                    <Label htmlFor="seo_description">SEO Description</Label>
                     <Textarea
-                      id="seoDescription"
+                      id="seo_description"
                       value={formData.seo_description}
-                      onChange={(e) => handleChange('seoDescription', e.target.value)}
+                      onChange={(e) => handleChange('seo_description', e.target.value)}
                       rows={3}
                       placeholder="Custom SEO description"
                     />
@@ -369,33 +369,33 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                   <h3 className="text-lg font-semibold">OpenGraph (Social Media)</h3>
                   
                   <div>
-                    <Label htmlFor="ogTitle">OG Title</Label>
+                    <Label htmlFor="og_title">OG Title</Label>
                     <Input
-                      id="ogTitle"
+                      id="og_title"
                       value={formData.og_title}
-                      onChange={(e) => handleChange('ogTitle', e.target.value)}
+                      onChange={(e) => handleChange('og_title', e.target.value)}
                       placeholder="Title for social media sharing"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="ogDescription">OG Description</Label>
+                    <Label htmlFor="og_description">OG Description</Label>
                     <Textarea
-                      id="ogDescription"
+                      id="og_description"
                       value={formData.og_description}
-                      onChange={(e) => handleChange('ogDescription', e.target.value)}
+                      onChange={(e) => handleChange('og_description', e.target.value)}
                       rows={3}
                       placeholder="Description for social media sharing"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="ogImage">OG Image URL</Label>
+                    <Label htmlFor="og_image">OG Image URL</Label>
                     <Input
-                      id="ogImage"
+                      id="og_image"
                       type="url"
                       value={formData.og_image}
-                      onChange={(e) => handleChange('ogImage', e.target.value)}
+                      onChange={(e) => handleChange('og_image', e.target.value)}
                       placeholder="https://example.com/og-image.jpg"
                     />
                     <p className="text-sm text-gray-500 mt-1">

@@ -82,7 +82,7 @@ export default function Blog() {
                   
                   <div className="relative overflow-hidden rounded-t-2xl">
                     <img
-                      src={post.imageUrl}
+                      src={post.image_url}
                       alt={post.title}
                       className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700"
                       onError={(e) => {
@@ -117,7 +117,7 @@ export default function Blog() {
                       </div>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-500 dark:text-gray-400">{post.readTime}</span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">{post.read_time}</span>
                       <Button variant="ghost" size="sm" className="group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20">
                         <Link href={`/blog/${post.slug}`}>
                           Read More

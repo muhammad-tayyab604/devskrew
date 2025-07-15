@@ -65,10 +65,10 @@ export function TeamCarousel() {
     quote: member.bio,
     name: member.name,
     designation: member.designation,
-    src: member.imageUrl,
+    src: member.image_url,
     socials: [
-      ...(member.linkedinUrl ? [{ icon: "linkedin" as IconName, url: member.linkedinUrl }] : []),
-      ...(member.twitterUrl ? [{ icon: "twitter" as IconName, url: member.twitterUrl }] : []),
+      ...(member.linkedin_url ? [{ icon: "linkedin" as IconName, url: member.linkedin_url }] : []),
+      ...(member.twitter_url ? [{ icon: "twitter" as IconName, url: member.twitter_url }] : []),
     ],
   }));
 

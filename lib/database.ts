@@ -6,9 +6,9 @@ export interface TeamMember {
   name: string;
   designation: string;
   bio: string;
-  imageUrl: string;
-  linkedinUrl?: string;
-  twitterUrl?: string;
+  image_url: string;
+  linkedin_url?: string;
+  twitter_url?: string;
   created_at?: string;
   updated_at?: string;
 }
@@ -67,28 +67,28 @@ export const teamMembersService = {
 
 // Services
 export interface Service {
-  id?:        string;
-  title:      string;
-  slug:       string;
-  description:string;
+  id?: string;
+  title: string;
+  slug: string;
+  description: string;
   long_description: string;
-  features:   string[];
-  technologies:string[];
-  starting_price:  string;
-  delivery_time:   string;
-  icon:       string;
+  features: string[];
+  technologies: string[];
+  starting_price: string;
+  delivery_time: string;
+  icon: string;
   featured_image?: string;
-  gradient:   string;
+  gradient: string;
   bg_gradient: string;
   seo_title?: string;
   seo_description?: string;
   seo_keywords?: string[];
-  og_title?:  string;
+  og_title?: string;
   og_description?: string;
-  og_image?:  string;
-  updated_at?:string;
+  og_image?: string;
+  created_at?: string;
+  updated_at?: string;
 }
-
 
 export const servicesService = {
   async getAll(): Promise<Service[]> {
@@ -159,18 +159,18 @@ export interface Portfolio {
   title: string;
   slug: string;
   description: string;
-  longDescription: string;
-  imageUrl: string;
-  featuredImage?: string;
-  galleryUrls: string[];
+  long_description: string;
+  image_url: string;
+  featured_image?: string;
+  gallery_urls: string[];
   tags: string[];
   category: string;
   client: string;
   year: string;
   duration?: string;
-  teamSize?: string;
-  liveUrl?: string;
-  githubUrl?: string;
+  team_size?: string;
+  live_url?: string;
+  github_url?: string;
   challenge: string;
   solution: string;
   features: string[];
@@ -184,12 +184,12 @@ export interface Portfolio {
   };
   gradient: string;
   featured: boolean;
-  seoTitle?: string;
-  seoDescription?: string;
-  seoKeywords?: string[];
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
+  seo_title?: string;
+  seo_description?: string;
+  seo_keywords?: string[];
+  og_title?: string;
+  og_description?: string;
+  og_image?: string;
   created_at?: string;
   updated_at?: string;
 }
@@ -264,18 +264,18 @@ export interface BlogPost {
   slug: string;
   excerpt: string;
   content: string;
-  imageUrl: string;
+  image_url: string;
   author: string;
   category: string;
-  readTime: string;
+  read_time: string;
   gradient: string;
   published: boolean;
-  seoTitle?: string;
-  seoDescription?: string;
-  seoKeywords?: string[];
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
+  seo_title?: string;
+  seo_description?: string;
+  seo_keywords?: string[];
+  og_title?: string;
+  og_description?: string;
+  og_image?: string;
   created_at?: string;
   updated_at?: string;
   published_at?: string;

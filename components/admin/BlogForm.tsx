@@ -29,19 +29,19 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
     slug: post?.slug || '',
     excerpt: post?.excerpt || '',
     content: post?.content || '',
-    imageUrl: post?.imageUrl || '',
+    image_url: post?.image_url || '',
     author: post?.author || '',
     category: post?.category || '',
-    readTime: post?.readTime || '',
+    read_time: post?.read_time || '',
     gradient: post?.gradient || 'from-blue-500 to-cyan-500',
     published: post?.published || false,
-    seoTitle: post?.seoTitle || '',
-    seoDescription: post?.seoDescription || '',
-    seoKeywords: post?.seoKeywords || [''],
+    seo_title: post?.seo_title || '',
+    seo_description: post?.seo_description || '',
+    seo_keywords: post?.seo_keywords || [''],
     // OpenGraph fields
-    ogTitle: post?.ogTitle || '',
-    ogDescription: post?.ogDescription || '',
-    ogImage: post?.ogImage || '',
+    og_title: post?.og_title || '',
+    og_description: post?.og_description || '',
+    og_image: post?.og_image || '',
   });
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -66,7 +66,7 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
     try {
       const cleanedData = {
         ...formData,
-        seoKeywords: formData.seoKeywords.filter(k => k.trim() !== ''),
+        seo_keywords: formData.seo_keywords.filter(k => k.trim() !== ''),
       };
 
       if (post?.id) {
@@ -94,21 +94,21 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
     });
   };
 
-  const handleArrayChange = (field: 'seoKeywords', index: number, value: string) => {
+  const handleArrayChange = (field: 'seo_keywords', index: number, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: prev[field].map((item, i) => i === index ? value : item)
     }));
   };
 
-  const addArrayItem = (field: 'seoKeywords') => {
+  const addArrayItem = (field: 'seo_keywords') => {
     setFormData(prev => ({
       ...prev,
       [field]: [...prev[field], '']
     }));
   };
 
-  const removeArrayItem = (field: 'seoKeywords', index: number) => {
+  const removeArrayItem = (field: 'seo_keywords', index: number) => {
     setFormData(prev => ({
       ...prev,
       [field]: prev[field].filter((_, i) => i !== index)
@@ -197,8 +197,8 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
                 </div>
 
                 <ImageUpload
-                  value={formData.imageUrl}
-                  onChange={(url) => handleChange('imageUrl', url)}
+                  value={formData.image_url}
+                  onChange={(url) => handleChange('image_url', url)}
                   bucket="blog"
                   folder="featured-images"
                   label="Featured Image"
@@ -225,11 +225,11 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="readTime">Read Time *</Label>
+                    <Label htmlFor="read_time">Read Time *</Label>
                     <Input
-                      id="readTime"
-                      value={formData.readTime}
-                      onChange={(e) => handleChange('readTime', e.target.value)}
+                      id="read_time"
+                      value={formData.read_time}
+                      onChange={(e) => handleChange('read_time', e.target.value)}
                       placeholder="5 min read"
                       required
                     />
@@ -286,21 +286,21 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
                   <h3 className="text-lg font-semibold">Basic SEO</h3>
                   
                   <div>
-                    <Label htmlFor="seoTitle">SEO Title</Label>
+                    <Label htmlFor="seo_title">SEO Title</Label>
                     <Input
-                      id="seoTitle"
-                      value={formData.seoTitle}
-                      onChange={(e) => handleChange('seoTitle', e.target.value)}
+                      id="seo_title"
+                      value={formData.seo_title}
+                      onChange={(e) => handleChange('seo_title', e.target.value)}
                       placeholder="Custom SEO title"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="seoDescription">SEO Description</Label>
+                    <Label htmlFor="seo_description">SEO Description</Label>
                     <Textarea
-                      id="seoDescription"
-                      value={formData.seoDescription}
-                      onChange={(e) => handleChange('seoDescription', e.target.value)}
+                      id="seo_description"
+                      value={formData.seo_description}
+                      onChange={(e) => handleChange('seo_description', e.target.value)}
                       rows={3}
                       placeholder="Custom SEO description"
                     />
@@ -308,18 +308,18 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
 
                   <div>
                     <Label>SEO Keywords</Label>
-                    {formData.seoKeywords.map((keyword, index) => (
+                    {formData.seo_keywords.map((keyword, index) => (
                       <div key={index} className="flex gap-2 mt-2">
                         <Input
                           value={keyword}
-                          onChange={(e) => handleArrayChange('seoKeywords', index, e.target.value)}
+                          onChange={(e) => handleArrayChange('seo_keywords', index, e.target.value)}
                           placeholder="Enter keyword"
                         />
                         <Button
                           type="button"
                           variant="outline"
                           size="sm"
-                          onClick={() => removeArrayItem('seoKeywords', index)}
+                          onClick={() => removeArrayItem('seo_keywords', index)}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -329,7 +329,7 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
                       type="button"
                       variant="outline"
                       size="sm"
-                      onClick={() => addArrayItem('seoKeywords')}
+                      onClick={() => addArrayItem('seo_keywords')}
                       className="mt-2"
                     >
                       <Plus className="h-4 w-4 mr-2" />
@@ -342,31 +342,31 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
                   <h3 className="text-lg font-semibold">OpenGraph (Social Media)</h3>
                   
                   <div>
-                    <Label htmlFor="ogTitle">OG Title</Label>
+                    <Label htmlFor="og_title">OG Title</Label>
                     <Input
-                      id="ogTitle"
-                      value={formData.ogTitle}
-                      onChange={(e) => handleChange('ogTitle', e.target.value)}
+                      id="og_title"
+                      value={formData.og_title}
+                      onChange={(e) => handleChange('og_title', e.target.value)}
                       placeholder="Title for social media sharing"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="ogDescription">OG Description</Label>
+                    <Label htmlFor="og_description">OG Description</Label>
                     <Textarea
-                      id="ogDescription"
-                      value={formData.ogDescription}
-                      onChange={(e) => handleChange('ogDescription', e.target.value)}
+                      id="og_description"
+                      value={formData.og_description}
+                      onChange={(e) => handleChange('og_description', e.target.value)}
                       rows={3}
                       placeholder="Description for social media sharing"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="ogImage">OG Image URL</Label>
+                    <Label htmlFor="og_image">OG Image URL</Label>
                     <ImageUpload
-                      value={formData.ogImage}
-                      onChange={(url) => handleChange('ogImage', url)}
+                      value={formData.og_image}
+                      onChange={(url) => handleChange('og_image', url)}
                       bucket="blog"
                       folder="og-images"
                       label="OpenGraph Image"

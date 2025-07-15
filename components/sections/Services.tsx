@@ -79,13 +79,23 @@ export default function Services() {
                   <div className={`absolute -inset-1 bg-gradient-to-r ${service.gradient} rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
                   
                   {/* Featured Image */}
-                  {service.featured_image && (
+                  {service.featured_image ? (
                     <div className="aspect-video relative overflow-hidden rounded-t-2xl">
                       <img
                         src={service.featured_image}
                         alt={service.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
                       />
+                    </div>
+                  ) : (
+                    <div className="aspect-video relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center rounded-t-2xl">
+                      <div className="text-center">
+                        <Sparkles className="h-12 w-12 mx-auto text-gray-400 mb-2" />
+                        <p className="text-gray-500 dark:text-gray-400 text-sm">No featured image</p>
+                      </div>
                     </div>
                   )}
                   

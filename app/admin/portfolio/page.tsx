@@ -144,7 +144,7 @@ export default function PortfolioPage() {
               {/* Featured or Main Image */}
               <div className="aspect-video relative">
                 <img
-                  src={item.featuredImage || item.imageUrl}
+                  src={item.featured_image || item.image_url}
                   alt={item.title}
                   className="w-full h-full object-cover"
                   onError={(e) => {
@@ -162,7 +162,7 @@ export default function PortfolioPage() {
                       Featured
                     </Badge>
                   )}
-                </div>
+                  {item.featured_image && item.featured_image !== item.image_url && (
                 {item.featuredImage && item.featuredImage !== item.imageUrl && (
                   <div className="absolute top-4 right-4">
                     <Badge variant="secondary" className="bg-blue-500 text-white">
@@ -211,8 +211,8 @@ export default function PortfolioPage() {
                           View
                         </Button>
                       </Link>
-                      {item.liveUrl && (
-                        <Link href={item.liveUrl} target="_blank">
+                      {item.live_url && (
+                        <Link href={item.live_url} target="_blank">
                           <Button size="sm" variant="outline">
                             <ExternalLink className="h-4 w-4" />
                           </Button>

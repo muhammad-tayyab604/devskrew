@@ -117,9 +117,12 @@ export default function TeamMembersPage() {
             <Card key={member.id} className="overflow-hidden">
               <div className="aspect-square relative">
                 <img
-                  src={member.imageUrl}
+                  src={member.image_url}
                   alt={member.name}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iNDAiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjOTk5Ij4n${member.name.charAt(0)}'</text></svg>';
+                  }}
                 />
               </div>
               <CardHeader>
@@ -132,10 +135,10 @@ export default function TeamMembersPage() {
                 </p>
                 <div className="flex justify-between items-center">
                   <div className="flex space-x-2">
-                    {member.linkedinUrl && (
+                    {member.linkedin_url && (
                       <Badge variant="outline">LinkedIn</Badge>
                     )}
-                    {member.twitterUrl && (
+                    {member.twitter_url && (
                       <Badge variant="outline">Twitter</Badge>
                     )}
                   </div>

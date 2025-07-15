@@ -140,9 +140,12 @@ export default function BlogPage() {
             <Card key={post.id} className="overflow-hidden">
               <div className="aspect-video relative">
                 <img
-                  src={post.imageUrl}
+                  src={post.image_url}
                   alt={post.title}
                   className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjOTk5Ij5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+';
+                  }}
                 />
                 <div className="absolute top-4 left-4">
                   <Badge className={post.published ? 'bg-green-500' : 'bg-yellow-500'}>
@@ -153,7 +156,7 @@ export default function BlogPage() {
               <CardHeader>
                 <div className="flex items-center justify-between mb-2">
                   <Badge variant="outline">{post.category}</Badge>
-                  <span className="text-sm text-gray-500">{post.readTime}</span>
+                  <span className="text-sm text-gray-500">{post.read_time}</span>
                 </div>
                 <CardTitle className="text-lg line-clamp-2">{post.title}</CardTitle>
                 <CardDescription className="line-clamp-3">

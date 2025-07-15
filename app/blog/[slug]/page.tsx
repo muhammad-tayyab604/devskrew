@@ -23,13 +23,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     return {
-      title: post.seoTitle || `${post.title} - Devskrew Blog`,
-      description: post.seoDescription || post.excerpt,
-      keywords: post.seoKeywords?.length ? post.seoKeywords : [post.category.toLowerCase(), 'blog', 'insights'],
+      title: post.seo_title || `${post.title} - Devskrew Blog`,
+      description: post.seo_description || post.excerpt,
+      keywords: post.seo_keywords?.length ? post.seo_keywords : [post.category.toLowerCase(), 'blog', 'insights'],
       openGraph: {
-        title: post.ogTitle || post.title,
-        description: post.ogDescription || post.excerpt,
-        images: post.ogImage ? [post.ogImage] : [post.imageUrl],
+        title: post.og_title || post.title,
+        description: post.og_description || post.excerpt,
+        images: post.og_image ? [post.og_image] : [post.image_url],
         type: 'article',
         publishedTime: post.published_at,
         authors: [post.author],
@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         card: 'summary_large_image',
         title: post.title,
         description: post.excerpt,
-        images: [post.imageUrl],
+        images: [post.image_url],
       },
     };
   } catch (error) {
@@ -102,7 +102,7 @@ export default async function BlogPost({ params }: Props) {
               </div>
               <div className="flex items-center">
                 <Clock className="h-4 w-4 mr-2" />
-                {post.readTime}
+                {post.read_time}
               </div>
             </div>
 
@@ -118,7 +118,7 @@ export default async function BlogPost({ params }: Props) {
             <div className="relative group">
               <div className={`absolute -inset-4 bg-gradient-to-r ${post.gradient} rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
               <img
-                src={post.imageUrl}
+                src={post.image_url}
                 alt={post.title}
                 className="relative rounded-3xl shadow-2xl w-full h-64 sm:h-96 object-cover"
                 onError={(e) => {

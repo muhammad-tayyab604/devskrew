@@ -21,9 +21,9 @@ export default function TeamMemberForm({ member, onClose }: TeamMemberFormProps)
     name: member?.name || '',
     designation: member?.designation || '',
     bio: member?.bio || '',
-    imageUrl: member?.imageUrl || '',
-    linkedinUrl: member?.linkedinUrl || '',
-    twitterUrl: member?.twitterUrl || '',
+    image_url: member?.image_url || '',
+    linkedin_url: member?.linkedin_url || '',
+    twitter_url: member?.twitter_url || '',
   });
   const [loading, setLoading] = useState(false);
 
@@ -104,8 +104,8 @@ export default function TeamMemberForm({ member, onClose }: TeamMemberFormProps)
             </div>
 
             <ImageUpload
-              value={formData.imageUrl}
-              onChange={(url) => handleChange('imageUrl', url)}
+              value={formData.image_url}
+              onChange={(url) => handleChange('image_url', url)}
               bucket="images"
               folder="avatars"
               label="Profile Image"
@@ -114,21 +114,21 @@ export default function TeamMemberForm({ member, onClose }: TeamMemberFormProps)
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="linkedinUrl">LinkedIn URL</Label>
+                <Label htmlFor="linkedin_url">LinkedIn URL</Label>
                 <Input
-                  id="linkedinUrl"
+                  id="linkedin_url"
                   type="url"
-                  value={formData.linkedinUrl}
-                  onChange={(e) => handleChange('linkedinUrl', e.target.value)}
+                  value={formData.linkedin_url}
+                  onChange={(e) => handleChange('linkedin_url', e.target.value)}
                 />
               </div>
               <div>
-                <Label htmlFor="twitterUrl">Twitter URL</Label>
+                <Label htmlFor="twitter_url">Twitter URL</Label>
                 <Input
-                  id="twitterUrl"
+                  id="twitter_url"
                   type="url"
-                  value={formData.twitterUrl}
-                  onChange={(e) => handleChange('twitterUrl', e.target.value)}
+                  value={formData.twitter_url}
+                  onChange={(e) => handleChange('twitter_url', e.target.value)}
                 />
               </div>
             </div>

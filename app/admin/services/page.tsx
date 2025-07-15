@@ -114,16 +114,16 @@ export default function ServicesPage() {
           {filteredServices.map((service) => (
             <Card key={service.id} className="overflow-hidden">
               {/* Featured Image */}
-              {service.featuredImage ? (
+              {service.featured_image ? (
                 <div className="aspect-video relative">
                   <img
-                    src={service.featuredImage}
+                    src={service.featured_image}
                     alt={service.title}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute top-4 right-4">
                     <Badge variant="outline" className="bg-white/90 text-gray-900">
-                      {service.startingPrice}
+                      {service.starting_price}
                     </Badge>
                   </div>
                 </div>
@@ -135,7 +135,7 @@ export default function ServicesPage() {
                   </div>
                   <div className="absolute top-4 right-4">
                     <Badge variant="outline" className="bg-white/90 text-gray-900">
-                      {service.startingPrice}
+                      {service.starting_price}
                     </Badge>
                   </div>
                 </div>

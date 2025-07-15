@@ -25,13 +25,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     return {
-      title: service.seoTitle || `${service.title} Services - Professional ${service.title} Solutions`,
-      description: service.seoDescription || service.description,
-      keywords: service.seoKeywords?.length ? service.seoKeywords : [service.title.toLowerCase(), 'professional services', 'digital agency', ...service.technologies.map(tech => tech.toLowerCase())],
+      title: service.seo_title || `${service.title} Services - Professional ${service.title} Solutions`,
+      description: service.seo_description || service.description,
+      keywords: service.seo_keywords?.length ? service.seo_keywords : [service.title.toLowerCase(), 'professional services', 'digital agency', ...service.technologies.map(tech => tech.toLowerCase())],
       openGraph: {
-        title: service.ogTitle || `${service.title} Services - Devskrew`,
-        description: service.ogDescription || service.description,
-        images: service.ogImage ? [service.ogImage] : undefined,
+        title: service.og_title || `${service.title} Services - Devskrew`,
+        description: service.og_description || service.description,
+        images: service.og_image ? [service.og_image] : undefined,
         type: 'website',
       },
     };
@@ -83,17 +83,17 @@ export default async function ServiceDetail({ params }: Props) {
                 </span>
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-                {service.longDescription}
+                {service.long_description}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 mb-8">
                 <div className="flex items-center text-gray-600 dark:text-gray-300">
                   <Clock className="h-5 w-5 mr-2 text-blue-600" />
-                  <span>{service.deliveryTime}</span>
+                  <span>{service.delivery_time}</span>
                 </div>
                 <div className="flex items-center text-gray-600 dark:text-gray-300">
                   <Award className="h-5 w-5 mr-2 text-green-600" />
-                  <span>Starting at {service.startingPrice}</span>
+                  <span>Starting at {service.starting_price}</span>
                 </div>
               </div>
               
@@ -109,10 +109,10 @@ export default async function ServiceDetail({ params }: Props) {
               <div className="relative group">
                 <div className={`absolute -inset-4 bg-gradient-to-r ${service.gradient} rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
                 <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
-                  {service.featuredImage && (
+                  {service.featured_image && (
                     <div className="mb-6">
                       <img
-                        src={service.featuredImage}
+                        src={service.featured_image}
                         alt={service.title}
                         className="w-full h-48 object-cover rounded-2xl"
                         onError={(e) => {

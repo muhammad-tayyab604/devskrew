@@ -23,18 +23,18 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
     title: item?.title || '',
     slug: item?.slug || '',
     description: item?.description || '',
-    longDescription: item?.longDescription || '',
-    imageUrl: item?.imageUrl || '',
-    featuredImage: item?.featuredImage || '',
-    galleryUrls: item?.galleryUrls || [''],
+    long_description: item?.long_description || '',
+    image_url: item?.image_url || '',
+    featured_image: item?.featured_image || '',
+    gallery_urls: item?.gallery_urls || [''],
     tags: item?.tags || [''],
     category: item?.category || '',
     client: item?.client || '',
     year: item?.year || '',
     duration: item?.duration || '',
-    teamSize: item?.teamSize || '',
-    liveUrl: item?.liveUrl || '',
-    githubUrl: item?.githubUrl || '',
+    team_size: item?.team_size || '',
+    live_url: item?.live_url || '',
+    github_url: item?.github_url || '',
     challenge: item?.challenge || '',
     solution: item?.solution || '',
     features: item?.features || [''],
@@ -43,13 +43,13 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
     testimonial: item?.testimonial || { content: '', author: '', role: '', avatar: '' },
     gradient: item?.gradient || 'from-blue-500 to-cyan-500',
     featured: item?.featured || false,
-    seoTitle: item?.seoTitle || '',
-    seoDescription: item?.seoDescription || '',
-    seoKeywords: item?.seoKeywords || [''],
+    seo_title: item?.seo_title || '',
+    seo_description: item?.seo_description || '',
+    seo_keywords: item?.seo_keywords || [''],
     // OpenGraph fields
-    ogTitle: item?.ogTitle || '',
-    ogDescription: item?.ogDescription || '',
-    ogImage: item?.ogImage || '',
+    og_title: item?.og_title || '',
+    og_description: item?.og_description || '',
+    og_image: item?.og_image || '',
   });
   const [loading, setLoading] = useState(false);
 
@@ -69,7 +69,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
     try {
       const cleanedData = {
         ...formData,
-        galleryUrls: formData.galleryUrls.filter(url => url.trim() !== ''),
+        gallery_urls: formData.gallery_urls.filter(url => url.trim() !== ''),
         tags: formData.tags.filter(tag => tag.trim() !== ''),
         features: formData.features.filter(feature => feature.trim() !== ''),
         technologies: {
@@ -78,7 +78,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
           tools: formData.technologies.tools.filter(tech => tech.trim() !== ''),
         },
         results: formData.results.filter(result => result.metric.trim() !== ''),
-        seoKeywords: formData.seoKeywords.filter(k => k.trim() !== ''),
+        seo_keywords: formData.seo_keywords.filter(k => k.trim() !== ''),
       };
 
       if (item?.id) {
@@ -107,7 +107,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
   };
 
   // Fixed array change handlers with proper typing
-  const handleArrayChange = (field: 'galleryUrls' | 'tags' | 'features' | 'seoKeywords', index: number, value: string) => {
+  const handleArrayChange = (field: 'gallery_urls' | 'tags' | 'features' | 'seo_keywords', index: number, value: string) => {
     setFormData(prev => ({
       ...prev,
       [field]: prev[field].map((item, i) => i === index ? value : item)
@@ -140,7 +140,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
     }));
   };
 
-  const addArrayItem = (field: 'galleryUrls' | 'tags' | 'features' | 'seoKeywords') => {
+  const addArrayItem = (field: 'gallery_urls' | 'tags' | 'features' | 'seo_keywords') => {
     setFormData(prev => ({
       ...prev,
       [field]: [...prev[field], '']
@@ -164,7 +164,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
     }));
   };
 
-  const removeArrayItem = (field: 'galleryUrls' | 'tags' | 'features' | 'seoKeywords', index: number) => {
+  const removeArrayItem = (field: 'gallery_urls' | 'tags' | 'features' | 'seo_keywords', index: number) => {
     setFormData(prev => ({
       ...prev,
       [field]: prev[field].filter((_, i) => i !== index)
@@ -252,11 +252,11 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                 </div>
 
                 <div>
-                  <Label htmlFor="longDescription">Long Description *</Label>
+                  <Label htmlFor="long_description">Long Description *</Label>
                   <Textarea
-                    id="longDescription"
-                    value={formData.longDescription}
-                    onChange={(e) => handleChange('longDescription', e.target.value)}
+                    id="long_description"
+                    value={formData.long_description}
+                    onChange={(e) => handleChange('long_description', e.target.value)}
                     rows={5}
                     required
                   />
@@ -303,11 +303,11 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="teamSize">Team Size</Label>
+                    <Label htmlFor="team_size">Team Size</Label>
                     <Input
-                      id="teamSize"
-                      value={formData.teamSize}
-                      onChange={(e) => handleChange('teamSize', e.target.value)}
+                      id="team_size"
+                      value={formData.team_size}
+                      onChange={(e) => handleChange('team_size', e.target.value)}
                       placeholder="5 developers"
                     />
                   </div>
@@ -315,21 +315,21 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="liveUrl">Live URL</Label>
+                    <Label htmlFor="live_url">Live URL</Label>
                     <Input
-                      id="liveUrl"
+                      id="live_url"
                       type="url"
-                      value={formData.liveUrl}
-                      onChange={(e) => handleChange('liveUrl', e.target.value)}
+                      value={formData.live_url}
+                      onChange={(e) => handleChange('live_url', e.target.value)}
                     />
                   </div>
                   <div>
-                    <Label htmlFor="githubUrl">GitHub URL</Label>
+                    <Label htmlFor="github_url">GitHub URL</Label>
                     <Input
-                      id="githubUrl"
+                      id="github_url"
                       type="url"
-                      value={formData.githubUrl}
-                      onChange={(e) => handleChange('githubUrl', e.target.value)}
+                      value={formData.github_url}
+                      onChange={(e) => handleChange('github_url', e.target.value)}
                     />
                   </div>
                 </div>
@@ -346,8 +346,8 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
 
               <TabsContent value="media" className="space-y-6">
                 <ImageUpload
-                  value={formData.imageUrl}
-                  onChange={(url) => handleChange('imageUrl', url)}
+                  value={formData.image_url}
+                  onChange={(url) => handleChange('image_url', url)}
                   bucket="portfolio"
                   folder="main-images"
                   label="Main Image"
@@ -355,8 +355,8 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                 />
 
                 <ImageUpload
-                  value={formData.featuredImage}
-                  onChange={(url) => handleChange('featuredImage', url)}
+                  value={formData.featured_image}
+                  onChange={(url) => handleChange('featured_image', url)}
                   bucket="portfolio"
                   folder="featured-images"
                   label="Featured Image (Optional)"
@@ -364,12 +364,12 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
 
                 <div>
                   <Label>Gallery URLs</Label>
-                  {formData.galleryUrls.map((url, index) => (
+                  {formData.gallery_urls.map((url, index) => (
                     <div key={index} className="flex gap-2 mt-2">
                       <div className="flex-1">
                         <ImageUpload
                           value={url}
-                          onChange={(newUrl) => handleArrayChange('galleryUrls', index, newUrl)}
+                          onChange={(newUrl) => handleArrayChange('gallery_urls', index, newUrl)}
                           bucket="portfolio"
                           folder="gallery"
                           label={`Gallery Image ${index + 1}`}
@@ -380,7 +380,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                         type="button"
                         variant="outline"
                         size="sm"
-                        onClick={() => removeArrayItem('galleryUrls', index)}
+                        onClick={() => removeArrayItem('gallery_urls', index)}
                         className="mt-8"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -391,7 +391,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                     type="button"
                     variant="outline"
                     size="sm"
-                    onClick={() => addArrayItem('galleryUrls')}
+                    onClick={() => addArrayItem('gallery_urls')}
                     className="mt-2"
                   >
                     <Plus className="h-4 w-4 mr-2" />
@@ -609,21 +609,21 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                   <h3 className="text-lg font-semibold">Basic SEO</h3>
                   
                   <div>
-                    <Label htmlFor="seoTitle">SEO Title</Label>
+                    <Label htmlFor="seo_title">SEO Title</Label>
                     <Input
-                      id="seoTitle"
-                      value={formData.seoTitle}
-                      onChange={(e) => handleChange('seoTitle', e.target.value)}
+                      id="seo_title"
+                      value={formData.seo_title}
+                      onChange={(e) => handleChange('seo_title', e.target.value)}
                       placeholder="Custom SEO title"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="seoDescription">SEO Description</Label>
+                    <Label htmlFor="seo_description">SEO Description</Label>
                     <Textarea
-                      id="seoDescription"
-                      value={formData.seoDescription}
-                      onChange={(e) => handleChange('seoDescription', e.target.value)}
+                      id="seo_description"
+                      value={formData.seo_description}
+                      onChange={(e) => handleChange('seo_description', e.target.value)}
                       rows={3}
                       placeholder="Custom SEO description"
                     />
@@ -631,18 +631,18 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
 
                   <div>
                     <Label>SEO Keywords</Label>
-                    {formData.seoKeywords.map((keyword, index) => (
+                    {formData.seo_keywords.map((keyword, index) => (
                       <div key={index} className="flex gap-2 mt-2">
                         <Input
                           value={keyword}
-                          onChange={(e) => handleArrayChange('seoKeywords', index, e.target.value)}
+                          onChange={(e) => handleArrayChange('seo_keywords', index, e.target.value)}
                           placeholder="Enter keyword"
                         />
                         <Button
                           type="button"
                           variant="outline"
                           size="sm"
-                          onClick={() => removeArrayItem('seoKeywords', index)}
+                          onClick={() => removeArrayItem('seo_keywords', index)}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -652,7 +652,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                       type="button"
                       variant="outline"
                       size="sm"
-                      onClick={() => addArrayItem('seoKeywords')}
+                      onClick={() => addArrayItem('seo_keywords')}
                       className="mt-2"
                     >
                       <Plus className="h-4 w-4 mr-2" />
@@ -665,33 +665,33 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                   <h3 className="text-lg font-semibold">OpenGraph (Social Media)</h3>
                   
                   <div>
-                    <Label htmlFor="ogTitle">OG Title</Label>
+                    <Label htmlFor="og_title">OG Title</Label>
                     <Input
-                      id="ogTitle"
-                      value={formData.ogTitle}
-                      onChange={(e) => handleChange('ogTitle', e.target.value)}
+                      id="og_title"
+                      value={formData.og_title}
+                      onChange={(e) => handleChange('og_title', e.target.value)}
                       placeholder="Title for social media sharing"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="ogDescription">OG Description</Label>
+                    <Label htmlFor="og_description">OG Description</Label>
                     <Textarea
-                      id="ogDescription"
-                      value={formData.ogDescription}
-                      onChange={(e) => handleChange('ogDescription', e.target.value)}
+                      id="og_description"
+                      value={formData.og_description}
+                      onChange={(e) => handleChange('og_description', e.target.value)}
                       rows={3}
                       placeholder="Description for social media sharing"
                     />
                   </div>
 
                   <div>
-                    <Label htmlFor="ogImage">OG Image URL</Label>
+                    <Label htmlFor="og_image">OG Image URL</Label>
                     <Input
-                      id="ogImage"
+                      id="og_image"
                       type="url"
-                      value={formData.ogImage}
-                      onChange={(e) => handleChange('ogImage', e.target.value)}
+                      value={formData.og_image}
+                      onChange={(e) => handleChange('og_image', e.target.value)}
                       placeholder="https://example.com/og-image.jpg"
                     />
                     <p className="text-sm text-gray-500 mt-1">
