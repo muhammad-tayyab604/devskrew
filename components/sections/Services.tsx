@@ -75,14 +75,14 @@ export default function Services() {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {services.map((service, index) => (
-                <Card key={service.id || index} className={`group relative overflow-hidden border-0 bg-gradient-to-br ${service.bgGradient || 'from-blue-50 to-cyan-50 dark:from-blue-950/50 dark:to-cyan-950/50'} hover:shadow-2xl transition-all duration-500 hover:-translate-y-2`}>
+                <Card key={service.id || index} className={`group relative overflow-hidden border-0 bg-gradient-to-br ${service.bg_gradient || 'from-blue-50 to-cyan-50 dark:from-blue-950/50 dark:to-cyan-950/50'} hover:shadow-2xl transition-all duration-500 hover:-translate-y-2`}>
                   <div className={`absolute -inset-1 bg-gradient-to-r ${service.gradient} rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
                   
                   {/* Featured Image */}
-                  {service.featuredImage && (
+                  {service.featured_image && (
                     <div className="aspect-video relative overflow-hidden rounded-t-2xl">
                       <img
-                        src={service.featuredImage}
+                        src={service.featured_image}
                         alt={service.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />
@@ -96,7 +96,7 @@ export default function Services() {
                       </div>
                       <div className="text-right">
                         <p className="text-sm text-gray-500 dark:text-gray-400">Starting at</p>
-                        <p className="text-lg font-bold text-blue-600 dark:text-blue-400">{service.startingPrice}</p>
+                        <p className="text-lg font-bold text-blue-600 dark:text-blue-400">{service.starting_price}</p>
                       </div>
                     </div>
                     <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white mb-3">

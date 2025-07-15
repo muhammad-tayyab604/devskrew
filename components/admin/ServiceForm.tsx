@@ -22,22 +22,22 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
     title: service?.title || '',
     slug: service?.slug || '',
     description: service?.description || '',
-    longDescription: service?.longDescription || '',
+    long_description: service?.long_description || '',
     features: service?.features || [''],
     technologies: service?.technologies || [''],
-    startingPrice: service?.startingPrice || '',
-    deliveryTime: service?.deliveryTime || '',
+    starting_price: service?.starting_price || '',
+    delivery_time: service?.delivery_time || '',
     icon: service?.icon || 'Code',
-    featuredImage: service?.featuredImage || '',
+    featured_image: service?.featured_image || '',
     gradient: service?.gradient || 'from-blue-500 to-cyan-500',
-    bgGradient: service?.bgGradient || 'from-blue-50 to-cyan-50 dark:from-blue-950/50 dark:to-cyan-950/50',
-    seoTitle: service?.seoTitle || '',
-    seoDescription: service?.seoDescription || '',
-    seoKeywords: service?.seoKeywords || [''],
+    bg_gradient: service?.bg_gradient || 'from-blue-50 to-cyan-50 dark:from-blue-950/50 dark:to-cyan-950/50',
+    seo_title: service?.seo_title || '',
+    seo_description: service?.seo_description || '',
+    seo_keywords: service?.seo_keywords || [''],
     // OpenGraph fields
-    ogTitle: service?.ogTitle || '',
-    ogDescription: service?.ogDescription || '',
-    ogImage: service?.ogImage || '',
+    og_title: service?.og_title || '',
+    og_description: service?.og_description || '',
+    og_image: service?.og_image || '',
   });
   const [loading, setLoading] = useState(false);
 
@@ -59,7 +59,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
         ...formData,
         features: formData.features.filter(f => f.trim() !== ''),
         technologies: formData.technologies.filter(t => t.trim() !== ''),
-        seoKeywords: formData.seoKeywords.filter(k => k.trim() !== ''),
+        seo_keywords: formData.seo_keywords.filter(k => k.trim() !== ''),
       };
 
       if (service?.id) {
@@ -87,21 +87,21 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
     });
   };
 
-  const handleArrayChange = (field: 'features' | 'technologies' | 'seoKeywords', index: number, value: string) => {
+  const handleArrayChange = (field: 'features' | 'technologies' | 'seo_keywords', index: number, value: string) => {
     setFormData(prev => ({
       ...prev,
-      [field]: prev[field].map((item, i) => i === index ? value : item)
+      [field]: prev[field].map((item: any, i: number) => i === index ? value : item)
     }));
   };
 
-  const addArrayItem = (field: 'features' | 'technologies' | 'seoKeywords') => {
+  const addArrayItem = (field: 'features' | 'technologies' | 'seo_keywords') => {
     setFormData(prev => ({
       ...prev,
       [field]: [...prev[field], '']
     }));
   };
 
-  const removeArrayItem = (field: 'features' | 'technologies' | 'seoKeywords', index: number) => {
+  const removeArrayItem = (field: 'features' | 'technologies' | 'seo_keywords', index: number) => {
     setFormData(prev => ({
       ...prev,
       [field]: prev[field].filter((_, i) => i !== index)
@@ -173,7 +173,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                   <Label htmlFor="longDescription">Long Description *</Label>
                   <Textarea
                     id="longDescription"
-                    value={formData.longDescription}
+                    value={formData.long_description}
                     onChange={(e) => handleChange('longDescription', e.target.value)}
                     rows={5}
                     required
@@ -185,7 +185,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                     <Label htmlFor="startingPrice">Starting Price *</Label>
                     <Input
                       id="startingPrice"
-                      value={formData.startingPrice}
+                      value={formData.starting_price}
                       onChange={(e) => handleChange('startingPrice', e.target.value)}
                       placeholder="$2,500"
                       required
@@ -195,7 +195,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                     <Label htmlFor="deliveryTime">Delivery Time *</Label>
                     <Input
                       id="deliveryTime"
-                      value={formData.deliveryTime}
+                      value={formData.delivery_time}
                       onChange={(e) => handleChange('deliveryTime', e.target.value)}
                       placeholder="4-12 weeks"
                       required
@@ -215,9 +215,9 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
 
               <TabsContent value="media" className="space-y-6">
                 <ImageUpload
-                  value={formData.featuredImage}
+                  value={formData.featured_image}
                   onChange={(url) => handleChange('featuredImage', url)}
-                  bucket="services"
+                  bucket="images"
                   folder="featured-images"
                   label="Featured Image"
                 />
@@ -300,7 +300,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                     <Label htmlFor="bgGradient">Background Gradient</Label>
                     <Input
                       id="bgGradient"
-                      value={formData.bgGradient}
+                      value={formData.bg_gradient}
                       onChange={(e) => handleChange('bgGradient', e.target.value)}
                       placeholder="from-blue-50 to-cyan-50"
                     />
@@ -316,7 +316,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                     <Label htmlFor="seoTitle">SEO Title</Label>
                     <Input
                       id="seoTitle"
-                      value={formData.seoTitle}
+                      value={formData.seo_title}
                       onChange={(e) => handleChange('seoTitle', e.target.value)}
                       placeholder="Custom SEO title"
                     />
@@ -326,7 +326,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                     <Label htmlFor="seoDescription">SEO Description</Label>
                     <Textarea
                       id="seoDescription"
-                      value={formData.seoDescription}
+                      value={formData.seo_description}
                       onChange={(e) => handleChange('seoDescription', e.target.value)}
                       rows={3}
                       placeholder="Custom SEO description"
@@ -335,18 +335,18 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
 
                   <div>
                     <Label>SEO Keywords</Label>
-                    {formData.seoKeywords.map((keyword, index) => (
+                    {formData.seo_keywords.map((keyword, index) => (
                       <div key={index} className="flex gap-2 mt-2">
                         <Input
                           value={keyword}
-                          onChange={(e) => handleArrayChange('seoKeywords', index, e.target.value)}
+                          onChange={(e) => handleArrayChange('seo_keywords', index, e.target.value)}
                           placeholder="Enter keyword"
                         />
                         <Button
                           type="button"
                           variant="outline"
                           size="sm"
-                          onClick={() => removeArrayItem('seoKeywords', index)}
+                          onClick={() => removeArrayItem('seo_keywords', index)}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -356,7 +356,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                       type="button"
                       variant="outline"
                       size="sm"
-                      onClick={() => addArrayItem('seoKeywords')}
+                      onClick={() => addArrayItem('seo_keywords')}
                       className="mt-2"
                     >
                       <Plus className="h-4 w-4 mr-2" />
@@ -372,7 +372,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                     <Label htmlFor="ogTitle">OG Title</Label>
                     <Input
                       id="ogTitle"
-                      value={formData.ogTitle}
+                      value={formData.og_title}
                       onChange={(e) => handleChange('ogTitle', e.target.value)}
                       placeholder="Title for social media sharing"
                     />
@@ -382,7 +382,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                     <Label htmlFor="ogDescription">OG Description</Label>
                     <Textarea
                       id="ogDescription"
-                      value={formData.ogDescription}
+                      value={formData.og_description}
                       onChange={(e) => handleChange('ogDescription', e.target.value)}
                       rows={3}
                       placeholder="Description for social media sharing"
@@ -394,7 +394,7 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                     <Input
                       id="ogImage"
                       type="url"
-                      value={formData.ogImage}
+                      value={formData.og_image}
                       onChange={(e) => handleChange('ogImage', e.target.value)}
                       placeholder="https://example.com/og-image.jpg"
                     />

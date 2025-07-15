@@ -67,27 +67,28 @@ export const teamMembersService = {
 
 // Services
 export interface Service {
-  id?: string;
-  title: string;
-  slug: string;
-  description: string;
-  longDescription: string;
-  features: string[];
-  technologies: string[];
-  startingPrice: string;
-  deliveryTime: string;
-  icon: string;
-  featuredImage?: string;
-  gradient: string;
-  bgGradient: string;
-  seoTitle?: string;
-  seoDescription?: string;
-  seoKeywords?: string[];
-  ogTitle?: string;
-  ogDescription?: string;
-  ogImage?: string;
-  updated_at?: string;
+  id?:        string;
+  title:      string;
+  slug:       string;
+  description:string;
+  long_description: string;
+  features:   string[];
+  technologies:string[];
+  starting_price:  string;
+  delivery_time:   string;
+  icon:       string;
+  featured_image?: string;
+  gradient:   string;
+  bg_gradient: string;
+  seo_title?: string;
+  seo_description?: string;
+  seo_keywords?: string[];
+  og_title?:  string;
+  og_description?: string;
+  og_image?:  string;
+  updated_at?:string;
 }
+
 
 export const servicesService = {
   async getAll(): Promise<Service[]> {
