@@ -55,12 +55,27 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
     setLoading(true);
 
     try {
-      const cleanedData = {
-        ...formData,
-        features: formData.features.filter(f => f.trim() !== ''),
-        technologies: formData.technologies.filter(t => t.trim() !== ''),
-        seo_keywords: formData.seo_keywords.filter(k => k.trim() !== ''),
-      };
+      const cleanedData: Omit<Service, 'id' | 'created_at' | 'updated_at'> = {
+  title:            formData.title,
+  slug:             formData.slug,
+  description:      formData.description,
+  long_description: formData.long_description,
+  features:         formData.features.filter(f => f.trim() !== ''),
+  technologies:     formData.technologies.filter(t => t.trim() !== ''),
+  starting_price:   formData.starting_price,
+  delivery_time:    formData.delivery_time,
+  icon:             formData.icon,
+  featured_image:   formData.featured_image,
+  gradient:         formData.gradient,
+  bg_gradient:      formData.bg_gradient,
+  seo_title:        formData.seo_title,
+  seo_description:  formData.seo_description,
+  seo_keywords:     formData.seo_keywords.filter(k => k.trim() !== ''),
+  og_title:         formData.og_title,
+  og_description:   formData.og_description,
+  og_image:         formData.og_image,
+};
+
 
       if (service?.id) {
         await servicesService.update(service.id, cleanedData);
@@ -170,11 +185,11 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
                 </div>
 
                 <div>
-                  <Label htmlFor="longDescription">Long Description *</Label>
+                  <Label htmlFor="long_description">Long Description *</Label>
                   <Textarea
-                    id="longDescription"
+                    id="long_description"
                     value={formData.long_description}
-                    onChange={(e) => handleChange('longDescription', e.target.value)}
+                    onChange={(e) => handleChange('long_description', e.target.value)}
                     rows={5}
                     required
                   />
@@ -182,21 +197,21 @@ export default function ServiceForm({ service, onClose }: ServiceFormProps) {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
-                    <Label htmlFor="startingPrice">Starting Price *</Label>
+                    <Label htmlFor="starting_price">Starting Price *</Label>
                     <Input
-                      id="startingPrice"
+                      id="starting_price"
                       value={formData.starting_price}
-                      onChange={(e) => handleChange('startingPrice', e.target.value)}
+                      onChange={(e) => handleChange('starting_price', e.target.value)}
                       placeholder="$2,500"
                       required
                     />
                   </div>
                   <div>
-                    <Label htmlFor="deliveryTime">Delivery Time *</Label>
+                    <Label htmlFor="delivery_time">Delivery Time *</Label>
                     <Input
-                      id="deliveryTime"
+                      id="delivery_time"
                       value={formData.delivery_time}
-                      onChange={(e) => handleChange('deliveryTime', e.target.value)}
+                      onChange={(e) => handleChange('delivery_time', e.target.value)}
                       placeholder="4-12 weeks"
                       required
                     />

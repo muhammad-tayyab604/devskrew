@@ -348,7 +348,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                 <ImageUpload
                   value={formData.image_url}
                   onChange={(url) => handleChange('image_url', url)}
-                  bucket="portfolio"
+                  bucket="images"
                   folder="main-images"
                   label="Main Image"
                   required
@@ -357,7 +357,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                 <ImageUpload
                   value={formData.featured_image}
                   onChange={(url) => handleChange('featured_image', url)}
-                  bucket="portfolio"
+                  bucket="images"
                   folder="featured-images"
                   label="Featured Image (Optional)"
                 />
@@ -370,7 +370,7 @@ export default function PortfolioForm({ item, onClose }: PortfolioFormProps) {
                         <ImageUpload
                           value={url}
                           onChange={(newUrl) => handleArrayChange('gallery_urls', index, newUrl)}
-                          bucket="portfolio"
+                          bucket="images"
                           folder="gallery"
                           label={`Gallery Image ${index + 1}`}
                           className="mb-0"

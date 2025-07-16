@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Check, Star, Users, Clock, Award, ArrowRight } from 'lucide-react';
 import CTA from '@/components/sections/CTA';
 import { servicesService } from '@/lib/database';
+import ServiceImage from '@/components/FeaturedImage';
 
 interface Props {
   params: {
@@ -111,14 +112,10 @@ export default async function ServiceDetail({ params }: Props) {
                 <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
                   {service.featured_image && (
                     <div className="mb-6">
-                      <img
-                        src={service.featured_image}
-                        alt={service.title}
-                        className="w-full h-48 object-cover rounded-2xl"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                        }}
-                      />
+                      <ServiceImage
+      src={service.featured_image}
+      alt={service.title}
+    />
                     </div>
                   )}
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Key Features</h3>
