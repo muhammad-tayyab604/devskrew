@@ -80,7 +80,7 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <HeaderGuard/>
-          <SmoothCursor />
+          {/* <SmoothCursor /> */}
 
           <main className="min-h-screen">
             {children}

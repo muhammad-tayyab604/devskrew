@@ -5,8 +5,9 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ExternalLink, ArrowRight, Calendar, User, FolderOpen } from 'lucide-react';
+import { ExternalLink, ArrowRight, Calendar, User, FolderOpen, Sparkles } from 'lucide-react';
 import { portfolioService, Portfolio } from '@/lib/database';
+import { CometCard } from '../ui/comet-card';
 
 export default function PortfolioSection() {
   const [projects, setProjects] = useState<Portfolio[]>([]);
@@ -71,79 +72,98 @@ export default function PortfolioSection() {
 
         {projects.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 justify-center items-center">
               {projects.map((project, index) => (
-                <Card key={project.id || index} className="group overflow-hidden border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-                  <div className={`absolute -inset-1 bg-gradient-to-r ${project.gradient} rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
-                  
-                  <div className="relative overflow-hidden rounded-t-2xl">
-                    <img
-                      src={project.featured_image || project.image_url}
-                      alt={project.title}
-                      className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700"
-                      onError={(e) => {
-                        e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjOTk5Ij5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+';
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    
+                
+                <><CometCard>
+                  <button
+                    type="button"
+                    className="my-10 flex w-[100%] cursor-pointer flex-col items-stretch rounded-[16px] border-0 bg-background p-2 md:my-20 md:p-4 "
+                    aria-label="View invite F7RA"
+                    style={{
+                      transformStyle: "preserve-3d",
+                      transform: "none",
+                      opacity: 1,
+                    }}
+                  >
+                    <div className="mx-2 flex-1">
+                      {project.featured_image ? (
+                        <div className="aspect-video relative overflow-hidden rounded-t-2xl">
+                          <img
+                            loading="lazy"
+                           src={project.featured_image || project.image_url}
+                        alt={project.title}
+                        className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          } }
+                            style={{
+                              boxShadow: "rgba(0, 0, 0, 0.05) 0px 5px 6px 0px",
+                              opacity: 1,
+                            }} />
+                        </div>
+                        ):(<div className="aspect-video relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center rounded-t-2xl">
+                        <div className="text-center">
+                          <Sparkles className="h-12 w-12 mx-auto text-gray-400 mb-2" />
+                          <p className="text-gray-500 dark:text-gray-400 text-sm">No featured image</p>
+                        </div>
+                      </div>)}
+                    </div>
                     <div className="absolute top-4 left-4">
-                      <Badge className="bg-white/90 text-gray-900 hover:bg-white">
-                        {project.category}
-                      </Badge>
-                    </div>
-                    
-                    <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2">
-                      <Button size="sm" className="bg-white/90 text-gray-900 hover:bg-white" asChild>
-                        <a href={project.live_url} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
+                        <Badge className="bg-white/90 text-gray-900 hover:bg-white">
+                          {project.category}
+                        </Badge>
+                      </div>
+                      <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2">
+                        <Button size="sm" className="bg-white/90 text-gray-900 hover:bg-white" asChild>
+                          <a href={project.live_url} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="h-4 w-4" />
+                          </a>
+                        </Button>
+                      </div>
+                      <CardContent className="text-start relative p-6 space-y-4">
+                      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                        <div className="flex items-center">
+                          <User className="h-3 w-3 mr-1" />
+                          {project.client}
+                        </div>
+                        <div className="flex items-center">
+                          <Calendar className="h-3 w-3 mr-1" />
+                          {project.year}
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                          {project.title}
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                          {project.description}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        {project.tags.slice(0, 3).map((tag, tagIndex) => (
+                          <Badge key={tagIndex} variant="outline" className="text-xs border-gray-200 dark:border-gray-700">
+                            {tag}
+                          </Badge>
+                        ))}
+                        {project.tags.length > 3 && (
+                          <Badge variant="outline" className="text-xs border-gray-200 dark:border-gray-700">
+                            +{project.tags.length - 3}
+                          </Badge>
+                        )}
+                      </div>
+
+                      <Button asChild variant="ghost" className="w-full justify-between group/btn hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl">
+                        <Link href={`/portfolio/${project.slug}`}>
+                          View Case Study
+                          <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                        </Link>
                       </Button>
-                    </div>
-                  </div>
-                  
-                  <CardContent className="relative p-6 space-y-4">
-                    <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                      <div className="flex items-center">
-                        <User className="h-3 w-3 mr-1" />
-                        {project.client}
-                      </div>
-                      <div className="flex items-center">
-                        <Calendar className="h-3 w-3 mr-1" />
-                        {project.year}
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
-                        {project.description}
-                      </p>
-                    </div>
-                    
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.slice(0, 3).map((tag, tagIndex) => (
-                        <Badge key={tagIndex} variant="outline" className="text-xs border-gray-200 dark:border-gray-700">
-                          {tag}
-                        </Badge>
-                      ))}
-                      {project.tags.length > 3 && (
-                        <Badge variant="outline" className="text-xs border-gray-200 dark:border-gray-700">
-                          +{project.tags.length - 3}
-                        </Badge>
-                      )}
-                    </div>
-                    
-                    <Button asChild variant="ghost" className="w-full justify-between group/btn hover:bg-gray-100 dark:hover:bg-gray-700 rounded-xl">
-                      <Link href={`/portfolio/${project.slug}`}>
-                        View Case Study
-                        <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </button>
+                </CometCard></>
               ))}
             </div>
 

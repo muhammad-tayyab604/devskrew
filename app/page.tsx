@@ -5,6 +5,7 @@ import Portfolio from '@/components/sections/Portfolio';
 import CTA from '@/components/sections/CTA';
 import Stats from '@/components/sections/Stats';
 import { Testimonials } from '@/components/sections/Testimonials';
+import { UnderHeroCTA } from '@/components/sections/UnderHeroCTA';
 
 export const metadata: Metadata = {
   title: 'Devskrew - Premium Digital Agency',
@@ -21,7 +22,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Stats />
+      <UnderHeroCTA />
       <Services />
       <Portfolio />
       <Testimonials />

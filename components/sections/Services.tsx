@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { servicesService, Service } from '@/lib/database';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { CometCard } from '../ui/comet-card';
 
 export default function Services() {
   const [services, setServices] = useState<Service[]>([]);
@@ -71,88 +72,102 @@ export default function Services() {
           </p>
         </div>
 
+         
+
         {services.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {services.map((service, index) => (
-                <Card key={service.id || index} className={`group relative overflow-hidden border-0 bg-gradient-to-br ${service.bg_gradient || 'from-blue-50 to-cyan-50 dark:from-blue-950/50 dark:to-cyan-950/50'} hover:shadow-2xl transition-all duration-500 hover:-translate-y-2`}>
-                  <div className={`absolute -inset-1 bg-gradient-to-r ${service.gradient} rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
-                  
-                  {/* Featured Image */}
-                  {service.featured_image ? (
-                    <div className="aspect-video relative overflow-hidden rounded-t-2xl">
-                      <img
-                        src={service.featured_image}
-                        alt={service.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        onError={(e) => {
-                          e.currentTarget.style.display = 'none';
-                        }}
-                      />
-                    </div>
-                  ) : (
-                    <div className="aspect-video relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center rounded-t-2xl">
-                      <div className="text-center">
-                        <Sparkles className="h-12 w-12 mx-auto text-gray-400 mb-2" />
-                        <p className="text-gray-500 dark:text-gray-400 text-sm">No featured image</p>
+                <><CometCard key={service.id || index}>
+                    <button
+                      type="button"
+                      className="my-10 flex w-[100%]]cursor-pointer flex-col items-stretch rounded-[16px] border-0 bg-background p-2 md:my-20 md:p-4"
+                      aria-label="View invite F7RA"
+                      style={{
+                        transformStyle: "preserve-3d",
+                        transform: "none",
+                        opacity: 1,
+                      }}
+                    >
+                      <div className="mx-2 flex-1">
+                        {service.featured_image ? (
+                        <div className="aspect-video relative overflow-hidden rounded-t-2xl">
+                          <img
+                            loading="lazy"
+                           src={service.featured_image}
+                          alt={service.title}
+                          className=" object-cover group-hover:scale-105 transition-transform duration-700"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                          } }
+                            style={{
+                              boxShadow: "rgba(0, 0, 0, 0.05) 0px 5px 6px 0px",
+                              opacity: 1,
+                            }} />
+                        </div>
+                        ):(<div className="aspect-video relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center rounded-t-2xl">
+                        <div className="text-center">
+                          <Sparkles className="h-12 w-12 mx-auto text-gray-400 mb-2" />
+                          <p className="text-gray-500 dark:text-gray-400 text-sm">No featured image</p>
+                        </div>
+                      </div>)}
+                        
                       </div>
-                    </div>
-                  )}
-                  
-                  <CardHeader className="relative">
-                    <div className="flex items-center justify-between mb-6">
-                      <div className={`w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                        <span className="text-white text-2xl">⚡</span>
+                      <CardHeader className="relative text-start">
+                      <div className="flex items-center justify-between mb-6">
+                        <div className={`w-16 h-16 bg-gradient-to-br ${service.gradient} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                          <span className="text-white text-2xl">⚡</span>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-sm text-gray-500 dark:text-gray-400">Starting at</p>
+                          <p className="text-lg font-bold text-blue-600 dark:text-blue-400">{service.starting_price}</p>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <p className="text-sm text-gray-500 dark:text-gray-400">Starting at</p>
-                        <p className="text-lg font-bold text-blue-600 dark:text-blue-400">{service.starting_price}</p>
+                      <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
+                        {service.title}
+                      </CardTitle>
+                      <CardDescription className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
+                        {service.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="relative space-y-6">
+                      <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3  text-start">Key Features:</h4>
+                        <ul className="space-y-2">
+                          {service.features.slice(0, 4).map((feature, featureIndex) => (
+                            <li key={featureIndex} className="flex items-start text-sm text-gray-600 dark:text-gray-300">
+                              <div className={`w-2 h-2 bg-gradient-to-r ${service.gradient} rounded-full mr-3 mt-2 flex-shrink-0`} />
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    </div>
-                    <CardTitle className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                      {service.title}
-                    </CardTitle>
-                    <CardDescription className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
-                      {service.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="relative space-y-6">
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Key Features:</h4>
-                      <ul className="space-y-2">
-                        {service.features.slice(0, 4).map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-start text-sm text-gray-600 dark:text-gray-300">
-                            <div className={`w-2 h-2 bg-gradient-to-r ${service.gradient} rounded-full mr-3 mt-2 flex-shrink-0`} />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Technologies:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {service.technologies.slice(0, 4).map((tech, techIndex) => (
-                          <Badge key={techIndex} variant="secondary" className="text-xs">
-                            {tech}
-                          </Badge>
-                        ))}
-                        {service.technologies.length > 4 && (
-                          <Badge variant="secondary" className="text-xs">
-                            +{service.technologies.length - 4} more
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
 
-                    <Button asChild className="w-full group/btn">
-                      <Link href={`/services/${service.slug}`}>
-                        Learn More
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+                      <div>
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-3  text-start">Technologies:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {service.technologies.slice(0, 4).map((tech, techIndex) => (
+                            <Badge key={techIndex} variant="secondary" className="text-xs">
+                              {tech}
+                            </Badge>
+                          ))}
+                          {service.technologies.length > 4 && (
+                            <Badge variant="secondary" className="text-xs">
+                              +{service.technologies.length - 4} more
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+
+                      <Button asChild className="w-full group/btn">
+                        <Link href={`/services/${service.slug}`}>
+                          Learn More
+                          <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
+                        </Link>
+                      </Button>
+                    </CardContent>
+                    </button>
+                  </CometCard></>
               ))}
             </div>
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -27,13 +27,14 @@ export default function TeamMemberForm({ member, onClose }: TeamMemberFormProps)
   });
   const [loading, setLoading] = useState(false);
 
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
     try {
       if (member?.id) {
-        await teamMembersService.update(member.id, formData);
+        await teamMembersService.update(member?.id, formData);
         toast.success('Team member updated successfully');
       } else {
         await teamMembersService.create(formData);

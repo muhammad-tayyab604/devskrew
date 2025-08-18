@@ -43,9 +43,8 @@ export function TeamCarousel() {
     );
   }
 
-  if (teamMembers.length === 0) {
-    return (
-      <div className="text-center py-20">
+
+  {teamMembers.length === 0 ? (<div className="text-center py-20">
         <div className="max-w-md mx-auto">
           <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
             <Users className="h-12 w-12 text-blue-600 dark:text-blue-400" />
@@ -57,9 +56,7 @@ export function TeamCarousel() {
             We're currently updating our team profiles. Check back soon to meet the amazing people behind our success.
           </p>
         </div>
-      </div>
-    );
-  }
+      </div>): ("")}
 
   const testimonials = teamMembers.map(member => ({
     quote: member.bio,

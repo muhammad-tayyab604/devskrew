@@ -199,7 +199,7 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
                 <ImageUpload
                   value={formData.image_url}
                   onChange={(url) => handleChange('image_url', url)}
-                  bucket="blog"
+                  bucket="images"
                   folder="featured-images"
                   label="Featured Image"
                   required

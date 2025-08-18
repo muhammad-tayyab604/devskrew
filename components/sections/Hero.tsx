@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Play, Sparkles, Zap } from 'lucide-react';
+import { ContainerScroll } from '../ui/container-scroll-animation';
 
 export default function Hero() {
   const [isVisible, setIsVisible] = useState(false);
@@ -40,7 +41,11 @@ export default function Hero() {
               </span>
             </div>
 
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
+           
+            <ContainerScroll
+        titleComponent={
+          <>
+             <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
               <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
                 Where {" "}
               </span>
@@ -52,18 +57,22 @@ export default function Hero() {
                 Take Flight!
               </span>
             </h1>
-            
             <p className="text-xl sm:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-4xl mx-auto leading-relaxed">
               We transform ambitious ideas into powerful digital solutions that drive growth, 
               engage audiences, and deliver measurable results for forward-thinking businesses.
             </p>
-          </div>
-
-          <div
-            className={`transition-all duration-1000 delay-300 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-          >
+          </>
+        }
+      >
+        <img
+          src={`https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg`}
+          alt="hero"
+          height={720}
+          width={1400}
+          className="mx-auto rounded-2xl object-cover h-full object-left-top"
+          draggable={false}
+        />
+      </ContainerScroll>
             <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
               <Button size="lg" asChild className="text-lg px-8 py-6 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105">
                 <Link href="/contact">
@@ -75,44 +84,6 @@ export default function Hero() {
                 <Play className="mr-2 h-5 w-5" />
                 Watch Demo
               </Button>
-            </div>
-          </div>
-
-          <div
-            className={`transition-all duration-1000 delay-500 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-          >
-            <div className="relative mx-auto max-w-6xl">
-              <div className="relative group">
-                {/* Glow Effect */}
-                <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
-                
-                {/* Main Image Container */}
-                <div className="relative overflow-hidden rounded-3xl shadow-2xl border border-white/20 dark:border-gray-700/20 bg-white/10 dark:bg-gray-800/10 backdrop-blur-sm">
-                  <img
-                    src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg"
-                    alt="Modern digital workspace with cutting-edge design tools"
-                    className="w-full h-64 sm:h-96 lg:h-[500px] object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-                  
-                  {/* Floating UI Elements */}
-                  <div className="absolute top-6 left-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Live Project</span>
-                    </div>
-                  </div>
-                  
-                  <div className="absolute bottom-6 right-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl">
-                    <div className="flex items-center space-x-2">
-                      <Zap className="w-4 h-4 text-blue-600" />
-                      <span className="text-sm font-medium text-gray-700 dark:text-gray-300">AI-Powered</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

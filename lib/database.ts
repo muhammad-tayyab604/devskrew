@@ -3,13 +3,13 @@ import { supabase } from './supabase';
 // Team Members
 export interface TeamMember {
   id?: string;
+  created_at?: string;
   name: string;
   designation: string;
   bio: string;
   image_url: string;
   linkedin_url?: string;
   twitter_url?: string;
-  created_at?: string;
   updated_at?: string;
 }
 
@@ -46,7 +46,7 @@ export const teamMembersService = {
     return result.id;
   },
 
-  async update(id: string, data: Partial<TeamMember>): Promise<void> {
+  async update(id: string, data: TeamMember): Promise<void> {
     const { error } = await supabase
       .from('team_members')
       .update(data)
