@@ -73,7 +73,7 @@ export default function PortfolioSection() {
         {projects.length > 0 ? (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 justify-center items-center">
-              {projects.map((project, index) => (
+              {projects.slice(0, 3).map((project, index) => (
                 
                 <><CometCard>
                   <button

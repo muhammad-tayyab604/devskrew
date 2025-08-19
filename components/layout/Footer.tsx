@@ -55,8 +55,7 @@ export default function Footer() {
             </Link>
             
             <p className="text-gray-400 mb-6 text-lg leading-relaxed">
-              We craft digital experiences that transform businesses and drive growth. 
-              Your success is our mission, and innovation is our passion.
+              At Devskrew, we design and build digital experiences that fuel business growth. Your success is our mission, powered by innovation and creativity.
             </p>
             
             <div className="space-y-4">

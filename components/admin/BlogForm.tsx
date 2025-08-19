@@ -42,6 +42,9 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
     og_title: post?.og_title || '',
     og_description: post?.og_description || '',
     og_image: post?.og_image || '',
+    faqs: post?.faqs || [
+    { question: '', answer: '' }, // default empty FAQ
+  ],
   });
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -138,7 +141,7 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <Card className="w-full max-w-6xl max-h-[90vh] overflow-y-auto">
+      <Card className="w-full max-w-[100vw] max-h-[100vh] overflow-y-auto">
         <CardHeader>
           <div className="flex justify-between items-center">
             <div>
@@ -157,9 +160,10 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
         <CardContent>
           <form onSubmit={handleSubmit}>
             <Tabs defaultValue="basic" className="space-y-6">
-              <TabsList className="grid w-full grid-cols-3">
+              <TabsList className="grid w-full grid-cols-4">
                 <TabsTrigger value="basic">Basic Info</TabsTrigger>
                 <TabsTrigger value="content">Content</TabsTrigger>
+                <TabsTrigger value="faq">FAQs</TabsTrigger>
                 <TabsTrigger value="seo">SEO</TabsTrigger>
               </TabsList>
 
@@ -280,6 +284,76 @@ export default function BlogForm({ post, onClose }: BlogFormProps) {
                   </div>
                 </div>
               </TabsContent>
+                    <TabsContent value="faq" className="space-y-6">
+         <div>
+    <h3 className="text-lg font-semibold">Frequently Asked Questions</h3>
+    <p className="text-sm text-gray-500 mb-4">
+      Add common questions and answers related to this blog post.
+    </p>
+
+    {formData.faqs?.map((faq, index) => (
+      <div key={index} className="border p-4 rounded-md mb-4 space-y-2">
+        <div>
+          <Label>Question</Label>
+          <Input
+            value={faq.question}
+            onChange={(e) =>
+              setFormData((prev) => {
+                const faqs = [...(prev.faqs || [])];
+                faqs[index].question = e.target.value;
+                return { ...prev, faqs };
+              })
+            }
+            placeholder="Enter question"
+          />
+        </div>
+        <div>
+          <Label>Answer</Label>
+          <Textarea
+            value={faq.answer}
+            onChange={(e) =>
+              setFormData((prev) => {
+                const faqs = [...(prev.faqs || [])];
+                faqs[index].answer = e.target.value;
+                return { ...prev, faqs };
+              })
+            }
+            rows={3}
+            placeholder="Enter answer"
+          />
+        </div>
+        <Button
+          type="button"
+          variant="destructive"
+          size="sm"
+          onClick={() =>
+            setFormData((prev) => ({
+              ...prev,
+              faqs: prev.faqs?.filter((_, i) => i !== index) || [],
+            }))
+          }
+        >
+          Remove FAQ
+        </Button>
+      </div>
+    ))}
+
+    <Button
+      type="button"
+      variant="outline"
+      size="sm"
+      onClick={() =>
+        setFormData((prev) => ({
+          ...prev,
+          faqs: [...(prev.faqs || []), { question: "", answer: "" }],
+        }))
+      }
+    >
+      <Plus className="h-4 w-4 mr-2" />
+      Add FAQ
+    </Button>
+  </div>
+                </TabsContent>
 
               <TabsContent value="seo" className="space-y-6">
                 <div className="space-y-6">

@@ -276,6 +276,7 @@ export interface BlogPost {
   og_title?: string;
   og_description?: string;
   og_image?: string;
+  faqs?: { question: string; answer: string }[];
   created_at?: string;
   updated_at?: string;
   published_at?: string;

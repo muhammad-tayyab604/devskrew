@@ -4,44 +4,84 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import CTA from '@/components/sections/CTA';
 import { AnimatedTeamMembers } from '@/components/ui/animated-testimonials';
 import { TeamCarousel } from '@/components/sections/TeamCarousel';
+import Stats from '@/components/sections/Stats';
 
 export const metadata: Metadata = {
-  title: 'About Us - Our Story, Mission & Team',
-  description: 'Learn about Devskrew\'s journey, our mission to transform businesses through digital innovation, and meet the talented team behind our success.',
-  keywords: ['about digital agency', 'company story', 'team', 'mission', 'values', 'digital transformation'],
+  title: 'About Devskrew | Our Story, Mission & Team',
+  description:
+    'Discover Devskrew’s journey as a digital agency. Learn about our mission, values, and the talented team driving innovation in web development, design & marketing.',
+  keywords: [
+    'about Devskrew',
+    'digital agency team',
+    'company story',
+    'our mission',
+    'agency values',
+    'web development experts',
+    'digital innovation',
+  ],
   openGraph: {
-    title: 'About Devskrew - Our Story & Mission',
-    description: 'Discover our journey and meet the team transforming businesses through digital innovation.',
+    title: 'About Devskrew | Our Story, Mission & Team',
+    description:
+      'Meet Devskrew — a digital agency helping businesses grow through web development, design, marketing & innovation. Learn our story and meet our team.',
+    url: 'https://yourdomain.com/about',
+    siteName: 'Devskrew',
+    images: [
+      {
+        url: '/og-about.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'About Devskrew - Our Story & Team',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Devskrew | Our Story, Mission & Team',
+    description:
+      'Learn about Devskrew’s mission, values, and the talented team driving digital innovation in web & app development, design & marketing.',
     images: ['/og-about.jpg'],
+    creator: '@Devskrew',
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
+
 
 const values = [
   {
     icon: Target,
     title: 'Results-Driven',
-    description: 'We focus on delivering measurable results that drive business growth and success.',
+    description:
+      'We deliver measurable results through data-driven strategies in web, app, and digital marketing — fueling long-term business growth.',
     gradient: 'from-blue-500 to-cyan-500',
   },
   {
     icon: Users,
     title: 'Client-Centric',
-    description: 'Your success is our success. We work closely with you to understand and exceed your expectations.',
+    description:
+      'Your goals are our mission. We collaborate closely, providing tailored digital solutions that exceed expectations and build lasting partnerships.',
     gradient: 'from-purple-500 to-pink-500',
   },
   {
     icon: Award,
     title: 'Excellence',
-    description: 'We strive for excellence in everything we do, from design to development to delivery.',
+    description:
+      'From design to development to delivery, we uphold the highest standards to ensure every project reflects innovation and quality.',
     gradient: 'from-green-500 to-emerald-500',
   },
   {
     icon: Heart,
     title: 'Passion',
-    description: 'We\'re passionate about digital innovation and helping businesses thrive in the digital age.',
+    description:
+      'We’re passionate about technology, creativity, and digital innovation — empowering businesses to thrive in today’s competitive landscape.',
     gradient: 'from-orange-500 to-red-500',
   },
 ];
+
 
 export default function About() {
   return (
@@ -70,10 +110,6 @@ export default function About() {
                 Story
               </span>
             </h1>
-            <p className="text-xl sm:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
-              We're a passionate team of digital innovators dedicated to helping businesses 
-              thrive in the ever-evolving digital landscape.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -83,20 +119,15 @@ export default function About() {
               </h2>
               <div className="space-y-6 text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                 <p>
-                  Founded with a vision to bridge the gap between technology and business success, 
-                  Devskrew has grown from a small startup to a trusted partner for companies 
-                  worldwide. Our journey began with a simple belief: that every business deserves 
-                  access to cutting-edge digital solutions.
+                 Founded in 2020, Devskrew was created with one clear mission — to bridge the gap between technology and business growth. What started as a small digital agency has evolved into a trusted partner for companies worldwide. Our core belief has always been simple: every business, no matter its size, deserves access to cutting-edge digital solutions that drive measurable results.
                 </p>
                 <p>
-                  Today, we're proud to work with businesses of all sizes, from ambitious startups 
-                  to established enterprises, helping them navigate the digital transformation journey 
-                  with confidence and success.
+                 Today, we partner with startups, SMEs, and global enterprises, helping them succeed in their digital transformation journey. From custom web and app development to digital marketing, branding, and UI/UX design, we deliver solutions tailored to each client’s goals.
                 </p>
                 <p>
-                  Our team combines technical expertise with creative vision to deliver solutions 
-                  that not only meet your needs but exceed your expectations. We believe in building 
-                  long-term partnerships based on trust, transparency, and results.
+                 Our strength lies in combining technical expertise with creative vision. Every project is built with precision, innovation, and a focus on delivering real business impact. Beyond just delivering projects, we believe in building long-term partnerships based on trust, transparency, and proven results.
+
+With Devskrew by your side, you don’t just get a service provider — you gain a digital partner dedicated to your growth.
                 </p>
               </div>
             </div>
@@ -113,6 +144,10 @@ export default function About() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className=' bg-white dark:bg-gray-900'>
+        <Stats/>
       </section>
 
       {/* Values Section */}

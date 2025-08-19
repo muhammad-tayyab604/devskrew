@@ -36,8 +36,7 @@ export default function CTA() {
           </h2>
           
           <p className="text-xl sm:text-2xl text-blue-100 mb-12 max-w-4xl mx-auto leading-relaxed">
-            Partner with us to build digital experiences that captivate your audience, 
-            drive meaningful engagement, and deliver exceptional results for your business.
+            Work with Devskrew to bring your ideas to life — from websites and apps to marketing and design — creating digital experiences that truly connect with your audience and grow your business.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
@@ -48,8 +47,8 @@ export default function CTA() {
               </Link>
             </Button>
             <Button size="lg" variant="outline" className="text-lg px-10 py-6 rounded-2xl border-2 border-white/30 text-gray-700 dark:text-gray-50 hover:bg-white/10 backdrop-blur-sm transition-all duration-300 hover:scale-105 group">
-              <MessageCircle className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
-              Schedule a Call
+              <Sparkles className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform duration-300" />
+              Get A Quote With AI
             </Button>
           </div>
 

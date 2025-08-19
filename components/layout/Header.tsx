@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Moon, Sun, Zap } from 'lucide-react';
+import { Menu, X, Moon, Sun, Zap, Sparkles, Sparkle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ModeToggle } from '../ThemeToggle';
@@ -128,7 +128,7 @@ export default function Header() {
 
             <div className="hidden lg:block">
               <Button asChild className="rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
-                <Link href="/contact">Get Started</Link>
+                <Link className='flex gap-2' href="/contact"><Sparkles/> AI Quote</Link>
               </Button>
             </div>
 
@@ -169,7 +169,7 @@ export default function Header() {
               ))}
               <div className="pt-4">
                 <Button asChild className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
-                  <Link href="/contact">Get Started</Link>
+                   <Link className='flex gap-2' href="/contact"><Sparkles/> AI Quote</Link>
                 </Button>
               </div>
             </div>

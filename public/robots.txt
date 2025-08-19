@@ -1,11 +1,20 @@
-# *
+# -------------------------------------
+# Devskrew Robots.txt
+# -------------------------------------
+
+# Global rules
 User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api
+Disallow: /_next/        # Blocks Next.js build files
+Disallow: /private/      # If you have any private pages
+
+# Crawl delay (optional, helps prevent server overload)
+# Crawl-delay: 5
 
 # Host
-Host: https://yourdomain.com
+Host: devskrew.com
 
 # Sitemaps
-Sitemap: https://yourdomain.com/sitemap.xml
+Sitemap: https://devskrew.com/sitemap.xml

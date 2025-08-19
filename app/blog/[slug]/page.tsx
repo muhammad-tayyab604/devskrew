@@ -8,6 +8,7 @@ import CTA from '@/components/sections/CTA';
 import { blogService } from '@/lib/database';
 import Image from 'next/image';
 import { TracingBeam } from '@/components/ui/tracing-beam';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 interface Props {
   params: {
@@ -116,7 +117,6 @@ export default async function BlogPost({ params }: Props) {
               </Button>
             </div>
           </div>
-
           <div className="relative">
             <div className="relative group">
               <div className={`absolute -inset-4 bg-gradient-to-r ${post.gradient} rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
@@ -143,7 +143,30 @@ export default async function BlogPost({ params }: Props) {
               dangerouslySetInnerHTML={{ __html: post.content }}
             />
           </div>
+           <div className="">
+            <hr />
+            <h2 className="text-2xl font-bold mb-3 mt-6">FAQs</h2>
+            {post.faqs && post.faqs.length > 0 && (
+         <>
+          <Accordion type="single" collapsible>
+  <AccordionItem value="item-1">
+    {post.faqs.map((faq, index)=>(
+
+    <>
+    <AccordionTrigger key={index}>{index+1}{". "}{faq.question}</AccordionTrigger>
+    <AccordionContent>
+      {faq.answer}
+    </AccordionContent>
+    </>
+    ))}
+  </AccordionItem>
+</Accordion>
+         </>
+)}
+           </div>
         </div>
+       
+
       </section>
 
       {/* <CTA /> */}
