@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     return {
-      title: service.seo_title || `${service.title} Services - Professional ${service.title} Solutions`,
+      title: service.seo_title || `${service.title} ${service.title}`,
       description: service.seo_description || service.description,
       keywords: service.seo_keywords?.length ? service.seo_keywords : [service.title.toLowerCase(), 'professional services', 'digital agency', ...service.technologies.map(tech => tech.toLowerCase())],
       openGraph: {

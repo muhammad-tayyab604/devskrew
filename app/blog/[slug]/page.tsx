@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     }
 
     return {
-      title: post.seo_title || `${post.title} - Devskrew Blog`,
+      title: post.seo_title || `${post.title}`,
       description: post.seo_description || post.excerpt,
       keywords: post.seo_keywords?.length ? post.seo_keywords : [post.category.toLowerCase(), 'blog', 'insights'],
       openGraph: {
