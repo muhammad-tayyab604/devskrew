@@ -90,7 +90,7 @@ export default function Header() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-3 group">
               <div className="relative">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl ">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl ">
                  <Image src={"/devskrewLogo.webp"} height={100} width={100} alt='devskrew logo' className='rounded-3xl'/>
                 </div>
                 <div className="absolute -inset-1 opacity-20 group-hover:opacity-40 blur transition-all duration-300" />
