@@ -129,7 +129,7 @@ export default function Header() {
 
             <div className="hidden lg:block">
               <Button asChild className="rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
-                <Link className='flex gap-2' href="/contact"><Sparkles/> AI Quote</Link>
+                <Link className='flex gap-2' href="/contact"><Sparkles/> Quote</Link>
               </Button>
             </div>
 
