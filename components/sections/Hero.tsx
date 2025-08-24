@@ -68,8 +68,8 @@ export default function Hero() {
         <Image
           src={`/hero-image-home-page.webp`}
           alt="hero"
-          height={720}
-          width={1400}
+          height={1536}
+          width={1024}
           className="mx-auto rounded-2xl object-cover h-full object-left-top"
           draggable={false}
         />

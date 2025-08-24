@@ -2,7 +2,6 @@ import { Metadata } from 'next';
 import { Users, Target, Award, Heart, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import CTA from '@/components/sections/CTA';
-import { AnimatedTeamMembers } from '@/components/ui/animated-testimonials';
 import { TeamCarousel } from '@/components/sections/TeamCarousel';
 import Stats from '@/components/sections/Stats';
 import Image from 'next/image';

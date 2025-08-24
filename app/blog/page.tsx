@@ -1,5 +1,4 @@
 
-import { blogService } from '@/lib/database';
 import { Metadata } from 'next';
 import BlogClient from './BlogClient';
 
