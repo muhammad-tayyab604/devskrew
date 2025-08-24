@@ -8,6 +8,7 @@ import { servicesService, Service } from '@/lib/database';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CometCard } from '../ui/comet-card';
+import Image from 'next/image';
 
 export default function Services() {
   const [services, setServices] = useState<Service[]>([]);
@@ -92,7 +93,9 @@ export default function Services() {
                       <div className="mx-2 flex-1">
                         {service.featured_image ? (
                         <div className="aspect-video relative overflow-hidden rounded-t-2xl">
-                          <img
+                          <Image
+                          height={2000}
+                          width={2000}
                             loading="lazy"
                            src={service.featured_image}
                           alt={service.title}

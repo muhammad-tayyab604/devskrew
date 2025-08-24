@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { ExternalLink, ArrowRight, Calendar, User, FolderOpen, Sparkles } from 'lucide-react';
 import { portfolioService, Portfolio } from '@/lib/database';
 import { CometCard } from '../ui/comet-card';
+import Image from 'next/image';
 
 export default function PortfolioSection() {
   const [projects, setProjects] = useState<Portfolio[]>([]);
@@ -89,7 +90,9 @@ export default function PortfolioSection() {
                     <div className="mx-2 flex-1">
                       {project.featured_image ? (
                         <div className="aspect-video relative overflow-hidden rounded-t-2xl">
-                          <img
+                          <Image
+                          height={2000}
+                          width={2000}
                             loading="lazy"
                            src={project.featured_image || project.image_url}
                         alt={project.title}

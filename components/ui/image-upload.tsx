@@ -7,6 +7,7 @@ import { Upload, X, Image as ImageIcon } from 'lucide-react';
 import { uploadImage, generateImagePath } from '@/lib/supabase';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 interface ImageUploadProps {
   value?: string;
@@ -102,7 +103,9 @@ export default function ImageUpload({
       
       {value ? (
         <div className="relative">
-          <img
+          <Image
+          height={2000}
+          width={2000}
             src={value}
             alt={label}
             className="w-full h-48 object-cover rounded-lg border"

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Play, Sparkles, Zap } from 'lucide-react';
 import { ContainerScroll } from '../ui/container-scroll-animation';
+import Image from 'next/image';
 
 export default function Hero() {
   const [isVisible, setIsVisible] = useState(false);
@@ -34,7 +35,7 @@ export default function Hero() {
             }`}
           >
             {/* Badge */}
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 border border-blue-200/50 dark:border-blue-700/50 mb-8">
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 border border-blue-200/50 dark:border-blue-700/50">
               <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400 mr-2" />
               <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
                 Turning Visions Into Reality Since 2022
@@ -45,7 +46,7 @@ export default function Hero() {
             <ContainerScroll
         titleComponent={
           <>
-             <h1 className="text-5xl sm:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
+             <h1 className="text-5xl sm:text-7xl lg:text-8xl font-extrabold mb-8 leading-tight">
               <span className="bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 dark:from-white dark:via-blue-200 dark:to-purple-200 bg-clip-text text-transparent">
                 Where {" "}
               </span>
@@ -64,8 +65,8 @@ export default function Hero() {
           </>
         }
       >
-        <img
-          src={`https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg`}
+        <Image
+          src={`/hero-image-home-page.webp`}
           alt="hero"
           height={720}
           width={1400}

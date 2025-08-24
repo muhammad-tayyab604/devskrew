@@ -5,11 +5,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
-import { Plus, Search, Edit, Trash2, ArrowLeft, ExternalLink, Image } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, ArrowLeft, ExternalLink, ImageDown } from 'lucide-react';
 import Link from 'next/link';
 import { servicesService, Service } from '@/lib/database';
 import { toast } from 'sonner';
 import ServiceForm from '@/components/admin/ServiceForm';
+import Image from 'next/image';
 
 export default function ServicesPage() {
   const [services, setServices] = useState<Service[]>([]);
@@ -116,7 +117,9 @@ export default function ServicesPage() {
               {/* Featured Image */}
               {service.featured_image ? (
                 <div className="aspect-video relative">
-                  <img
+                  <Image
+                  height={2000}
+                  width={2000}
                     src={service.featured_image}
                     alt={service.title}
                     className="w-full h-full object-cover"
@@ -130,7 +133,7 @@ export default function ServicesPage() {
               ) : (
                 <div className="aspect-video relative bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center">
                   <div className="text-center">
-                    <Image className="h-12 w-12 mx-auto text-gray-400 mb-2" />
+                    <ImageDown className="h-12 w-12 mx-auto text-gray-400 mb-2" />
                     <p className="text-gray-500 dark:text-gray-400 text-sm">No featured image</p>
                   </div>
                   <div className="absolute top-4 right-4">

@@ -6,11 +6,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Search, Edit, Trash2, ArrowLeft, ExternalLink, Eye, Star, Image } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, ArrowLeft, ExternalLink, Eye, Star } from 'lucide-react';
 import Link from 'next/link';
 import { portfolioService, Portfolio } from '@/lib/database';
 import { toast } from 'sonner';
 import PortfolioForm from '@/components/admin/PortfolioForm';
+import Image from 'next/image';
 
 export default function PortfolioPage() {
   const [portfolioItems, setPortfolioItems] = useState<Portfolio[]>([]);
@@ -143,7 +144,9 @@ export default function PortfolioPage() {
             <Card key={item.id} className="overflow-hidden">
               {/* Featured or Main Image */}
               <div className="aspect-video relative">
-                <img
+                <Image
+                height={100}
+                width={100}
                   src={item.featured_image || item.image_url}
                   alt={item.title}
                   className="w-full h-full object-cover"
@@ -167,7 +170,7 @@ export default function PortfolioPage() {
                 {item.featured_image && item.featured_image !== item.image_url && (
                   <div className="absolute top-4 right-4">
                     <Badge variant="secondary" className="bg-blue-500 text-white">
-                      <Image className="h-3 w-3 mr-1" />
+                      {/* <Image className="h-3 w-3 mr-1" /> */}
                       Featured
                     </Badge>
                   </div>

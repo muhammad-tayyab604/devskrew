@@ -1,16 +1,4 @@
-
-
-import { useState, useEffect } from 'react';
 import { Metadata } from 'next';
-import Link from 'next/link';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { ExternalLink, Github, Calendar, User, ArrowRight, Sparkles, FolderOpen, Check } from 'lucide-react';
-import CTA from '@/components/sections/CTA';
-import { portfolioService, Portfolio } from '@/lib/database';
-import { CometCard } from '@/components/ui/comet-card';
-import { BackgroundBeamsWithCollision } from '@/components/ui/background-beams-with-collision';
 import PortfolioClient from './PortfolioClient';
 
 export const metadata: Metadata = {

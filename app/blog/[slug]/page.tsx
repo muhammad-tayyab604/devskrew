@@ -123,8 +123,8 @@ export default async function BlogPost({ params }: Props) {
               <Image src={post.image_url}
                 alt={post.title}
                 className="relative rounded-3xl shadow-2xl w-full h-64 sm:h-96 object-cover"
-                height={100}
-                width={100}/>
+                height={2000}
+                width={2000}/>
             </div>
           </div>
         </div>

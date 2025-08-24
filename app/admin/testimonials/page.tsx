@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { testimonialsService, Testimonial } from '@/lib/database';
 import { toast } from 'sonner';
 import TestimonialForm from '@/components/admin/TestimonialForm';
+import Image from 'next/image';
 
 export default function TestimonialsPage() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -124,7 +125,9 @@ export default function TestimonialsPage() {
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
                       {testimonial.avatar ? (
-                        <img
+                        <Image
+                        height={2000}
+                        width={2000}
                           src={testimonial.avatar}
                           alt={testimonial.name}
                           className="w-full h-full object-cover"

@@ -63,19 +63,19 @@ export default function Footer() {
                 <div className="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center mr-4 group-hover:bg-blue-600 transition-colors duration-300">
                   <Mail className="h-4 w-4" />
                 </div>
-                <span>hello@Devskrew.com</span>
+                <a href="mailto::tali6443@gmail.com"><span>tali6443@gmail.com</span></a>
               </div>
               <div className="flex items-center text-gray-400 hover:text-white transition-colors duration-300 group">
                 <div className="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center mr-4 group-hover:bg-purple-600 transition-colors duration-300">
                   <Phone className="h-4 w-4" />
                 </div>
-                <span>+1 (555) 123-4567</span>
+                <a href="tel:+923355565699"><span>+92 33555 65699</span></a>
               </div>
               <div className="flex items-center text-gray-400 hover:text-white transition-colors duration-300 group">
                 <div className="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center mr-4 group-hover:bg-indigo-600 transition-colors duration-300">
                   <MapPin className="h-4 w-4" />
                 </div>
-                <span>New York, NY</span>
+                <span>Rawalpindi, Pakistan</span>
               </div>
             </div>
           </div>

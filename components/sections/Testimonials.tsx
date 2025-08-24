@@ -7,6 +7,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { Sparkles, MessageSquare } from "lucide-react";
 import { testimonialsService, Testimonial } from '@/lib/database';
+import Image from "next/image";
 
 export const Testimonials = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -98,7 +99,7 @@ const TestimonialList = ({ testimonials }: { testimonials: Testimonial[] }) =>
         <div className="flex items-center gap-4">
           <Avatar>
             {testimonial.avatar ? (
-              <img src={testimonial.avatar} alt={testimonial.name} className="w-full h-full object-cover" />
+              <Image height={2000} width={2000} src={testimonial.avatar} alt={testimonial.name} className="w-full h-full object-cover" />
             ) : (
               <AvatarFallback className="text-xl font-medium bg-primary text-primary-foreground">
                 {testimonial.name.charAt(0)}

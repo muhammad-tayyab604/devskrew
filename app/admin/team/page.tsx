@@ -116,7 +116,9 @@ export default function TeamMembersPage() {
           {filteredMembers.map((member) => (
             <Card key={member.id} className="overflow-hidden">
               <div className="aspect-square relative">
-                <img
+                <Image
+                height={2000}
+                width={2000}
                   src={member.image_url}
                   alt={member.name}
                   className="w-full h-full object-cover"

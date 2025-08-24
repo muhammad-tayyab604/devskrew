@@ -8,9 +8,10 @@ import { CalendarDays, User, ArrowRight, Sparkles, FileText } from 'lucide-react
 import { Button } from '@/components/ui/button';
 import CTA from '@/components/sections/CTA';
 import { blogService, BlogPost } from '@/lib/database';
+import Image from 'next/image';
 
-export default function BlogClient({ blogPosts }: { blogPosts: BlogPost[] }) {
-  const [posts, setPosts] = useState(blogPosts)
+export default function BlogClient() {
+  const [blogPosts, setPosts] = useState<BlogPost[]>([])
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -81,14 +82,16 @@ export default function BlogClient({ blogPosts }: { blogPosts: BlogPost[] }) {
                   <div className={`absolute -inset-1 bg-gradient-to-r ${post.gradient} rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
                   
                   <div className="relative overflow-hidden rounded-t-2xl">
-                    <img
+                    <Image
+                    height={2000}
+                    width={2000}
                       src={post.image_url}
                       alt={post.title}
                       className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700"
                      onError={(e) => {
-  e.currentTarget.src =
-    'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjOTk5Ij5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+';
-}}
+                      e.currentTarget.src =
+                        'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjOTk5Ij5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+';
+                    }}
 
                     />
                     <div className="absolute top-4 left-4">

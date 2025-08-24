@@ -18,31 +18,33 @@ const contactInfo = [
   {
     icon: Mail,
     title: 'Email Us',
-    content: 'info@Devskrew.com',
+    content: 'tali6443@gmail.com',
     subContent: 'We reply within 24 hours',
     gradient: 'from-blue-500 to-cyan-500',
+    link: "mailto::tali6443@gmail.com"
   },
   {
     icon: Phone,
     title: 'Call Us',
-    content: '+1 (555) 123-4567',
-    subContent: 'Mon-Fri 9AM-6PM EST',
+    content: '+92 33555 65699',
+    link: "tel:+923355565699",
+    subContent: 'Business Hours: 24/7',
     gradient: 'from-purple-500 to-pink-500',
   },
   {
     icon: MapPin,
-    title: 'Visit Us',
-    content: '123 Innovation Ave',
-    subContent: 'New York, NY 10001',
+    title: 'Location',
+    content: 'Rawalpindi, 4600',
+    subContent: 'Rawalpindi, Pakistan',
     gradient: 'from-green-500 to-emerald-500',
   },
-  {
-    icon: Clock,
-    title: 'Business Hours',
-    content: 'Mon-Fri: 9AM-6PM',
-    subContent: 'Weekend: By appointment',
-    gradient: 'from-orange-500 to-red-500',
-  },
+  // {
+  //   icon: Clock,
+  //   title: 'Business Hours',
+  //   content: 'Mon-Fri: 9AM-6PM',
+  //   subContent: 'Weekend: By appointment',
+  //   gradient: 'from-orange-500 to-red-500',
+  // },
 ];
 
 const services = [
@@ -290,9 +292,11 @@ export default function Contact() {
                             <h3 className="font-bold text-gray-900 dark:text-white mb-1 text-lg">
                               {info.title}
                             </h3>
-                            <p className="text-gray-900 dark:text-white font-medium">
+                           <a href={info?.link}>
+                             <p className="text-gray-900 dark:text-white font-medium">
                               {info.content}
                             </p>
+                           </a>
                             <p className="text-gray-600 dark:text-gray-300 text-sm">
                               {info.subContent}
                             </p>

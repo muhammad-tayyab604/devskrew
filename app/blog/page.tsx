@@ -52,7 +52,6 @@ export const metadata: Metadata = {
 
 
 export default async function Blog() {
-  const blogPosts = await blogService.getPublished()
 
-  return <BlogClient blogPosts={blogPosts} />
+  return <BlogClient />
 }

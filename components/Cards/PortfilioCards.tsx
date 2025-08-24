@@ -5,6 +5,7 @@ import { ExternalLink, Github, Calendar, User, ArrowRight, Sparkles } from 'luci
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
 
 
 type Props = { limit?: number };
@@ -21,7 +22,9 @@ export function PortfolioCards({ limit }: Props){
                 <div className={`absolute -inset-1 bg-gradient-to-r ${project.gradient} rounded-3xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
                 
                 <div className="relative overflow-hidden rounded-t-2xl">
-                  <img
+                  <Image
+                  height={2000}
+                  width={2000}
                     src={project.image}
                     alt={project.title}
                     className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700"

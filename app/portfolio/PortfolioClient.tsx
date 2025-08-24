@@ -11,6 +11,7 @@ import CTA from '@/components/sections/CTA';
 import { portfolioService, Portfolio } from '@/lib/database';
 import { CometCard } from '@/components/ui/comet-card';
 import { BackgroundBeamsWithCollision } from '@/components/ui/background-beams-with-collision';
+import Image from 'next/image';
 
 export default function PortfolioClient() {
   const [projects, setProjects] = useState<Portfolio[]>([]);
@@ -153,7 +154,9 @@ export default function PortfolioClient() {
                   <div className={index % 2 === 1 ? 'lg:col-start-1' : ''}>
                     <div className="relative group">
                       <div className={`absolute -inset-4 bg-gradient-to-r ${project.gradient} rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500`} />
-                      <img
+                      <Image
+                      height={2000}
+                      width={2000}
                         src={project.featured_image || project.image_url}
                         alt={project.title}
                         className="relative rounded-3xl shadow-2xl group-hover:scale-105 transition-transform duration-500"
@@ -209,7 +212,9 @@ export default function PortfolioClient() {
                               <div className="mx-2 flex-1">
                                 {project.featured_image ? (
                                   <div className="aspect-video relative overflow-hidden rounded-t-2xl">
-                                    <img
+                                    <Image
+                                    height={2000}
+                                    width={2000}
                                       loading="lazy"
                                      src={project.featured_image || project.image_url}
                                   alt={project.title}

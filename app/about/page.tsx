@@ -5,6 +5,7 @@ import CTA from '@/components/sections/CTA';
 import { AnimatedTeamMembers } from '@/components/ui/animated-testimonials';
 import { TeamCarousel } from '@/components/sections/TeamCarousel';
 import Stats from '@/components/sections/Stats';
+import Image from 'next/image';
 
 export const metadata: Metadata = {
   title: 'About Devskrew | Our Story, Mission & Team',
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     siteName: 'Devskrew',
     images: [
       {
-        url: '/og-about.jpg',
+        url: '/about-us.webp',
         width: 1200,
         height: 630,
         alt: 'About Devskrew - Our Story & Team',
@@ -41,7 +42,7 @@ export const metadata: Metadata = {
     title: 'About Devskrew | Our Story, Mission & Team',
     description:
       'Learn about Devskrew’s mission, values, and the talented team driving digital innovation in web & app development, design & marketing.',
-    images: ['/og-about.jpg'],
+    images: ['/about-us.webp'],
     creator: '@Devskrew',
   },
   robots: {
@@ -135,10 +136,12 @@ With Devskrew by your side, you don’t just get a service provider — you gain
             <div className="relative">
               <div className="relative group">
                 <div className="absolute -inset-4 bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
-                <img
-                  src="https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg"
+                <Image
+                  src="/about-us.webp"
                   alt="Team collaboration"
                   className="relative rounded-3xl shadow-2xl group-hover:scale-105 transition-transform duration-500"
+                  height={2000}
+                  width={2000}
                 />
               </div>
             </div>

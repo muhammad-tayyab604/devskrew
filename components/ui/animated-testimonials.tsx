@@ -4,6 +4,7 @@ import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "motion/react";
  import { Linkedin, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 
 
@@ -94,7 +95,7 @@ export const AnimatedTeamMembers = ({
                   }}
                   className="absolute inset-0 origin-bottom"
                 >
-                  <img
+                  <Image
                     src={testimonial.src}
                     alt={testimonial.name}
                     width={500}

@@ -7,6 +7,7 @@ import { Menu, X, Moon, Sun, Zap, Sparkles, Sparkle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ModeToggle } from '../ThemeToggle';
+import Image from 'next/image';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -42,7 +43,7 @@ export default function Header() {
               <Link href="/" className="flex items-center space-x-3 group">
                 <div className="relative">
                   <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 shadow-lg">
-                    <Zap className="h-6 w-6 text-white" />
+                    <Image src={"/devskrewLogo.webp"} height={100} width={100} alt='devskrew logo'/>
                   </div>
                 </div>
                 <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
@@ -89,10 +90,10 @@ export default function Header() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-3 group">
               <div className="relative">
-                <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105">
-                  <Zap className="h-6 w-6 text-white" />
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl ">
+                 <Image src={"/devskrewLogo.webp"} height={100} width={100} alt='devskrew logo' className='rounded-3xl'/>
                 </div>
-                <div className="absolute -inset-1 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 rounded-2xl opacity-20 group-hover:opacity-40 blur transition-all duration-300" />
+                <div className="absolute -inset-1 opacity-20 group-hover:opacity-40 blur transition-all duration-300" />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
                 Devskrew
@@ -169,7 +170,7 @@ export default function Header() {
               ))}
               <div className="pt-4">
                 <Button asChild className="w-full rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
-                   <Link className='flex gap-2' href="/contact"><Sparkles/> AI Quote</Link>
+                   <Link className='flex gap-2' href="/contact"><Sparkles/> Quote</Link>
                 </Button>
               </div>
             </div>
